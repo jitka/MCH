@@ -1,0 +1,83 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+
+Contraction Hierarchies provides guaranteed speedup on singe-criteria graph
+with fixed highway dimension. We bring its advantages to multi-criteria 
+road graphs.
+precise, static,..
+
+
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{INTRODUCTION}
+
+Contraction hierarchies (CH) \cite{geisberger2008contraction}
+is fundamental improvement for single criteria path graphs.
+
+
+TODO update 
+Chapter two present generalization for highway dimension. In chapter
+three we present complexity bound for multi-criteria contraction hierarchies.
+At chapter four we present our results. First is number of transition roads for
+New York street graph which support our belief that multi-criteria pathway
+has also low highway dimension.
+Then we present comparison with other algorithms.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{RELATED WORK}
+
+Constrained shortest path 
+\cite{pugliese2013survey} is often used in cases when we are looking for
+paths which are good in more than one criteria.
+CH could be used for finding 
+paths which are on lover envelope of paretoset.
+\cite{funke2013polynomial}
+or for the other constrains \todo{cite electromobility}
+However, minimalising linear combination of criteria sum 
+do not found all paths from paretoset.
+
+We present algorithm which found whole paretoset.
+Multicriterial dijkstra is optimal for general graphs.
+\todo{citace} 
+For vehicle or bicycle routing could be used namoa
+\todo{citace}
+which is optimal for direct questions.
+There could be improvemenents when we allows preprocessing
+algorithms 
+There was preprocessing algorithms for multi-criteria
+shortest path already.
+\cite{kohler2005acceleration} 
+
+Higway dimension  \cite{abraham2010highway} is parametr which 
+is low on road network whit only on criteria
+and it could be used for upper bound of time complexity of search 
+algorithms. We generalize highway dimension in orther to found 
+complexity bound also for our problem.
+
+
+
+%Intuice v pozadí:
+%Important vertices plati nejen čase - dokazano v
+%ale věřím že bude funguvat i v namořské výšce a
+%pohodlnosti cest
+%Tj delší důležitější cesty mají hezké vlastnosti
+
+%tady patri vetsina uvodu
+
+Fully dynamic speed-up techniques for multi-criteria shortest path searches in time-dependent networks.
+\cite{berger2010fully}
+
+\todo{cite bidirectional heuristic}
+\cite{holte2016bidirectional}
+\todo{future work hub labeling}
+\cite{abraham2012hierarchical}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

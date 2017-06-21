@@ -1,0 +1,319 @@
+
+---10---
+dijkstra expanded 19154 time 27ms
+contraction hiearchies expanded 4468 time 116ms
+Preparation time 3793ms
+dijkstra expanded 44878 time 72ms
+contraction hiearchies expanded 5148 time 102ms
+Preparation time 3757ms
+Test testGraph11k-10k
+dijkstra expanded 99571 time 161ms
+contraction hiearchies expanded 2014 time 33ms
+Preparation time 25061ms
+Test testGraph2455-20k
+dijkstra expanded 365425 time 2193ms
+contraction hiearchies expanded 2461 time 44ms
+Preparation time 23270ms
+Test testGraph2455-20k
+dijkstra expanded 201928 time 671ms
+----100----
+contraction hiearchies expanded 2144 time 46ms
+Preparation time 26598ms
+Test testGraph2455-20k
+dijkstra expanded 170617 time 576ms
+contraction hiearchies expanded 2511 time 54ms
+Preparation time 25908ms
+Test testGraph2455-20k
+dijkstra expanded 201438 time 562ms
+contraction hiearchies expanded 2126 time 37ms
+Preparation time 26220ms
+Test testGraph2455-20k
+---1000----
+dijkstra expanded 192188 time 627ms
+contraction hiearchies expanded 2216 time 43ms
+Preparation time 28584ms
+Test testGraph2455-20k
+dijkstra expanded 185541 time 608ms
+contraction hiearchies expanded 2057 time 35ms
+Preparation time 24495ms
+Test testGraph2455-20kf
+---10----
+======================SUM==================
+dijkstra expanded 28898 time 37ms
+contraction hiearchies expanded 5346 time 68ms
+Preparation time 3514ms
+Test testGraph11k-10k
+random queries
+======================SUM==================
+dijkstra expanded 106939 time 330ms
+contraction hiearchies expanded 2748 time 38ms
+Preparation time 25412ms
+Test testGraph2455-20k
+random queries
+======================SUM==================
+dijkstra expanded 100733 time 198ms
+contraction hiearchies expanded 1558 time 12ms
+Preparation time 21086ms
+Test testGraph5555-20k
+random queries
+======================SUM==================
+dijkstra expanded 45538 time 48ms
+contraction hiearchies expanded 2232 time 15ms
+Preparation time 6062ms
+Test testGraph8765-20k
+random queries
+======================SUM==================
+dijkstra expanded 81018 time 152ms
+contraction hiearchies expanded 4801 time 48ms
+Preparation time 30325ms
+Test testGraph110k-30k
+random queries
+======================SUM==================
+dijkstra expanded 613058 time 8543ms
+contraction hiearchies expanded 9741 time 238ms
+Preparation time 1684639ms
+Test testGraph150k-40k
+random queries
+======================SUM==================
+dijkstra expanded 779486 time 13035ms
+contraction hiearchies expanded 17978 time 855ms
+Preparation time 2058688ms
+Test testGraph200k-50k
+---1000---
+======================SUM==================
+dijkstra expanded 26051 time 32ms
+contraction hiearchies expanded 4227 time 56ms
+Preparation time 4351ms
+Test testGraph11k-10k
+======================SUM==================
+dijkstra expanded 178472 time 607ms
+contraction hiearchies expanded 2055 time 34ms
+Preparation time 31035ms
+Test testGraph2455-20k
+======================SUM==================
+dijkstra expanded 174808 time 514ms
+contraction hiearchies expanded 2004 time 20ms
+Preparation time 23975ms
+Test testGraph5555-20k
+======================SUM==================
+dijkstra expanded 53238 time 60ms
+contraction hiearchies expanded 1365 time 5ms
+Preparation time 12296ms
+Test testGraph8765-20k
+======================SUM==================
+dijkstra expanded 146709 time 278ms
+contraction hiearchies expanded 6853 time 149ms
+Preparation time 41253ms
+Test testGraph110k-30k
+======================SUM==================
+dijkstra expanded 912326 time 17455ms
+contraction hiearchies expanded 10307 time 353ms
+Preparation time 1978569ms
+Test testGraph150k-40k
+======================SUM==================
+dijkstra expanded 996507 time 16181ms
+contraction hiearchies expanded 13681 time 711ms
+Preparation time 2142798ms
+Test testGraph200k-50k
+
+
+
+
+
+%[[26051 , 32 , 4.3 , 4227 , 56 ], [178472 , 607 , 31 , 2055 , 34 ], [174808 , 514 , 23 , 2004 , 20 ], [53238 , 60 , 12 , 1365 , 5 ], [146709 , 278 , 41 , 6853 , 149 ], [912326 , 17455 , 1978 , 10307 , 353 ], [996507 , 16181 , 2142 , 13681 , 711 ]]
+%[6.1629997634255975, 86.84768856447688, 87.22954091816368, 39.002197802197806, 21.407996497884138, 88.51518385563209, 72.83875447701192]
+% [0.5714285714285714, 17.852941176470587, 25.7, 12.0, 1.8657718120805369, 49.447592067988666, 22.758087201125175]
+% min [26051, 32, 4.3, 1365, 5]
+% max [996507, 17455, 2142, 13681, 711]
+% avr [355444.42857142858, 5018.1428571428569, 604.47142857142865, 5784.5714285714284, 189.71428571428572]
+
+% min [26051 & 32 & 4.3 & 1365 & 5 & 6.16 & 88.51 ]
+% max [996507 & 17455 & 2142 & 13681 & 711 & 0.57 & 49.45 ]
+% avr [355444 & 5018 & 604 & 5786 & 190 & 57 & 18.6
+
+
+
+
+Test testGraph11k-10k (0.75-1.5)
+Preparation time 17s
+query 4214` 8112
+ dijkstra expanded 25167 time 143872178
+ contraction hiearchies expanded 15818 time 860167734
+ paretoset size 8
+query 8886` 5068
+ dijkstra expanded 16274 time 31100756
+ contraction hiearchies expanded 1738 time 49105827
+ paretoset size 16
+query 3116` 637
+ dijkstra expanded 8609 time 6623897
+ contraction hiearchies expanded 2038 time 6922222
+ paretoset size 3
+query 9339` 5079
+ dijkstra expanded 90847 time 356853207
+ contraction hiearchies expanded 1244 time 13814608
+ paretoset size 85
+query 4379` 7735
+ dijkstra expanded 38266 time 87921573
+ contraction hiearchies expanded 10714 time 44424923
+ paretoset size 71
+query 5293` 3972
+ dijkstra expanded 8836 time 7441474
+ contraction hiearchies expanded 1965 time 21394472
+ paretoset size 7
+query 3505` 5378
+ dijkstra expanded 161999 time 591432665
+ contraction hiearchies expanded 10907 time 44483917
+ paretoset size 12
+query 3427` 8818
+ dijkstra expanded 18790 time 17422867
+ contraction hiearchies expanded 8868 time 321327015
+ paretoset size 3
+query 9642` 3871
+ dijkstra expanded 1485 time 941656
+ contraction hiearchies expanded 31591 time 5027231373
+ paretoset size 5
+query 273` 7018
+ dijkstra expanded 19702 time 21952421
+ contraction hiearchies expanded 3418 time 41831355
+ paretoset size 27
+======================SUM==================
+dijkstra expanded 38997 time 126ms
+contraction hiearchies expanded 8830 time 643ms
+
+Test testGraph11k-10k
+Preparation time 734s
+query 3287` 5223
+ dijkstra expanded 175665 time 864934632
+ contraction hiearchies expanded 7752 time 152411468
+ paretoset size 21
+query 7616` 1763
+ dijkstra expanded 21795 time 32876784
+ contraction hiearchies expanded 2688 time 44879918
+ paretoset size 2
+query 4190` 9693
+ dijkstra expanded 302267 time 3339505527
+ contraction hiearchies expanded 17350 time 242429849
+ paretoset size 129
+query 6608` 5879
+ dijkstra expanded 1572978 time 141773647221
+ contraction hiearchies expanded 14716 time 433239414
+ paretoset size 292
+query 9165` 7938
+ dijkstra expanded 115616 time 303336670
+ contraction hiearchies expanded 12577 time 352357360
+ paretoset size 61
+query 8556` 1659
+ dijkstra expanded 133546 time 852790727
+ contraction hiearchies expanded 1807 time 23287927
+ paretoset size 3
+query 7809` 2399
+ dijkstra expanded 76212 time 107191199
+ contraction hiearchies expanded 5885 time 58621773
+ paretoset size 26
+query 5731` 8278
+ dijkstra expanded 402439 time 3971859972
+ contraction hiearchies expanded 36281 time 1114691416
+ paretoset size 126
+query 8754` 80
+ dijkstra expanded 20781 time 19155968
+ contraction hiearchies expanded 7724 time 193568584
+ paretoset size 7
+query 8723` 3945
+ dijkstra expanded 954119 time 56716412526
+ contraction hiearchies expanded 15838 time 918256710
+ paretoset size 427
+======================SUM==================
+dijkstra expanded 377541 time 20798ms
+contraction hiearchies expanded 12261 time 353ms
+
+Test testGraph5555-20k
+Preparation time 121s shrotcuts42780
+query 2701` 13062
+ dijkstra expanded 552764 time 5545805612
+ contraction hiearchies expanded 3828 time 134631110
+ paretoset size 51
+query 3151` 14595
+ dijkstra expanded 384793 time 2809199922
+ contraction hiearchies expanded 3478 time 121117115
+ paretoset size 37
+query 14890` 18120
+ dijkstra expanded 27641 time 32821880
+ contraction hiearchies expanded 15552 time 995454848
+ paretoset size 7
+query 1054` 15009
+ dijkstra expanded 159665 time 327765911
+ contraction hiearchies expanded 7024 time 220088435
+ paretoset size 46
+query 3646` 10378
+ dijkstra expanded 1061361 time 25448096069
+ contraction hiearchies expanded 2387 time 37627466
+ paretoset size 159
+query 15303` 17474
+ dijkstra expanded 562401 time 10300022973
+ contraction hiearchies expanded 13341 time 1002272703
+ paretoset size 63
+query 697` 10364
+ dijkstra expanded 415286 time 3827348796
+ contraction hiearchies expanded 1209 time 18222513
+ paretoset size 25
+query 6790` 9680
+ dijkstra expanded 109738 time 232311155
+ contraction hiearchies expanded 3770 time 228227791
+ paretoset size 30
+query 5763` 5470
+ dijkstra expanded 261816 time 1276603970
+ contraction hiearchies expanded 1652 time 14111688
+ paretoset size 32
+query 2370` 10269
+ dijkstra expanded 19510 time 18787367
+ contraction hiearchies expanded 2427 time 213593116
+ paretoset size 6
+======================SUM==================
+dijkstra expanded 355497 time 4981ms
+contraction hiearchies expanded 5466 time 298ms
+Test testGraph5555-20k
+Preparation time 116s shrotcuts43082
+query 720` 4220
+ dijkstra expanded 52967 time 81352081
+ contraction hiearchies expanded 3274 time 114558059
+ paretoset size 25
+query 19605` 702
+ dijkstra expanded 156909 time 439273638
+ contraction hiearchies expanded 4892 time 368289967
+ paretoset size 57
+query 19417` 450
+ dijkstra expanded 185751 time 646464838
+ contraction hiearchies expanded 1875 time 43695241
+ paretoset size 30
+query 16127` 2880
+ dijkstra expanded 518143 time 7587243444
+ contraction hiearchies expanded 14551 time 420293822
+ paretoset size 18
+query 9692` 2367
+ dijkstra expanded 42452 time 72297052
+ contraction hiearchies expanded 2087 time 96575165
+ paretoset size 22
+query 4983` 9528
+ dijkstra expanded 170486 time 670357882
+ contraction hiearchies expanded 6948 time 152002526
+ paretoset size 17
+query 19467` 5980
+ dijkstra expanded 525946 time 7555815070
+ contraction hiearchies expanded 14614 time 835954376
+ paretoset size 39
+query 7299` 5743
+ dijkstra expanded 174236 time 580375886
+ contraction hiearchies expanded 2100 time 23980356
+ paretoset size 49
+query 18051` 8592
+ dijkstra expanded 755279 time 12275124520
+ contraction hiearchies expanded 15348 time 354782351
+ paretoset size 76
+query 6032` 11738
+ dijkstra expanded 343099 time 2351405274
+ contraction hiearchies expanded 13665 time 438549219
+ paretoset size 37
+======================SUM==================
+dijkstra expanded 292526 time 3225ms
+contraction hiearchies expanded 7935 time 284ms
+
