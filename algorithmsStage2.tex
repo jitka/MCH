@@ -5,11 +5,10 @@
 %      If needed, make and use some graph pictures.
 %    - Show the MCHq pseudocode.
 
-\subsection{Stage 2: Search query}
+\subsection{Stage 2: Search Query}
 \label{subsecStage2}
 
-Multi-weighted contraction hierarchies query (MCHq) 
-is based on bi-directional search.
+Multi-weighted contraction hierarchies query (MCHq) is based on bi-directional search.
 Each $s$-$t$ query run two MLS-like searches slightly modified preprocessed graph
 and then sum they results.
 
@@ -19,25 +18,25 @@ alphabetically.
 MCHq searches on slightly modified graphs. 
 We do not transform the whole graph in advance but modify it during queries.
 
-\paragraph*{Forward search}
+\paragraph*{Forward Search}
 Forward search use preprocessed graph with edges oriented from the node with lower rank to nodes with higher rank.
 This could by done by replacing line \todo{budu predelavat sazbu pseudokodu aby to slo} by \ref{}
 It run Meta Search algorithm with the query from node $s$ to $t$ and return all label bug.
 Line TODO could by replaced by:
 
-\begin{lstlisting}[caption={MCHp},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
+\begin{lstlisting}[caption={Forward Search},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
     for every outgoing edge e=(node(l),w):
     	if rank(node(l)) < rank(w):
         	continue;
 \end{lstlisting}
 
-\paragraph*{Reverse search}
+\paragraph*{Reverse Search}
 Reverse search use graph with all edges reversed and then keep only edges
 from lower rank to higher. 
 This could by done by replacing line \todo{budu predelavat sazbu pseudokodu aby to slo} by \ref{}
 It run Meta Search algorithm with the query from node $t$ to $s$ and return all label bug.
 
-\begin{lstlisting}[caption={MCHp},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
+\begin{lstlisting}[caption={Reverse Search},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
     for every outgoing edge e=(w, node(l)):
     	if rank(w) < rank(node(l)):
         	continue;
