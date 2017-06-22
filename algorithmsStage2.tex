@@ -1,0 +1,53 @@
+%  3.2. Stage 2: Search query
+%    - Explain MCHq in natural language here.
+%      Get inspiration from what you wrote on whiteboard yesterday. 
+%      Feel free to use some numbered lists to make it easy to read and understand.
+%      If needed, make and use some graph pictures.
+%    - Show the MCHq pseudocode.
+
+\subsection{Stage 2: Search query}
+
+Each $s$-$t$ query is based on bi-directional search.
+Both searches are based on Meta search algorithm with priority queue which orders labels
+alphabetically. It searches on slightly modified graphs. We do not transform the whole
+graph in advance but modify it during queries.
+
+\emph{Forward search} use graph with edges
+oriented from the node with lower rank to nodes with higher rank.
+We run Meta Search algorithm with the query from node $s$ to $t$ and use all label bug.
+Line TODO could by replaced by:
+
+\begin{lstlisting}[caption={MCHp},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
+    for every outgoing edge e=(node(l),w):
+    	if rank(node(l)) < rank(w):
+        	continue;
+\end{lstlisting}
+
+\emph{Reverse search} use graph whit all edges reversed and then keep only edges
+from lower rank to higher. 
+The reverse search runs Meta Search algorithm with the query from node $t$ to $s$ and uses all label bug.
+Line TODO could by replaced by:
+
+\begin{lstlisting}[caption={MCHp},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
+    for every outgoing edge e=(w, node(l)):
+    	if rank(w) < rank(node(l)):
+        	continue;
+\end{lstlisting}
+
+To find paths in preprocessed graph is combine labels from forward and reverse search. 
+For all nodes $v$ with $B(v) \ne \emptyset$ we join all combination of $s$-$v$ and $v$-$t$ paths. 
+All non-dominated paths determine Pareto set of shortest $s$-$t$ path in preprocessed set.
+
+Original paths could be reconstructed recursively.
+Each shortcut $(u,v)_i$ could be decomposed either by using note or 
+by comparing all out-edges of $u$ and all in-edges of $v$.
+
+
+
+% TODO
+%vic popsat uvod - nazvy
+%nazvat veci
+%Rozumne dělení, nadpisy
+%PSEUDOKOD
+%mohou vztikat multihrany
+% updatovani
