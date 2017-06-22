@@ -5,12 +5,9 @@
 \section{Proposed Algorithms: Multi-weighted Contraction Hierarchies}
 \label{secAlgorithms}
 
-We propose a Multi-weighted Contraction Hierarchies (MCH) for finding the Pareto set
-of optimal paths in multi-weighted directed multi-graphs. 
-MCH consist of two separate algorithm preprocessing and query,
-both algorithms are based on Contraction Hiearchies 
-for single-weighted undirected graphs \cite{geisberger2008contraction}.
-
+To address the problem of finding Pareto set of optimal paths in multi-weighted directed multi-graphs, we propose so-called Multi-weighted Contraction Hierarchies (MCH). 
+MCH consist of two separate stages, each solved by a separate algorithm: preprocessing (MCHp) and query (MCHq). 
+Both algorithms are based on Contraction Hiearchies for single-weighted undirected graphs \cite{geisberger2008contraction}.
 
 Preprocessing algorithm (MCHp) takes the multi-weighted directed multigraph
 and returns preprocessed graph. MCHp contracts nodes one by one. 
