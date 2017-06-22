@@ -1,0 +1,107 @@
+% 2. Preliminaries
+%  - First, let's define MOSP (graph, solutions, etc.).
+%  - We're going to be using MLS algorithm in our solution. 
+%    MLS alg. is ... (explain it here instead of its own section)
+
+\section{Preliminaries}
+
+multigraph 
+multiweigthd
+directed
+in-edge out-edge
+dominated
+s-t query
+path
+shortest path - one of nondominated = element of paretoset
+$w$ is weight function $w: E \leftarrow \mathbb{R+}^d$
+Edges $(u,v)_0,(u,v)_i$
+Directed multiweighted $G$ with
+$n$ nodes,
+$m$ edges, 
+higway dimension $h$,
+maximum degree $\Delta$
+Pareto set $\Pi(s,t)$ $P_{s,t}$
+diametr $D \in \mathbb{R+}^d$
+
+When there are two edges $(u,v)$ with same nodes we count them
+separately. 
+
+
+Let $G = (V,E)$ be a directed graph with length
+$l: E$ 
+$ \rightarrow $
+$\mathcal{R+}^d$, 
+where $d \in \mathcal{N}$ is
+dimension. In our experimental results
+we consider $d=2, d=3$.
+
+For each path $P(s,d)$ we denote 
+$l(P) = \Sigma_{e\in P} l(e) $
+length of path $P$.
+Let $P(u,v)$ denote the \emph{pareto set} of shortest path.
+
+Given a non-negative $r \in \mathcal{}{N}^d $, let $B_{u,r} = 
+\{ v \in V, |P(u,v)| \le r \} $.
+Directed ball
+
+
+%\subsection{Meta Search Algorithm}
+
+Many of search algorithm which we consider
+are closed to original dijkstra algorithm \cite{dijkstra1959note}.
+We present its generalization in order establish the notation.
+
+Meta search works on multi-weighted directed multi-graphs. 
+Search algorithm answers three types of queries.
+\begin{itemize}
+\item Find all non-dominated shortest path from source node $s$ to target node $t$.\todo{je to vhodne pojmenovani?}
+\item Find all non-dominated shortest path from $s$ to every $t \in T \subseteq V$.
+\item Find all non-dominated shortest path from $s$ to every other vertex in the graph.
+\end{itemize}
+
+Key part of all algorithm are \emph{labels} $l\in \mathcal{R}^d$.
+Each label $l$ of node $v$ remember length $w(l)$  of one 
+possible path from $s$ to $v$, $node(l) = v$ is name of its node
+and $prev(l)$ is node previous node on path from $s$ to $v$.
+Each nodes have set of non-dominated labels called \emph{label bag} $B(v)$.
+
+Set up algorithm by creating labels.
+
+\begin{gather*} 
+B(s)=0^d, B(v)=\emptyset \forall v \ne s.
+\end{gather*} 
+
+In each step of the algorithm some label is \emph{expanded}. 
+All its outgoing edges are considered. 
+The outgoing edge plus path to label represents 
+path which we add to the corresponding bag then check if there
+is label which dominates another.
+
+open\_labels is set of all labels which was created but not expanded.
+
+Algorithm stop when every label was expanded at that time
+labels in bags $B(t), t \in T$ are lengths of paretoset of shortest path.
+Path could by found recursively using $prev(l)$.
+
+\todo{je třeba dokazovat korektnost nebo je to zjevne ci zname?}
+
+\begin{lstlisting}[caption={Meta Search Algorithm},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
+Input: source node s, set of target nodes T
+for all nodes v:
+	B(v) <- \emptyset
+B(s) <- 0^d
+B(t) <- \infinity^d for all t \in T
+open_labels <- s
+while open_labels is not empty:
+	l <- some label from open_labels
+    if w(l) is dominated by all labels in B(t) \in T
+    	continue
+    for every outgoing edge e=(node(l),w)_i
+    	for every label k from bag B(w):
+        	if k is dominated by l+w(e):
+            	remove k from bag B(w)
+        if l+w(e) is not dominated by any label from B(w)
+        	add new label with weight (l+w(e)) to B(w)
+Output: B(t) for every t \in T
+\end{lstlisting}
+\todo{psat pseudokod v tomhe (doporucuje examle pro tu konference) nebo v necem co umi zobrazit symboly? }

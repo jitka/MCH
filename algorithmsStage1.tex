@@ -1,0 +1,63 @@
+%  3.1. Stage 1: Preprocessing
+%    - Explain MCHp in natural language here.
+%      Get inspiration from what you wrote on whiteboard yesterday. 
+%      Feel free to use some numbered lists to make it easy to read and understand.
+%      If needed, make and use some graph pictures.
+%    - Show the MCHp pseudocode.
+
+
+\subsection{Stage 1: Preprocessing}
+
+Preprocessing contract all nodes one by one from least important to the most important. 
+Cost vector of all paths between two nodes has to last after contraction.
+
+We suppose that we have some function which denotes least important vertex of the graph. For theoretical results, we consider function based on Highway Dimension
+(see todo)  for computational results see todo.
+
+At $i$-th step least important node $v$ got $rank(v) = i$ and is \emph{contracted}. 
+Contraction of node $v$ consists removing and archiving all edges adjacent $v$, removing 
+and archiving node $v$ and adding shortcuts. 
+
+To found shortcuts, we run witness search, which returns paths from all nodes which had
+out-edge to $v$ and all nodes which have in-edge from $v$. 
+For every pair edges $(u,v)_i,(v,w)_j$ we check 
+if path $p_{\{u,v,w\}}$ is dominated by any path from witness search. 
+If not, then we add shortcut between these two nodes with a note 
+saying which node was contracted.
+By that process, new multi-edges could be created.
+\todo{je treba vysvetlovat vic?}
+
+When all node was removed all nodes and edges of preprocessed graph are in the archive.
+
+\begin{lstlisting}[caption={MCHp},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
+Input: Graph G
+for i from 0 to n-1
+    v <- least important node
+    rank(v) = i
+    witnesses <- witness search
+    for every pair of edges (u,v)_i,(v,w)_j:
+    if p(u,v,w) is not dominated by any witness:
+        add shortcut (u,w)_0
+            w((u,w)_0) = w((u,v)_i)+w((v,w)_j)
+            note((u,w)) = v
+    archive all out-edges (v,w) 
+    archive all in-edges (u,v)
+    archive v
+Output: Archived nodes, edges, rank of nodes.
+\end{lstlisting}
+
+
+\paragraph*{Witness search}
+
+Witness search is used to found which shortcut we need to add when we contract 
+node $v$.
+
+For each in-edge $(u_i,v)_j$ we run separate search which founds all shortcuts 
+from $u_i$.
+
+We use an algorithm based on Meta Search Algorithm. 
+open\_labels 
+is implemented as a priority queue with alphabetical ordering. Top of quote contain labels with the lowest first weight which are ordered by second weight and so on. 
+In such ordering, each label comes after all open labels which dominate it.
+
+It is possible to set up time limit on witness search. The algorithm is stopped after the time limit. Some witnessing paths could by missing and unnecessary shortcut are added, but it does not violate correctness of the algorithm.

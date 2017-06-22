@@ -1,0 +1,34 @@
+% 3. Proposed Algorithms: Multi-weighted Contraction Hierarchies
+%  - Proposed solution consists of two algorithms for two 
+%    separate stages: graph preprocessing and the search query  
+
+\section{Proposed Algorithms: Multi-weighted Contraction Hierarchies}
+
+We propose a Multi-weighted Contraction Hierarchies (MCH) for finding the Pareto set
+of optimal paths in multi-weighted directed multi-graphs. 
+MCH consist of two separate algorithm preprocessing and query,
+both algorithms are based on Contraction Hiearchies 
+for single-weighted undirected graphs \cite{geisberger2008contraction}.
+
+
+Preprocessing algorithm (MCHp) takes the multi-weighted directed multigraph
+and returns preprocessed graph. MCHp contracts nodes one by one. 
+When node is conrtacted algorithm add new edges called \emph{shortcuts} in order
+to keep all Pareto optimal shortest path distances. 
+Preprocessed graph has same set of nodes as the original graph.
+Nodes are has \emph{rank} which correspond to order of contraction.
+$rank(v) \in \{0,..n-1\}$
+Preprocessed graph has all original edges $E$ and shorthus $E+$.
+Each shortcut $(u,v)_i$ represent 
+path in original graph $p_{u,v}$, $w((u,v)) = w(p_{u,v})$ and it have a note which helps
+to reconstruct the original path.
+
+Query algorithm (MCHq) use preprocessed graph to found Pareto set of all
+shortest path between two nodes $s, t$. MCHq runs search algorithms
+from both $s, t$. 
+It joins results to the path in preprocessed graph 
+and then reconstruct path in the original graph.
+
+\input{algorithmsStage1.tex}
+\input{algorithmsStage2.tex}
+
