@@ -7,13 +7,20 @@
 
 \subsection{Stage 2: Search query}
 
-Each $s$-$t$ query is based on bi-directional search.
-Both searches are based on Meta search algorithm with priority queue which orders labels
-alphabetically. It searches on slightly modified graphs. We do not transform the whole
-graph in advance but modify it during queries.
+Multi-weighted contraction hierarchies query (MCHq) 
+is based on bi-directional search.
+Each $s$-$t$ query run two MLS-like searches slightly modified preprocessed graph
+and then sum they results.
 
-\emph{Forward search} use graph with edges
-oriented from the node with lower rank to nodes with higher rank.
+Both forward and reverse search have
+structure open\_labels implemented as priority queue which orders labels
+alphabetically.
+MCHq searches on slightly modified graphs. 
+We do not transform the whole graph in advance but modify it during queries.
+
+\paragraph*{Forward search}
+Forward search use preprocessed graph with edges oriented from the node with lower rank to nodes with higher rank.
+This could by done by replacing line \todo{budu predelavat sazbu pseudokodu aby to slo} by \ref{}
 We run Meta Search algorithm with the query from node $s$ to $t$ and use all label bug.
 Line TODO could by replaced by:
 
@@ -42,12 +49,3 @@ Original paths could be reconstructed recursively.
 Each shortcut $(u,v)_i$ could be decomposed either by using note or 
 by comparing all out-edges of $u$ and all in-edges of $v$.
 
-
-
-% TODO
-%vic popsat uvod - nazvy
-%nazvat veci
-%Rozumne dělení, nadpisy
-%PSEUDOKOD
-%mohou vztikat multihrany
-% updatovani
