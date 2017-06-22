@@ -8,21 +8,19 @@
 \subsection{Stage 2: Search Query}
 \label{subsecStage2}
 
-Multi-weighted contraction hierarchies query (MCHq) is based on bi-directional search.
-Each $s$-$t$ query run two MLS-like searches slightly modified preprocessed graph
-and then sum they results.
+Multi-weighted Contraction Hierarchies query (MCHq) is based on a bi-directional search.
+Each $s$-$t$ search query runs two MLS-like searches on a slightly modified preprocessed graph
+and then they combine their results.
 
-Both forward and reverse search have
-structure open\_labels implemented as priority queue which orders labels
-alphabetically.
-MCHq searches on slightly modified graphs. 
+Both forward and reverse search have structure open\_labels implemented as priority queue which orders labels alphabetically. MCHq searches on slightly modified graphs. 
 We do not transform the whole graph in advance but modify it during queries.
+\todo[inline]{Nie su v tomto odstavci nahodou len implementacne detaily, ktore pre samotny algoritmus nie su dolezite? Neda sa to vynechat?}
 
 \paragraph*{Forward Search}
-Forward search use preprocessed graph with edges oriented from the node with lower rank to nodes with higher rank.
-This could by done by replacing line \todo{budu predelavat sazbu pseudokodu aby to slo} by \ref{}
-It run Meta Search algorithm with the query from node $s$ to $t$ and return all label bug.
+Forward search uses a preprocessed graph with edges oriented from the node with lower rank to nodes with higher rank. This could be done by replacing line \todo{budu predelavat sazbu pseudokodu aby to slo} by \ref{}
+It runs MLS search algorithm with the query from node $s$ to $t$ and returns all label bug.\todo{label bug? co to je?}
 Line TODO could by replaced by:
+\todo[inline]{Priznam sa, ze vobec nerozumiem tomuto odstavcu (Forward Search). Chce to nejak preformulovat. Mimochodom, preco chceme rozpravat o nejakom nahradzani riadkov pseudokodu? }
 
 \begin{lstlisting}[caption={Forward Search},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
     for every outgoing edge e=(node(l),w):
@@ -31,10 +29,12 @@ Line TODO could by replaced by:
 \end{lstlisting}
 
 \paragraph*{Reverse Search}
-Reverse search use graph with all edges reversed and then keep only edges
+Reverse search uses graph with all the edges reversed and then keeps only edges
 from lower rank to higher. 
 This could by done by replacing line \todo{budu predelavat sazbu pseudokodu aby to slo} by \ref{}
-It run Meta Search algorithm with the query from node $t$ to $s$ and return all label bug.
+It run MLS search algorithm with the query from node $t$ to $s$ and return all label bug.
+
+\todo[inline]{Tak isto ako pri Forward Search - toto treba prepisat. Okrem toho - ma zmysel mat 2 odstavce a 2 pseudokody na Forward/Backward search, ked je to skoro to iste?}
 
 \begin{lstlisting}[caption={Reverse Search},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
     for every outgoing edge e=(w, node(l)):
@@ -42,10 +42,7 @@ It run Meta Search algorithm with the query from node $t$ to $s$ and return all 
         	continue;
 \end{lstlisting}
 
-To find paths in preprocessed graph it combine labels from forward and reverse search. 
-For all nodes $v$ with $B(v) \ne \emptyset$ we join all combination of $s$-$v$ and $v$-$t$ paths. 
-All non-dominated paths determine Pareto set of shortest $s$-$t$ path in preprocessed graph.
-
-Pareto set of shortest path in the original graph could be reconstructed recursively
-using note on shortcuts.
+To find the paths in preprocessed graph, we combine the labels from forward and reverse search. 
+For all the nodes $v$ with $B(v) \ne \emptyset$ we join all the combinations of $s$-$v$ and $v$-$t$ paths. All non-dominated paths determine the Pareto set of shortest $s$-$t$ paths in the preprocessed graph.
+Pareto set of shortest paths in the original graph can be reconstructed recursively using the notes on the shortcuts.
 

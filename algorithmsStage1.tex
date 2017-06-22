@@ -31,7 +31,7 @@ The Witness Search is used to determine which shortcuts we need to add when we c
 First, we denote all the in-edges as $(u_i,v)_k$ and out-edges as $(v,w_i)_l$. For each in-edge $(u_i,v)_k$, we run a separate search which finds all the shortcuts from $u_i$. For that, we use a MLS algorithm with query $u_i-\{w_0,\dots w_k\}$. 
 
 Structure open\_labels is implemented as a priority queue with alphabetical ordering. 
-Top of quote contain labels with the lowest first weight which are ordered by second weight and so on. In such ordering, each label comes after all open labels which dominate it.\todo[inline]{Cely tento odstavec nechapem. Na co je open\_labels? Aky quote? Tuto cast potrebujeme lepsie vysvetlit.}
+Top of quote contain labels with the lowest first weight which are ordered by second weight and so on. In such ordering, each label comes after all open labels which dominate it.\todo[inline]{Cely tento odstavec nechapem. Na co je open\_labels? Aky quote? Tuto cast potrebujeme lepsie vysvetlit. Doplnujuca otazka: nie su to nahodou len nejake zbytocne implementacne detaily, ktore bude lepsie vynechat?}
 
 The MLS algorithm does not expand a label when it is dominated by at least one path to every goal node $w_j$. It stops either when there are no open labels and its goal nodes are all witnesses,
 or when some time limit was reached (finding only a subset of witnesses). 
