@@ -43,11 +43,11 @@ See pseudocode in \ref{MCHp}
 \subsubsection{Witness search}
 
 Witness search is used to found which shortcut we need to add when we contract 
-node $v$. We denote in-edges $(u_i,v)_*$ and out-edges $(v,w_i)_*$.
+node $v$. We denote in-edges $(u_i,v)_k$ and out-edges $(v,w_i)_l$.
 \todo{mám obrázek zatím na papiře jak může vypadat okoli v, pošlu ho do chatu, jestli ho ma smysl přepisovat}
 
-For each in-edge $(u_i,v)_j$ we run separate search which founds all shortcuts from $u_i$.
-We use an algorithm based on MLS with query $u_i-\{w_0,\dots w_k}$. 
+For each in-edge $(u_i,v)_k$ we run separate search which founds all shortcuts from $u_i$.
+We use an algorithm based on MLS with query $u_i-\{w_0,\dots w_k\}$. 
 
 Structure open\_labels is implemented as a priority queue with alphabetical ordering. 
 Top of quote contain labels with the lowest first weight which are ordered by second weight and so on. 
