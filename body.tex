@@ -48,8 +48,6 @@ Directed ball
 Many of search algorithm which we consider
 are closed to original dijkstra algorithm \cite{dijkstra1959note}.
 We present its generalization in order establish the notation.
-\todo{citovat medveda? http://mj.ucw. cz/vyuka/ads /06-cesty.pdf str 7}
-\todo{muzu pouzivat slovo 'path' i pro sled?}
 
 Meta search works on multi-weighted directed multi-graphs. 
 Search algorithm answers three types of queries.
@@ -110,21 +108,30 @@ Output: B(t) for every t \in T
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Multi-weighted Contraction Hierarchies}
-Multi-weighted Contraction Hierarchies (MCH) consist of two separate algorithm
-preprocessing and query.
+We propose a Multi-weighted Contraction Hierarchies (MCH) for finding the Pareto set
+of optimal paths in multi-weighted directed multi-graphs. 
+MCH consist of two separate algorithm preprocessing and query,
+both algorithms are based on Contraction Hiearchies 
+for single-weighted undirected graphs \cite{geisberger2008contraction}.
+
 
 Preprocessing algorithm (MCHp) takes the multi-weighted directed multigraph
-and returns preprocessed graph. Both graphs have the same set of nodes.
-Preprocessed graph have linear ordering on nodes. We call it \emph{importance} of
-node. $imprtance(v) \in \{0,..n-1\}$ 
-Preprocessed graph contains all edges from original graph
-and additional edges called \emph{shortcuts}. Each shortcut $(u,v)_i$ represent 
+and returns preprocessed graph. MCHp contracts nodes one by one. 
+When node is conrtacted algorithm add new edges called \emph{shortcuts} in order
+to keep all Pareto optimal shortest path distances. 
+Preprocessed graph has same set of nodes as the original graph.
+Nodes are has \emph{rank} which correspond to order of contraction.
+$rank(v) \in \{0,..n-1\}$
+Preprocessed graph has all original edges $E$ and shorthus $E+$.
+Each shortcut $(u,v)_i$ represent 
 path in original graph $p_{u,v}$, $w((u,v)) = w(p_{u,v})$ and it have a note which helps
 to reconstruct the original path.
 
 Query algorithm (MCHq) use preprocessed graph to found Pareto set of all
-shortest path between two nodes $s, t$. MCHq runs special search algorithms
-from both $s, t$. It joins results to get the path in preprocessed graph and then reconstruct path in the original graph.
+shortest path between two nodes $s, t$. MCHq runs search algorithms
+from both $s, t$. 
+It joins results to the path in preprocessed graph 
+and then reconstruct path in the original graph.
 
 \subsubsection{Preprocessing MCHp}
 
@@ -134,7 +141,7 @@ Cost vector of all paths between two nodes has to last after contraction.
 We suppose that we have some function which denotes least important vertex of the graph. For theoretical results, we consider function based on Highway Dimension
 (see todo)  for computational results see todo.
 
-At $i$-th step least important node $v$ got $importance(v) = i$ and is \emph{contracted}. 
+At $i$-th step least important node $v$ got $rank(v) = i$ and is \emph{contracted}. 
 Contraction of node $v$ consists removing and archiving all edges adjacent $v$, removing 
 and archiving node $v$ and adding shortcuts. 
 
@@ -153,7 +160,7 @@ When all node was removed all nodes and edges of preprocessed graph are in the a
 Input: Graph G
 for i from 0 to n-1
     v <- least important node
-    importance(v) = i
+    rank(v) = i
     witnesses <- witness search
     for every pair of edges (u,v)_i,(v,w)_j:
     if p(u,v,w) is not dominated by any witness:
@@ -163,7 +170,7 @@ for i from 0 to n-1
     archive all out-edges (v,w) 
     archive all in-edges (u,v)
     archive v
-Output: Archived nodes, edges, importance of nodes.
+Output: Archived nodes, edges, rank of nodes.
 \end{lstlisting}
 
 
@@ -190,24 +197,24 @@ alphabetically. It searches on slightly modified graphs. We do not transform the
 graph in advance but modify it during queries.
 
 \emph{Forward search} use graph with edges
-oriented from the node with lower importance to nodes with higher importance.
+oriented from the node with lower rank to nodes with higher rank.
 We run Meta Search algorithm with the query from node $s$ to $t$ and use all label bug.
 Line TODO could by replaced by:
 
 \begin{lstlisting}[caption={MCHp},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
     for every outgoing edge e=(node(l),w):
-    	if importance(node(l)) < importance(w):
+    	if rank(node(l)) < rank(w):
         	continue;
 \end{lstlisting}
 
 \emph{Reverse search} use graph whit all edges reversed and then keep only edges
-from lower importance to higher. 
+from lower rank to higher. 
 The reverse search runs Meta Search algorithm with the query from node $t$ to $s$ and uses all label bug.
 Line TODO could by replaced by:
 
 \begin{lstlisting}[caption={MCHp},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
     for every outgoing edge e=(w, node(l)):
-    	if importance(w) < importance(node(l)):
+    	if rank(w) < rank(node(l)):
         	continue;
 \end{lstlisting}
 
