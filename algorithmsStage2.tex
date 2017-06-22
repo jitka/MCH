@@ -21,7 +21,7 @@ We do not transform the whole graph in advance but modify it during queries.
 \paragraph*{Forward search}
 Forward search use preprocessed graph with edges oriented from the node with lower rank to nodes with higher rank.
 This could by done by replacing line \todo{budu predelavat sazbu pseudokodu aby to slo} by \ref{}
-We run Meta Search algorithm with the query from node $s$ to $t$ and use all label bug.
+It run Meta Search algorithm with the query from node $s$ to $t$ and return all label bug.
 Line TODO could by replaced by:
 
 \begin{lstlisting}[caption={MCHp},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
@@ -30,10 +30,11 @@ Line TODO could by replaced by:
         	continue;
 \end{lstlisting}
 
-\emph{Reverse search} use graph whit all edges reversed and then keep only edges
+\paragraph*{Reverse search}
+Reverse search use graph with all edges reversed and then keep only edges
 from lower rank to higher. 
-The reverse search runs Meta Search algorithm with the query from node $t$ to $s$ and uses all label bug.
-Line TODO could by replaced by:
+This could by done by replacing line \todo{budu predelavat sazbu pseudokodu aby to slo} by \ref{}
+It run Meta Search algorithm with the query from node $t$ to $s$ and return all label bug.
 
 \begin{lstlisting}[caption={MCHp},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
     for every outgoing edge e=(w, node(l)):
@@ -41,11 +42,10 @@ Line TODO could by replaced by:
         	continue;
 \end{lstlisting}
 
-To find paths in preprocessed graph is combine labels from forward and reverse search. 
+To find paths in preprocessed graph it combine labels from forward and reverse search. 
 For all nodes $v$ with $B(v) \ne \emptyset$ we join all combination of $s$-$v$ and $v$-$t$ paths. 
-All non-dominated paths determine Pareto set of shortest $s$-$t$ path in preprocessed set.
+All non-dominated paths determine Pareto set of shortest $s$-$t$ path in preprocessed graph.
 
-Original paths could be reconstructed recursively.
-Each shortcut $(u,v)_i$ could be decomposed either by using note or 
-by comparing all out-edges of $u$ and all in-edges of $v$.
+Pareto set of shortest path in the original graph could be reconstructed recursively
+using note on shortcuts.
 
