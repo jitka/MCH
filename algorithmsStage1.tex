@@ -9,55 +9,35 @@
 \subsection{Stage 1: Preprocessing}
 \label{subsecStage1}
 
-Preprocessing contract all nodes one by one from least important to the most important. 
-Cost vector of all Pareto optimal paths between two nodes has to last after contraction.
+Preprocessing algorithm (see Pseudocode \ref{MCHp} below) contracts all the graph nodes one by one in the order of their importance (starting with the least important), while keeping the cost vector of all the Pareto optimal paths unchanged. Importance of a node is expressed by a heuristic function $f$. In our implementation, we used a highway dimension (described in section \ref{secFormalResults}).
+ 
+First, we initialize the $f$ values for all the nodes. Then, at each step of the algorithm, we select the node $v$ with lowest value of $f$ and update $f$ of all the nodes adjacent to $v$. 
+At $i$-th step, the least important node $v$ is assigned a $rank(v) = i$ and is \emph{contracted}. 
+Contraction of a node $v$ consists of removing and archiving all the edges adjacent to $v$, removing and archiving the node $v$ itself and adding {\em shortcuts}. 
 
-In our implementation the importance of node is measured by heuristic function $f$
-described in section \todo{reference to experimens subsection}. 
-First we initialize $f$ values for every nodes. In each step we choose node $v$ with 
-lowest $f$ and update $f$ of all nodes adjacent to $v$.
-In formal results the importance is based on highway dimension.
+We need to keep the distance of all Pareto optimal paths in the graph unchanged. For every two edges $(u_i,v)_k,(v,w_j)_l$, we need to know if they are part of a Pareto optimal path. If we found a path $p(u_i,w_j)_m$ which dominates $w((u_i,v)_k)+w((v,w_j)_l)$, then the combination is not needed. We call $p(u_i,w_j)_m$ a \emph{witness} for these two edges. 
 
-At $i$-th step least important node $v$ got $rank(v) = i$ and is \emph{contracted}. 
-Contraction of node $v$ consists removing and archiving all edges adjacent $v$, removing 
-and archiving node $v$ and adding shortcuts. 
+To find the {\em shortcuts}, we run so-called {\em witness search} (described below) and add a shortcut for each pair of edges which do not have a witness. A shortcut is a new edge with the weight equal to the sum of weights of edges\todo{sum of weights of which edges?}. We also keep a note about which node was used to create which shortcut.
 
-We need to keep distance of all Pareto optimal paths in the graph. 
-For each two edges $(u_i,v)_k,(v,w_j)_l$ we need to know if there
-are part of a Pareto optimal path. If we found path $p(u_i,w_j)_m$ which dominates
-$w((u_i,v)_k)+w((v,w_j)_l)$ then the combination is not needed. 
-We call $p(u_i,w_j)_m$ a \emph{witness} for these two edges. 
+Note that a shortcut could be added even if a witness exists for it. Unnecessary shortcuts do not violate the correctness. They can only make the preprocessed graph larger.
 
-To found shortcuts, we run witness search and add shortcut for each pair of edges
-which do not have the witness. Shortcut is new edges with weight equal to sum
-of weights of edges and with note, which node was used to create it.
+%By this process, multiple edges with different weights could be created. 
 
-Note that shortcut could be added even if it has witness. 
-Unnecessary shortcut do not violate correctness, but it could make preprocessed graph larger.
+Finally, when all the nodes are removed in this manner, we have the preprocessed graph in the archive including all its nodes and edges.
 
-By this process multiple edges with different weights could be created. 
+\subsubsection{Witness Search}
+The Witness Search is used to determine which shortcuts we need to add when we contracting a node $v$. 
 
-When all node was removed all nodes and edges of preprocessed graph are in the archive.
-
-See pseudocode in \ref{MCHp}
-
-\subsubsection{Witness search}
-
-Witness search is used to found which shortcut we need to add when we contract 
-node $v$. We denote in-edges $(u_i,v)_k$ and out-edges $(v,w_i)_l$.
-\todo{mám obrázek zatím na papiře jak může vypadat okoli v, pošlu ho do chatu, jestli ho ma smysl přepisovat}
-
-For each in-edge $(u_i,v)_k$ we run separate search which founds all shortcuts from $u_i$.
-We use an algorithm based on MLS with query $u_i-\{w_0,\dots w_k\}$. 
+First, we denote all the in-edges as $(u_i,v)_k$ and out-edges as $(v,w_i)_l$. For each in-edge $(u_i,v)_k$, we run a separate search which finds all the shortcuts from $u_i$. For that, we use a MLS algorithm with query $u_i-\{w_0,\dots w_k\}$. 
 
 Structure open\_labels is implemented as a priority queue with alphabetical ordering. 
-Top of quote contain labels with the lowest first weight which are ordered by second weight and so on. 
-In such ordering, each label comes after all open labels which dominate it.
+Top of quote contain labels with the lowest first weight which are ordered by second weight and so on. In such ordering, each label comes after all open labels which dominate it.\todo[inline]{Cely tento odstavec nechapem. Na co je open\_labels? Aky quote? Tuto cast potrebujeme lepsie vysvetlit.}
 
-Algorithm MLS do not expand label when it is dominated by at least one path to every goal node $w_j$. 
-It stops when there are no open labels and is goal nodes are all witness path
-or it stops or after some time limit founding only subset of witness path. 
+The MLS algorithm does not expand a label when it is dominated by at least one path to every goal node $w_j$. It stops either when there are no open labels and its goal nodes are all witnesses,
+or when some time limit was reached (finding only a subset of a witness path). 
+\todo[inline]{nemame na witness search pseudokod?}
 
+\renewcommand{\lstlistingname}{Pseudocode}
 \begin{lstlisting}[caption={MCHp},label=MCHp,captionpos=t,float,abovecaptionskip=-\medskipamount]
 Input: Graph G
 for i from 0 to n-1
