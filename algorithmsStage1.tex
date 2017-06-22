@@ -9,27 +9,55 @@
 \subsection{Stage 1: Preprocessing}
 
 Preprocessing contract all nodes one by one from least important to the most important. 
-Cost vector of all paths between two nodes has to last after contraction.
+Cost vector of all Pareto optimal paths between two nodes has to last after contraction.
 
-We suppose that we have some function which denotes least important vertex of the graph. For theoretical results, we consider function based on Highway Dimension
-(see todo)  for computational results see todo.
+In our implementation the importance of node is measured by heuristic function $f$
+described in section \todo{reference to experimens subsection}. 
+First we initialize $f$ values for every nodes. In each step we choose node $v$ with 
+lowest $f$ and update $f$ of all nodes adjacent to $v$.
+In formal results the importance is based on highway dimension.
 
 At $i$-th step least important node $v$ got $rank(v) = i$ and is \emph{contracted}. 
 Contraction of node $v$ consists removing and archiving all edges adjacent $v$, removing 
 and archiving node $v$ and adding shortcuts. 
 
-To found shortcuts, we run witness search, which returns paths from all nodes which had
-out-edge to $v$ and all nodes which have in-edge from $v$. 
-For every pair edges $(u,v)_i,(v,w)_j$ we check 
-if path $p_{\{u,v,w\}}$ is dominated by any path from witness search. 
-If not, then we add shortcut between these two nodes with a note 
-saying which node was contracted.
-By that process, new multi-edges could be created.
-\todo{je treba vysvetlovat vic?}
+We need to keep distance of all Pareto optimal paths in the graph. 
+For each two edges $(u_i,v)_k,(v,w_j)_l$ we need to know if there
+are part of a Pareto optimal path. If we found path $p(u_i,w_j)_m$ which dominates
+$w((u_i,v)_k)+w((v,w_j)_l)$ then the combination is not needed. 
+We call $p(u_i,w_j)_m$ a \emph{witness} for these two edges. 
+
+To found shortcuts, we run witness search and add shortcut for each pair of edges
+which do not have the witness. Shortcut is new edges with weight equal to sum
+of weights of edges and with note, which node was used to create it.
+
+Note that shortcut could be added even if it has witness. 
+Unnecessary shortcut do not violate correctness, but it could make preprocessed graph larger.
+
+By this process multiple edges with different weights could be created. 
 
 When all node was removed all nodes and edges of preprocessed graph are in the archive.
 
-\begin{lstlisting}[caption={MCHp},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
+See pseudocode in \ref{MCHp}
+
+\subsubsection{Witness search}
+
+Witness search is used to found which shortcut we need to add when we contract 
+node $v$. We denote in-edges $(u_i,v)_*$ and out-edges $(v,w_i)_*$.
+\todo{mám obrázek zatím na papiře jak může vypadat okoli v, pošlu ho do chatu, jestli ho ma smysl přepisovat}
+
+For each in-edge $(u_i,v)_j$ we run separate search which founds all shortcuts from $u_i$.
+We use an algorithm based on MLS with query $u_i-\{w_0,\dots w_k}$. 
+
+Structure open\_labels is implemented as a priority queue with alphabetical ordering. 
+Top of quote contain labels with the lowest first weight which are ordered by second weight and so on. 
+In such ordering, each label comes after all open labels which dominate it.
+
+Algorithm MLS do not expand label when it is dominated by at least one path to every goal node $w_j$. 
+It stops when there are no open labels and is goal nodes are all witness path
+or it stops or after some time limit founding only subset of witness path. 
+
+\begin{lstlisting}[caption={MCHp},label=MCHp,captionpos=t,float,abovecaptionskip=-\medskipamount]
 Input: Graph G
 for i from 0 to n-1
     v <- least important node
@@ -45,19 +73,3 @@ for i from 0 to n-1
     archive v
 Output: Archived nodes, edges, rank of nodes.
 \end{lstlisting}
-
-
-\paragraph*{Witness search}
-
-Witness search is used to found which shortcut we need to add when we contract 
-node $v$.
-
-For each in-edge $(u_i,v)_j$ we run separate search which founds all shortcuts 
-from $u_i$.
-
-We use an algorithm based on Meta Search Algorithm. 
-open\_labels 
-is implemented as a priority queue with alphabetical ordering. Top of quote contain labels with the lowest first weight which are ordered by second weight and so on. 
-In such ordering, each label comes after all open labels which dominate it.
-
-It is possible to set up time limit on witness search. The algorithm is stopped after the time limit. Some witnessing paths could by missing and unnecessary shortcut are added, but it does not violate correctness of the algorithm.
