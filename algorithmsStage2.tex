@@ -18,25 +18,21 @@ Forward search runs on a preprocessed sub-graph with only those oriented edges g
 %In the pseudocode of MLS we change line \todo{jina sazba pseudokodu} to \ref{}.
 The MLS algorithm is used to search for the shortest path from $s$ to $t$ and obtain the label bags $B(v)$ for all the nodes.
 
-\begin{lstlisting}[caption={Forward Search},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
+\begin{lstlisting}[caption={Line X of MLS for Forward Search},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
     for every outgoing edge e=(node(l),w):
     	if rank(node(l)) < rank(w):
         	continue;
 \end{lstlisting}
 
 \paragraph*{Reverse Search}
-%\todo[inline]{prepisu po schvaleni Forward Searche}
 Reverse search is similar to Forward search, but it originates in the node $t$ and runs on a graph with all the edges reversed (implicitly -- we do not need to actually modify the graph structure for this). Again, we only consider those edges, which (after being reversed) go from lower-ranked nodes to higher-ranked nodes. 
-%This could by done by replacing line \todo{budu predelavat sazbu pseudokodu aby to slo} by \ref{}
 In this case, the MLS search algorithm is used to search for the shortest path from $t$ to $s$ and obtain the label bags $B(v)$ for all the nodes.
 
-\begin{lstlisting}[caption={Reverse Search},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
+\begin{lstlisting}[caption={Line X of MLS for Reverse Search},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
     for every outgoing edge e=(w, node(l)):
     	if rank(w) < rank(node(l)):
         	continue;
 \end{lstlisting}
-
-\todo[inline]{prosim ta skontroluj, ci som tie forward/reverse search odstavce napisal spravne. ak ano, tak len vymaz tuto poznamku}
 
 To find the paths in preprocessed graph, we combine the labels from forward and reverse search. 
 For all the nodes $v$ with $B(v) \ne \emptyset$, we join all the combinations of $s$-$v$ and $v$-$t$ paths. 

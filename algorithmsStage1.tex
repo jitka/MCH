@@ -9,7 +9,8 @@
 \subsection{Stage 1: Preprocessing}
 \label{subsecStage1}
 
-Preprocessing algorithm (see Pseudocode \ref{MCHp} below) contracts all the graph nodes one by one in the order of their rank (starting with the lowest rank), while keeping the cost vector of all the Pareto optimal paths unchanged. Rank of a node is assigned by a heuristic function $f$. In our implementation, we used a highway dimension (described in section \ref{secExperiments}).
+Preprocessing algorithm (see Pseudocode \ref{MCHp} below) contracts all the graph nodes one by one in the order of their rank (starting with the lowest rank), while keeping the cost vector of all the Pareto optimal paths unchanged. Rank of a node is assigned by a heuristic function $f$. In our implementation, we used a function described in section \ref{secExperiments}.
+%Higway dimension in theretical resutls
 
 \renewcommand{\lstlistingname}{Pseudocode}
 \begin{lstlisting}[caption={MCHp},label=MCHp,captionpos=t,float,abovecaptionskip=-\medskipamount]
@@ -33,7 +34,7 @@ First, we initialize the $f$ values for all the nodes. Then, at each step of the
 At $i$-th step, the lowest-ranked node $v$ is assigned a $rank(v) = i$ and is \emph{contracted}. 
 Contraction of a node $v$ consists of removing and archiving all the edges adjacent to $v$, removing and archiving the node $v$ itself and adding {\em shortcuts}. 
 
-We need to keep the distance of all Pareto optimal paths in the graph unchanged. For every two edges $(u_i,v)_k,(v,w_j)_l$ , we need to know if they are part of a Pareto optimal path. If we found a path $p(u_i,w_j)_m$ which dominates $w((u_i,v)_k)+w((v,w_j)_l)$ , then the combination is not needed. We call $p(u_i,w_j)_m$ a \emph{witness} for these two edges. 
+We need to keep the distance of all Pareto optimal paths in the graph unchanged. For every two edges $(u_i,v)_k,(v,w_j)_l$ , we need to know if they are part of a Pareto optimal path. If we found a path $p_{u_i,w_j}$ which dominates $w((u_i,v)_k)+w((v,w_j)_l)$ , then the combination is not needed. We call $p_{u_i,w_j}$ a \emph{witness} for these two edges. 
 
 To find the {\em shortcuts}, we run so-called {\em witness search} (described
 below) and add a shortcut for each pair of edges which do not have a witness.
