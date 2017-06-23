@@ -17,54 +17,46 @@
 %  
 %  (outline)
 %  - paper outline. contents of all the sections
-% CSH
 
 \section{Introduction}
 \label{secIntroduction}
 
-Contraction hierarchies (CH) \cite{geisberger2008contraction}
-is fundamental improvement for single criteria path graphs.
+Multi-objective shortest path problems (MOSP) ask for Pareto set of paths
+between two nodes in multi-weighted graph in both directed or undirected graphs. 
+We consider directed graphs with possible multiple edges.
 
-TODO update 
-Chapter two present generalization for highway dimension. In chapter
-three we present complexity bound for multi-criteria contraction hierarchies.
-At chapter four we present our results. First is number of transition roads for
-New York street graph which support our belief that multi-criteria pathway
-has also low highway dimension.
-Then we present comparison with other algorithms.
+The MOSP could be use for routing in real word road networks. 
+Objectives of route could be length, time, surface quality, popularity and much more.
 
+%  (problem)
+%  - CH has good results (reference), but it was no used for MOSP yet
+%   CSH
 
-% X. Related Work
-%  - Delete this section and have all the references in section 1. Introduction.
+The easier problem with one weight Shortest Path Problem is well studied problem.
+On of algorithms is Contraction Hierarchies (CH) \cite{geisberger2008contraction}.
 
-Constrained shortest path 
-\cite{pugliese2013survey} is often used in cases when we are looking for
-paths which are good in more than one criteria.
-CH could be used for finding 
-paths which are on lover envelope of paretoset.
-\cite{funke2013polynomial}
-or for the other constrains \todo{cite electromobility}
-However, minimalising linear combination of criteria sum 
-do not found all paths from paretoset.
+Constrained Shortest Path Problem (CSPP) is 
+\cite{pugliese2013survey} problem very similar to MOSP.
+It ask of shortest path in multi-weighted graph, but instead whole
+Pareto sets search for single paths whit optimalize a linear combination
+of weight. CSPP could only found paths on lover envelope of Pareto set.
+Contraction Hierarchies was used for CSPP
+ \cite{funke2013polynomial}.
 
+%  (solution)
+%  - in this paper, we show how CH can be used for MOSP
+%  - [describe the solution] 
 We present algorithm which found whole paretoset.
-Multicriterial dijkstra is optimal for general graphs.
-\todo{citace} 
-For vehicle or bicycle routing could be used namoa
-\todo{citace}
-which is optimal for direct questions.
-There could be improvemenents when we allows preprocessing
-algorithms 
-There was preprocessing algorithms for multi-criteria
-shortest path already.
-\cite{kohler2005acceleration} 
+Multicriteria Label-Setting (MLS) algorithm~\cite{martins1984multicriteria} 
+is optimal for general graphs.
+% \todo{citace} co si rovnou nezapisu na posledni chvili nenajdu!
 
-Higway dimension  \cite{abraham2010highway} is parametr which 
-is low on road network whit only on criteria
-and it could be used for upper bound of time complexity of search 
-algorithms. We generalize highway dimension in orther to found 
-complexity bound also for our problem.
+For vehicle or bicycle routing could be used namoa \todo{citace} which is optimal for direct (no preparation) questions.
+\todo[inline]{to je state of the art a u te si nejsem jista jestli jsem si naimplementovala dobre a tak ji nemam ve vysledcich, nevim jestli ji davat tady.} 
 
+There could be improvemenents when we allows preprocessing algorithms. 
+
+% Higway dimension  \cite{abraham2010highway} is parametr which is low on road network whit only on criteria and it could be used for upper bound of time complexity of search algorithms. We generalize highway dimension in orther to found complexity bound also for our problem.  
 %Intuice v pozadí:
 %Important vertices plati nejen čase - dokazano v
 %ale věřím že bude funguvat i v namořské výšce a
@@ -73,16 +65,18 @@ complexity bound also for our problem.
 
 %tady patri vetsina uvodu
 
-Fully dynamic speed-up techniques for multi-criteria shortest path searches in time-dependent networks.
-\cite{berger2010fully}
+%Fully dynamic speed-up techniques for multi-criteria shortest path searches in time-dependent networks.\cite{berger2010fully}
 
-\todo{cite bidirectional heuristic}
-\cite{holte2016bidirectional}
-\todo{future work hub labeling}
-\cite{abraham2012hierarchical}
+% bidirectional heuristic (spis nepouzitelna) \cite{holte2016bidirectional}
+% future work hub labeling \cite{abraham2012hierarchical}
 
 
-
+%  (outline)
+%  - paper outline. contents of all the sections
+Chapter two present problem definition and MLS algorithm. In chapter
+three we present multi-criteria contraction hierarchies.
+At chapter four we present our experimental result.
+Chapter five contains proof of correctness of algorithm.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

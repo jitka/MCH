@@ -44,67 +44,67 @@ Each path found by multi-weighted CH corresponds to the path in the original gra
 \end{itemize}
 \end{proof}
 
-\subsection{Highway dimension}
-
-% TODO (origin-destinetion) 
-
-Parameter Highway Dimension was introduced in \cite{abraham2010highway}.
-There are few slightly different definition. 
-We use definition based on (\cite{abraham2016highway}, Lemma 4.3)
-which  use \emph{ Sparse Shortest Path Hitting Set (SPHS)}.
-This definition could be easily transformed for multi-weighted directed
-multi-graphs. We changed definition of ball and multiscale SHPS.
-
-
-\begin{definition}
-Given a non-negative vector $r \in \mathbb{R}^+$, let 
-$B_{u,r} = \{v \in V, |P(u, v)| \le r \}$ 
-be the ball of radius $r$ centered at $u$.
-\end{definition}
-
-\begin{definition}
-Given a set of paths $P$, we say that $H \subseteq V$ is a hitting set for $P$ if every
-path in $P$ contains a vertex in $H$. 
-\end{definition}
-
-\begin{definition}
-For $r > 0$, an $(h, r)-$SPHS is a hitting set $C \subseteq V$ such that
-$\forall v \in V, |B_{2r} (v) \cap C| \le h$.
-\end{definition}
-
-\begin{definition}
-Let $D$ be the diameter and $k = \log(\max(D))$ logarithm of value of its biggest coordinates. 
-$D_k = D$, when $D_i$ is vector $(w_0,w_1,\dots)$ then $D_{i-1} = (w_0/2,w_1/2,\dots)$. 
-A \emph{multiscale SPHS} of $(G,w)$ is a collection of sets $C_{D_i}$ for $0 \le i \le k$.
-\end{definition}
-
-\begin{definition}
-If the highway dimension of $(G,w)$ is h, then there exists a multiscale
-SPHS such that $|C_{\log D}| \le h$ and $|C_i| \le h|C_{i+1}|$ for $0 \le i < \log D$.
-\end{definition}
-%diametr $D \in \mathbb{R+}^d$
-
-In order to get time and space estimates of MCHp and MCHq we need to count shortcuts in
-the graph. Let $Q_{D_i} = C_{D_i} \setminus \Cup^{k}_{j=i+1}C_{D_j}$.
-
-\begin{lemma}
-For fixed $v$ and $j$, the number of shortcuts $(v,w)$ with $w\in Q_j$ is at most $h$.
-\end{lemma}
-
-\begin{theorem}
-\label{shrotcutsNumber}
-If $(G,w)$ has highway dimension h, then preprocessing based on
-multiscale SPHS produces a set of shortcuts $E+$ such that degree of every vertex in
-$G(V, E \cup E+)$ is at most $h + h \log D$ and $|E+| \le nh\log D$.
-\end{theorem}
-
-The proof is exactly same as in (\cite{abraham2016highway}, Lemma 6.1, Theorem 6.2)
-
-Time complexity of MCHp 
-
-Time complexity of MCHq. By theorem \ref{shrotcutsNumber} we know that degree is 
-bounded by $h \log D$. When the MLS Algorithm use Fibonacci heaps  
-
+% \subsection{Highway dimension}
+% 
+% % TODO (origin-destinetion) 
+% 
+% Parameter Highway Dimension was introduced in \cite{abraham2010highway}.
+% There are few slightly different definition. 
+% We use definition based on (\cite{abraham2016highway}, Lemma 4.3)
+% which  use \emph{ Sparse Shortest Path Hitting Set (SPHS)}.
+% This definition could be easily transformed for multi-weighted directed
+% multi-graphs. We changed definition of ball and multiscale SHPS.
+% 
+% 
+% \begin{definition}
+% Given a non-negative vector $r \in \mathbb{R}^+$, let 
+% $B_{u,r} = \{v \in V, |P(u, v)| \le r \}$ 
+% be the ball of radius $r$ centered at $u$.
+% \end{definition}
+% 
+% \begin{definition}
+% Given a set of paths $P$, we say that $H \subseteq V$ is a hitting set for $P$ if every
+% path in $P$ contains a vertex in $H$. 
+% \end{definition}
+% 
+% \begin{definition}
+% For $r > 0$, an $(h, r)-$SPHS is a hitting set $C \subseteq V$ such that
+% $\forall v \in V, |B_{2r} (v) \cap C| \le h$.
+% \end{definition}
+% 
+% \begin{definition}
+% Let $D$ be the diameter and $k = \log(\max(D))$ logarithm of value of its biggest coordinates. 
+% $D_k = D$, when $D_i$ is vector $(w_0,w_1,\dots)$ then $D_{i-1} = (w_0/2,w_1/2,\dots)$. 
+% A \emph{multiscale SPHS} of $(G,w)$ is a collection of sets $C_{D_i}$ for $0 \le i \le k$.
+% \end{definition}
+% 
+% \begin{definition}
+% If the highway dimension of $(G,w)$ is h, then there exists a multiscale
+% SPHS such that $|C_{\log D}| \le h$ and $|C_i| \le h|C_{i+1}|$ for $0 \le i < \log D$.
+% \end{definition}
+% %diametr $D \in \mathbb{R+}^d$
+% 
+% In order to get time and space estimates of MCHp and MCHq we need to count shortcuts in
+% the graph. Let $Q_{D_i} = C_{D_i} \setminus \Cup^{k}_{j=i+1}C_{D_j}$.
+% 
+% \begin{lemma}
+% For fixed $v$ and $j$, the number of shortcuts $(v,w)$ with $w\in Q_j$ is at most $h$.
+% \end{lemma}
+% 
+% \begin{theorem}
+% \label{shrotcutsNumber}
+% If $(G,w)$ has highway dimension h, then preprocessing based on
+% multiscale SPHS produces a set of shortcuts $E+$ such that degree of every vertex in
+% $G(V, E \cup E+)$ is at most $h + h \log D$ and $|E+| \le nh\log D$.
+% \end{theorem}
+% 
+% The proof is exactly same as in (\cite{abraham2016highway}, Lemma 6.1, Theorem 6.2)
+% 
+% Time complexity of MCHp 
+% 
+% Time complexity of MCHq. By theorem \ref{shrotcutsNumber} we know that degree is 
+% bounded by $h \log D$. When the MLS Algorithm use Fibonacci heaps  
+% 
 
 % During query faze we can use bidirectional search 
 % \cite{ma2013using}
