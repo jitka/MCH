@@ -9,37 +9,7 @@
 \subsection{Stage 1: Preprocessing}
 \label{subsecStage1}
 
-Preprocessing algorithm (see Pseudocode \ref{MCHp} below) contracts all the graph nodes one by one in the order of their importance (starting with the least important), while keeping the cost vector of all the Pareto optimal paths unchanged. Importance of a node is expressed by a heuristic function $f$. In our implementation, we used a highway dimension (described in section \ref{secFormalResults}).
- 
-First, we initialize the $f$ values for all the nodes. Then, at each step of the algorithm, we select the node $v$ with lowest value of $f$ and update $f$ of all the nodes adjacent to $v$. 
-At $i$-th step, the least important node $v$ is assigned a $rank(v) = i$ and is \emph{contracted}. 
-Contraction of a node $v$ consists of removing and archiving all the edges adjacent to $v$, removing and archiving the node $v$ itself and adding {\em shortcuts}. 
-
-We need to keep the distance of all Pareto optimal paths in the graph unchanged. For every two edges $(u_i,v)_k,(v,w_j)_l$ , we need to know if they are part of a Pareto optimal path. If we found a path $p(u_i,w_j)_m$ which dominates $w((u_i,v)_k)+w((v,w_j)_l)$ , then the combination is not needed. We call $p(u_i,w_j)_m$ a \emph{witness} for these two edges. 
-
-To find the {\em shortcuts}, we run so-called {\em witness search} (described
-below) and add a shortcut for each pair of edges which do not have a witness.
-For pair of edges $(u_i,v)_k,(v,w_j)_l$, a  shortcut is a new edge $(u_i,w_j)_0$ 
-\todo[inline]{ta nula tam je trošku haluzná protože ve stejném kroku můžu přidat i druhou zkratku (ui,wj)1, netusim jak to napsat aby to nebylo matoci}
-with the weight $w((u_i,w_j)_0) = w((u_i,v)_k)+w((v,w_j)_l)$. 
-We also keep a note about which node was used to create which
-shortcut.
-
-Note that a shortcut could be added even if a witness exists for it. Unnecessary shortcuts do not violate the correctness. They can only make the preprocessed graph larger.
-
-%By this process, multiple edges with different weights could be created. 
-
-Finally, when all the nodes are removed in this manner, we have the preprocessed graph in the archive including all its nodes and edges.
-
-\paragraph*{Witness Search}
-The Witness Search is used to determine which shortcuts we need to add when we contracting a node $v$. 
-
-First, we denote all the in-edges as $(u_i,v)_k$ and out-edges as $(v,w_i)_l$. For each in-edge $(u_i,v)_k$, we run a separate search which finds all the shortcuts from $u_i$. For that, we use a MLS algorithm with query $u_i-\{w_0,\dots w_k\}$. 
-
-The MLS algorithm does not expand a label when it is dominated by at least one path to every goal node $w_j$. It stops either when there are no open labels and its goal nodes are all witnesses,
-or when some time limit was reached (finding only a subset of witnesses). 
-\todo[inline]{nemame na witness search pseudokod?}
-\todo[inline]{ne mame pseudokod na MLS který se od withnes searche lisi jen malinko, stejne tak se od nej forward a reverse search lisi jen trochu}
+Preprocessing algorithm (see Pseudocode \ref{MCHp} below) contracts all the graph nodes one by one in the order of their rank (starting with the lowest rank), while keeping the cost vector of all the Pareto optimal paths unchanged. Rank of a node is assigned by a heuristic function $f$. In our implementation, we used a highway dimension (described in section \ref{secExperiments}).
 
 \renewcommand{\lstlistingname}{Pseudocode}
 \begin{lstlisting}[caption={MCHp},label=MCHp,captionpos=t,float,abovecaptionskip=-\medskipamount]
@@ -58,3 +28,34 @@ for i from 0 to n-1
     archive v
 Output: Archived nodes, edges, rank of nodes.
 \end{lstlisting}
+
+First, we initialize the $f$ values for all the nodes. Then, at each step of the algorithm, we select the node $v$ with lowest value of $f$ and update $f$ of all the nodes adjacent to $v$. 
+At $i$-th step, the lowest-ranked node $v$ is assigned a $rank(v) = i$ and is \emph{contracted}. 
+Contraction of a node $v$ consists of removing and archiving all the edges adjacent to $v$, removing and archiving the node $v$ itself and adding {\em shortcuts}. 
+
+We need to keep the distance of all Pareto optimal paths in the graph unchanged. For every two edges $(u_i,v)_k,(v,w_j)_l$ , we need to know if they are part of a Pareto optimal path. If we found a path $p(u_i,w_j)_m$ which dominates $w((u_i,v)_k)+w((v,w_j)_l)$ , then the combination is not needed. We call $p(u_i,w_j)_m$ a \emph{witness} for these two edges. 
+
+To find the {\em shortcuts}, we run so-called {\em witness search} (described
+below) and add a shortcut for each pair of edges which do not have a witness.
+For pair of edges $(u_i,v)_k,(v,w_j)_l$, shortcuts are a new edges $(u_i,w_j)_0, (u_i,w_j)_1 \dots$ 
+%\todo[inline]{ta nula tam je trošku haluzná protože ve stejném kroku můžu přidat i druhou zkratku (ui,wj)1, netusim jak to napsat aby to nebylo matoci}
+with weights $w((u_i,w_j)_0) = w((u_i,v)_k)+w((v,w_j)_l)$. 
+We also keep a note about which node was used to create which
+shortcut.
+Note that a shortcut could be added even if a witness exists for it. Unnecessary shortcuts do not violate the correctness. They can only make the preprocessed graph larger.
+
+%By this process, multiple edges with different weights could be created. 
+
+Finally, when all the nodes are removed in this manner, we have the preprocessed graph in the archive including all its nodes and edges.
+
+\paragraph*{Witness Search}
+The Witness Search is used to determine which shortcuts we need to add when we contracting a node $v$. 
+
+First, we denote all the in-edges as $(u_i,v)_k$ and out-edges as $(v,w_i)_l$. For each in-edge $(u_i,v)_k$, we run a separate search which finds all the shortcuts from $u_i$. For that, we use a MLS algorithm with query $u_i-\{w_0,\dots w_k\}$. 
+
+The MLS algorithm does not expand a label when it is dominated by at least one path to every goal node $w_j$. It stops either when there are no open labels and its goal nodes are all witnesses,
+or when some time limit was reached (finding only a subset of witnesses). 
+%\todo[inline]{nemame na witness search pseudokod?}
+%\todo[inline]{ne mame pseudokod na MLS který se od withnes searche lisi jen malinko, stejne tak se od nej forward a reverse search lisi jen trochu}
+
+
