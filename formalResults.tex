@@ -31,11 +31,11 @@ then sub-path $p_{v,t}$ is also found by the forward search.
 The case when $rank(s)$ is the highest rank on path $p_{s,t}$ is very similar. 
 
 Let $v \ne s \ne t$ be node with highest rank on path $p_{s,t}$. 
-Sub-path $p_{s,v} \in \Pi(s,v)$ 
-if not than the $p' \in \Pi(s,v)$ which dominates $p_{s,v}$ could be substituted
+Sub-path $p_{s,v} \in P(s,v)$ 
+if not than the $p' \in P(s,v)$ which dominates $p_{s,v}$ could be substituted
 to $p_{s,t}$ and the resulting paths $p'_{s,t}$ dominates $p_{s,t}$ which contradict
-$p \in \Pi(s,t)$.
-Similarly, $p_{v,t} \in \Pi(v,t) $. Path $p_{s,v}$ is found by forward search end path
+$p \in P(s,t)$.
+Similarly, $p_{v,t} \in P(v,t) $. Path $p_{s,v}$ is found by forward search end path
 $p_{v,t}$ by backward search.
 
 \item[$\supseteq$] 
@@ -82,6 +82,7 @@ A \emph{multiscale SPHS} of $(G,w)$ is a collection of sets $C_{D_i}$ for $0 \le
 If the highway dimension of $(G,w)$ is h, then there exists a multiscale
 SPHS such that $|C_{\log D}| \le h$ and $|C_i| \le h|C_{i+1}|$ for $0 \le i < \log D$.
 \end{definition}
+%diametr $D \in \mathbb{R+}^d$
 
 In order to get time and space estimates of MCHp and MCHq we need to count shortcuts in
 the graph. Let $Q_{D_i} = C_{D_i} \setminus \Cup^{k}_{j=i+1}C_{D_j}$.
@@ -102,7 +103,7 @@ The proof is exactly same as in (\cite{abraham2016highway}, Lemma 6.1, Theorem 6
 Time complexity of MCHp 
 
 Time complexity of MCHq. By theorem \ref{shrotcutsNumber} we know that degree is 
-bounded by $h \log D$. When the Meta Search Algorithm use Fibonacci heaps  
+bounded by $h \log D$. When the MLS Algorithm use Fibonacci heaps  
 
 
 % During query faze we can use bidirectional search 

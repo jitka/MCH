@@ -6,56 +6,40 @@
 \section{Preliminaries}
 \label{secPreliminaries}
 
-multigraph 
-multiweigthd
-directed
-in-edge out-edge
-dominated
-s-t query
-path
-shortest path - one of nondominated = element of paretoset
-$w$ is weight function $w: E \leftarrow \mathbb{R+}^d$
-Edges $(u,v)_0,(u,v)_i$
-Directed multiweighted $G$ with
-$n$ nodes,
-$m$ edges, 
-higway dimension $h$,
-maximum degree $\Delta$
-Pareto set $\Pi(s,t)$ $P_{s,t}$
-diametr $D \in \mathbb{R+}^d$
 
-When there are two edges $(u,v)$ with same nodes we count them
-separately. 
+First, let's define Multi-Objective Shortest Path Problem (MOSP).
 
+Let $G(V,A)$ be a directed graph where $V$ is set of nodes and $E$ set
+of edges with $|V| = n$ and $|E| = m$. In multi graph we permit multiedges
+$(u,v)_0,(u,v)_1,\dots)$. For fixed node $v$ in-edge is $(u,v)_i$ and out-edge
+$(v,w)_j$.
 
-Let $G = (V,E)$ be a directed graph with length
-$l: E$ 
-$ \rightarrow $
-$\mathcal{R+}^d$, 
-where $d \in \mathcal{N}$ is
-dimension. In our experimental results
-we consider $d=2, d=3$.
+Each node has \emph{weight} given by weight function
+$w: E \leftarrow \mathbb{R+}^d$.
+Dimension $d$ is number of weights or criteria or objective. 
+In our experiments we consider $d=2,3$.
+Vector $a$ is dominated by vector $b$ ($a,b \in \mathbb{R+}^d$) if
+$b$ has at least one weight lower than $a$ and no weight higher than $a$.
 
-For each path $P(s,d)$ we denote 
-$l(P) = \Sigma_{e\in P} l(e) $
-length of path $P$.
-Let $P(u,v)$ denote the \emph{pareto set} of shortest path.
-
-Given a non-negative $r \in \mathcal{}{N}^d $, let $B_{u,r} = 
-\{ v \in V, |P(u,v)| \le r \} $.
-Directed ball
+Sequence of edges $(s=u_0,u_1)_*,(u_1,u_k)_*,\dots(u_{k-1},t=u_k)$ is called
+\emph{path} $p_{s,t}$. Length of path is sum of their weights 
+$w(p_{s,t}) = \Sigma_{i=0}^{i<k} (u_i,u_{i+1})$.
+Set of all nondomated paths between $s,t$ is called Pareto set
+$P(s,t)$.
 
 
 %\subsection{Meta Search Algorithm}
 
 Many of search algorithm which we consider
-are closed to original dijkstra algorithm \cite{dijkstra1959note}.
+are closed to original dijkstra algorithm \cite{dijkstra1959note}
+or to multi-criteria labelling setting (MLS) \cite{martins1984multicriteria}
 We present its generalization in order establish the notation.
 
-Meta search works on multi-weighted directed multi-graphs. 
+MLS search works on multi-weighted directed multi-graphs. 
 Search algorithm answers three types of queries.
 \begin{itemize}
-\item Find all non-dominated shortest path from source node $s$ to target node $t$.\todo{je to vhodne pojmenovani?}
+\item Find all non-dominated shortest path from source node $s$ to target node $t$.
+    % TODO přepsat s t na o d (origin destination)
 \item Find all non-dominated shortest path from $s$ to every $t \in T \subseteq V$.
 \item Find all non-dominated shortest path from $s$ to every other vertex in the graph.
 \end{itemize}
@@ -86,9 +70,9 @@ Algorithm stop when every label was expanded at that time
 labels in bags $B(t), t \in T$ are lengths of paretoset of shortest path.
 Path could by found recursively using $prev(l)$.
 
-\todo{je třeba dokazovat korektnost nebo je to zjevne ci zname?}
+\todo[inline]{je třeba dokazovat korektnost nebo je to zjevne ci zname?}
 
-\begin{lstlisting}[caption={Meta Search Algorithm},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
+\begin{lstlisting}[caption={MLS Algorithm},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
 Input: source node s, set of target nodes T
 for all nodes v:
 	B(v) <- \emptyset
@@ -107,4 +91,4 @@ while open_labels is not empty:
         	add new label with weight (l+w(e)) to B(w)
 Output: B(t) for every t \in T
 \end{lstlisting}
-\todo{psat pseudokod v tomhe (doporucuje examle pro tu konference) nebo v necem co umi zobrazit symboly? }
+\todo[inline]{sazba pseudokodu}
