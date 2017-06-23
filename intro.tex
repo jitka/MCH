@@ -21,40 +21,29 @@
 \section{Introduction}
 \label{secIntroduction}
 
-Multi-objective shortest path problems (MOSP) ask for Pareto set of paths
-between two nodes in multi-weighted graph in both directed or undirected graphs. 
-We consider directed graphs with possible multiple edges.
+Multi-objective shortest path problem (MOSP) is a fundamental problem from graphy theory with many real world applications. Algorithms solving the problem need to find a Pareto set of shortest paths between two nodes in a multi-weighted directed or undirected graphs or multi-graphs. 
 
-The MOSP could be use for routing in real word road networks. 
-Objectives of route could be length, time, surface quality, popularity and much more.
+Typical example of real-world application of MOSP is automated planning of paths within the transport network represented as a graph, while optimizing criteria like travel time, distance, price, comfort or compatibility with traveller's preferences. This problem arises from both travel industry and daily life activities. Trip planning applications, such as car or public transport navigation systems need efficient algorithms for for multi-criteria problems in very large transport networks~\cite{veneti2016time}. 
 
 %  (problem)
 %  - CH has good results (reference), but it was no used for MOSP yet
 %   CSH
 
-The easier problem with one weight Shortest Path Problem is well studied problem.
-On of algorithms is Contraction Hierarchies (CH) \cite{geisberger2008contraction}.
+One of the common methods used to speed up the graph search is called Contraction Hierarchies (CH)~\cite{geisberger2008contraction}. They can be used to find the shortest path more efficiently than Dijkstra algorithm or similar routing approaches and is used in many advanced routing techniques~\cite{delling2009engineering}. 
 
-Constrained Shortest Path Problem (CSPP) is 
-\cite{pugliese2013survey} problem very similar to MOSP.
-It ask of shortest path in multi-weighted graph, but instead whole
-Pareto sets search for single paths whit optimalize a linear combination
-of weight. CSPP could only found paths on lover envelope of Pareto set.
-Contraction Hierarchies was used for CSPP
- \cite{funke2013polynomial}.
+The problem is that CH is not applicable to multi-weighted graphs and therefore cannot be used for MOSP, even though the method was recently used for a similar problem -- Constrained Shortest Path Problem (CSPP)~\cite{pugliese2013survey,funke2013polynomial}. Similarly to MOSP, CSPP algorithms also search for shortest paths in multi-weighted graphs, but instead of complete Pareto sets, they only return a single path with the best linear combination of the weights.  
 
 %  (solution)
 %  - in this paper, we show how CH can be used for MOSP
 %  - [describe the solution] 
-We present algorithm which found whole paretoset.
-Multicriteria Label-Setting (MLS) algorithm~\cite{martins1984multicriteria} 
-is optimal for general graphs.
+
+In this paper, we present an algorithm that successfully applies the idea behind Contraction Hierarchies approach to efficiently solve MOSP. Our algorithm, called Multi-weighted Contraction Hierarchies (MCH), is able to find the whole Pareto set of shortest paths between a pair of nodes in a multi-weighted directed multi-graph. In addition to CH, we also draw inspiration from Multicriteria Label-Setting (MLS) algorithm~\cite{martins1984multicriteria}. 
 % \todo{citace} co si rovnou nezapisu na posledni chvili nenajdu!
 
-For vehicle or bicycle routing could be used namoa \todo{citace} which is optimal for direct (no preparation) questions.
-\todo[inline]{to je state of the art a u te si nejsem jista jestli jsem si naimplementovala dobre a tak ji nemam ve vysledcich, nevim jestli ji davat tady.} 
+%For vehicle or bicycle routing could be used namoa \todo{citace} which is optimal for direct (no preparation) questions.
+%\todo[inline]{to je state of the art a u te si nejsem jista jestli jsem si naimplementovala dobre a tak ji nemam ve vysledcich, nevim jestli ji davat tady.} -> radsej nie. 
 
-There could be improvemenents when we allows preprocessing algorithms. 
+%There could be improvemenents when we allows preprocessing algorithms. 
 
 % Higway dimension  \cite{abraham2010highway} is parametr which is low on road network whit only on criteria and it could be used for upper bound of time complexity of search algorithms. We generalize highway dimension in orther to found complexity bound also for our problem.  
 %Intuice v pozadí:
@@ -73,10 +62,7 @@ There could be improvemenents when we allows preprocessing algorithms.
 
 %  (outline)
 %  - paper outline. contents of all the sections
-Chapter two present problem definition and MLS algorithm. In chapter
-three we present multi-criteria contraction hierarchies.
-At chapter four we present our experimental result.
-Chapter five contains proof of correctness of algorithm.
+After the introduction of required terminology in Section \ref{secPreliminaries}, we describe our two-stage solution in Section \ref{secAlgorithms} -- MHC actually consists of two algorithms: one for offline graph preprocessing and one for the search queries. In Section \ref{secExperiments}, we describe our experiments on DIMACS New York City road network benchmarks and compare the performance to an alternative approach. Finally, in Section \ref{secFormalResults}, we formally prove our algorithm's correctness.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
