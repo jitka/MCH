@@ -6,73 +6,52 @@
 \section{Preliminaries}
 \label{secPreliminaries}
 
+First of all, let us describe the Multi-Objective Shortest Path Problem (MOSP) and the Multicriteria Label-Setting (MLS) algorithm, which is relevant to our own solution.
 
-First, let's define Multi-Objective Shortest Path Problem (MOSP).
+Let $G(V,E)$ be a directed multi-graph where $V$ is a set of nodes and $E$ a set
+of edges with $|V| = n$ and $|E| = m$. Since $G$ is a multi-graph, multi-edges
+$((u,v)_0,(u,v)_1,\dots)$ are allowed in $E$. For a fixed node $v$, any edge $(u,v)_i$ is called an in-edge and any edge $(v,w)_j$ is considered an out-edge.
 
-Let $G(V,A)$ be a directed graph where $V$ is set of nodes and $E$ set
-of edges with $|V| = n$ and $|E| = m$. In multi graph we permit multiedges
-$(u,v)_0,(u,v)_1,\dots)$. For fixed node $v$ in-edge is $(u,v)_i$ and out-edge
-$(v,w)_j$.
+Every node is assigned a \emph{weight vector} given by the weight function $w: E \rightarrow \mathbb{R+}^d$. Dimension $d$ represents a number of criteria in a multi-objective search. 
+In our experiments, we consider $d=2$ and $d=3$.
+We say that a weight vector $a$ is dominated by vector $b$ ($a,b \in \mathbb{R+}^d$) if
+$b$ has at least one weight lower than $a$ and no weight higher than $a$. 
 
-Each node has \emph{weight} given by weight function
-$w: E \leftarrow \mathbb{R+}^d$.
-Dimension $d$ is number of weights or criteria or objective. 
-In our experiments we consider $d=2,3$.
-Vector $a$ is dominated by vector $b$ ($a,b \in \mathbb{R+}^d$) if
-$b$ has at least one weight lower than $a$ and no weight higher than $a$.
-
-Sequence of edges $(s=u_0,u_1)_*,(u_1,u_k)_*,\dots(u_{k-1},t=u_k)$ is called
-\emph{path} $p_{s,t}$. Length of path is sum of their weights 
-$w(p_{s,t}) = \Sigma_{i=0}^{i<k} (u_i,u_{i+1})$.
-Set of all nondomated paths between $s,t$ is called Pareto set
+Any sequence of edges $(s=u_0,u_1)_*,(u_1,u_k)_*,\dots(u_{k-1},t=u_k)$ is called
+\emph{path} $p_{s,t}$. Length of a path is defined as a sum of the weights 
+$w(p_{s,t}) = \Sigma_{i=0}^{i<k} (u_i,u_{i+1})$. The set of all non-dominated paths between $s$ and $t$ is called {\em Pareto set}
 $P(s,t)$.
-
+\todo[inline]{Sem pridaj este jednu vetu, ktora definuje co je to MOSP. Napr. neico ako ``Given a pair of nodes s,t, the aim of MOSP is to find P(s,t)''?. Zatial mame explicitne definovany len Pareto set, nie samotny search problem.}
 
 %\subsection{Meta Search Algorithm}
 
-Many of search algorithm which we consider
-are closed to original dijkstra algorithm \cite{dijkstra1959note}
-or to multi-criteria labelling setting (MLS) \cite{martins1984multicriteria}
-We present its generalization in order establish the notation.
+Many typical search algorithms in this context are related either to original Dijkstra algorithm~\cite{dijkstra1959note} or to Multicriteria Label-Setting (MLS) algorithm~\cite{martins1984multicriteria}. Let us now present its generalization in order to establish the notation.
 
-MLS search works on multi-weighted directed multi-graphs. 
-Search algorithm answers three types of queries.
+MLS algorithm (see Pseudocode \ref{MLSalg}) is designed to search for paths in multi-weighted directed multi-graphs. It can answer three types of queries:
 \begin{itemize}
-\item Find all non-dominated shortest path from source node $s$ to target node $t$.
+\item Find all non-dominated shortest paths from source node $s$ to target node $t$ ($s$ is sometimes called {\em origin} and $t$ is called {\em destination}).
     % TODO přepsat s t na o d (origin destination)
-\item Find all non-dominated shortest path from $s$ to every $t \in T \subseteq V$.
-\item Find all non-dominated shortest path from $s$ to every other vertex in the graph.
+\item Find all non-dominated shortest paths from $s$ to every $t \in T \subseteq V$.
+\item Find all non-dominated shortest paths from $s$ to every other vertex in the graph ($\forall t \in V$).
 \end{itemize}
 
-Key part of all algorithm are \emph{labels} $l\in \mathcal{R}^d$.
-Each label $l$ of node $v$ remember length $w(l)$  of one 
-possible path from $s$ to $v$, $node(l) = v$ is name of its node
-and $prev(l)$ is node previous node on path from $s$ to $v$.
-Each nodes have set of non-dominated labels called \emph{label bag} $B(v)$.
+Key part of the algorithm is assigning so-called \emph{labels} $l\in \mathcal{R}^d$ to graph nodes.
+Each label $l$ of a node $v$ contains the length $w(l)$  of one possible path from $s$ to $v$. Given a node pair $s,t$ and a label $l$, we denote the name of its corresponding node as $node(l) = v$ and the name of previous node on the path from $s$ to $v$ as $prev(l)$.
+Each node has a set of non-dominated labels called \emph{label bag} $B(v)$.
 
-Set up algorithm by creating labels.
+As the first step of the algorithm, we assign labels in the following manner: $B(s)=0^d$ and $\forall v \ne s: B(v)=\emptyset$.
+At every subsequent step of the algorithm, one label is \emph{expanded}. 
+During the expansion, all the outgoing edges are considered -- the outgoing edge, together with the previous path to the label make up the path that is added to corresponding label bag. Then, we check whether there is a label which dominates another.
+\todo[inline]{nie som si isty, ci su predchadzajuce 2 vety spravne, plus nie su uplne jednoducho zrozumitelne. skontroluj to prosim a ked sa da, vylepsi tu formulaciu tak, aby bola jasnejsia}
 
-\begin{gather*} 
-B(s)=0^d, B(v)=\emptyset \forall v \ne s.
-\end{gather*} 
+Data structure {\em open\_labels} is typically used when implementing MLS. It is a priority queue with all the labels which were created, but not yet expanded. The priority function needs to guarantee that top label is never dominated by any other label in that queue.
 
-In each step of the algorithm some label is \emph{expanded}. 
-All its outgoing edges are considered. 
-The outgoing edge plus path to label represents 
-path which we add to the corresponding bag then check if there
-is label which dominates another.
+The MLS algorithm stops when every label is expanded. At that time, the labels in bags $B(t), t \in T$ represent the lengths of the paretoset of shortest path.\todo{Veta zacinajuca na ``At that time\ldots'' asi nie je formalne uplne ok.} Resulting path can be reconstructed recursively using $prev(l)$.
 
-Structure open\_labels is a priority queue with all labels which was created but not expanded.
-Priority function has to guarantee that top label is not dominated by any other label in that
-queue an any time.
+%\todo[inline]{je třeba dokazovat korektnost nebo je to zjevne ci zname?} -> netreba
 
-Algorithm stop when every label was expanded at that time
-labels in bags $B(t), t \in T$ are lengths of paretoset of shortest path.
-Path could by found recursively using $prev(l)$.
-
-\todo[inline]{je třeba dokazovat korektnost nebo je to zjevne ci zname?}
-
-\begin{lstlisting}[caption={MLS Algorithm},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
+\renewcommand{\lstlistingname}{Pseudocode} 
+\begin{lstlisting}[caption={MLS Algorithm},label=MLSalg,captionpos=t,float,abovecaptionskip=-\medskipamount]
 Input: source node s, set of target nodes T
 for all nodes v:
 	B(v) <- \emptyset
@@ -91,4 +70,5 @@ while open_labels is not empty:
         	add new label with weight (l+w(e)) to B(w)
 Output: B(t) for every t \in T
 \end{lstlisting}
-\todo[inline]{sazba pseudokodu}
+
+%\todo[inline]{sazba pseudokodu}
