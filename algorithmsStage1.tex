@@ -45,7 +45,7 @@ or when some time limit was reached (finding only a subset of witnesses).
 \begin{lstlisting}[caption={MCHp},label=MCHp,captionpos=t,float,abovecaptionskip=-\medskipamount]
 Input: Graph G
 for i from 0 to n-1
-    v <- least important node
+    v <- node with minimal rank
     rank(v) = i
     witnesses <- witness search
     for every pair of edges (u,v)_i,(v,w)_j:
