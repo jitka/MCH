@@ -25,11 +25,11 @@ Graph representing New York City road network consists of 270,000 nodes. In addi
 
 The benchmark problem was defined as a bi-criterial shortest path search. The two objectives were: geographic distance and travel time. 
 
-{\color{blue}{
+%{\color{blue}{
 We also generated graphs with a random third criterion. When the original weight vector is $(w_1,w_2)$ the new is $(w_1,w_2,rand(0.75,1.5) \times w_1 + rand(0.75,1.5) \times w_2)$ and $(w_1,w_2,rand(0.5,2) \times w_1 + rand(0.5,2) \times w_2)$.
-}}
-\todo{pro tyhle grafy mam vysledky spocitane v raw\_result.txt, do tabulky doplnim pozdej}
+%}}
 \todo[inline]{Tretie (nahodne) kriterium nemusime myslim vobec spominat. Ja by som tento (modry) odstavec proste zmazal/zakomentoval. Ale je to na tebe.}
+\todo[inline]{Me to prislo velmi prekvapive ze to dost dobre funguje i s nekorelovanou souradnici. Nechala bych to tam.}
 
 We computed 1,000 random queries on the subgraphs and 10 queries on the full graph. %and tri-criteria graphs. 
 The queries on the full graph had to be hand-crafted in such a way, that would allow the MLS algorithm to finish in a reasonable time (MLS failed to finish within one day using random full graph queries).  
@@ -71,9 +71,11 @@ full & 270 000 & & & &  2 & 8 & 1.1 & 1.9 \\ \hline
 \end{table}
 
 \todo[inline]{v tabulke chybaju vysledky pre MLS a preparation time MCH na full grafe}
+\todo[inline]{ s full graf je problem. nahodne dozaci tam casto nezbehnou ani za nekolik hodin. jsou dve reseni but tam nedat to MLS pro porovnani a nebo dat vyber jen tech dotazu co zbehnout (mam uz ho pripraveny). Ktera varianta je lepsi?}
 
 The {\em ``speed up expanded''} and {\em ``speed up time''} columns in the table express how many times faster the MCH queries were compared to MLS queries with respect to number of expanded nodes and computation time respectively. We can see that MCH performed better on all the benchmark graphs with the exception of the smallest one (10K nodes), where MLS had shorter computation time (speedup was 0.57 < 1).
 \todo[inline]{Prosim ta vysvetli tu Summary cast a avg/min/max hodnoty.}
+\todo[inline]{je to 'excelovkse sum, min, avr sloupecku nad tim. To jsem ospala z tabulky v jinem clanku stejne koference. Ma smysl to tam mit?}
 
 % jak porametry MCq ovlivnovali dobu preprocessingu:
 %\subsection{Graph preprocessing}
