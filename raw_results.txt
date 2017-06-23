@@ -303,7 +303,13 @@ contraction hiearchies expanded 7935 time 284ms
 
 
 
-%[[26051 , 32 , 4.3 , 4227 , 56 ], [178472 , 607 , 31 , 2055 , 34 ], [174808 , 514 , 23 , 2004 , 20 ], [53238 , 60 , 12 , 1365 , 5 ], [146709 , 278 , 41 , 6853 , 149 ], [912326 , 17455 , 1978 , 10307 , 353 ], [996507 , 16181 , 2142 , 13681 , 711 ]]
+%[[26051 , 32 , 4.3 , 4227 , 56 ], [178472 , 607 , 31 , 2055 , 34 ], [174808 , 514 , 23 , 2004 , 20 ], [53238 , 60 , 12 , 1365 , 5 ], [146709 , 278 , 41 , 6853 , 149 ], [912326 , 17455 , 1978 , 10307 , 353 ], [996507 , 16181 , 2142 , 13681 , 711 ], 
+[38997,126,17,8830,643], [377541,20798,734,12261,353], [355497,4981,121,5466,298], [292526,3225,116,7935,284] 
+]
+%  [ b[0]*1.0/b[3] for b in a ]
+%  [ b[1]*1.0/b[4] for b in a ]
+
+
 %[6.1629997634255975, 86.84768856447688, 87.22954091816368, 39.002197802197806, 21.407996497884138, 88.51518385563209, 72.83875447701192]
 % [0.5714285714285714, 17.852941176470587, 25.7, 12.0, 1.8657718120805369, 49.447592067988666, 22.758087201125175]
 % min [26051, 32, 4.3, 1365, 5]
@@ -313,27 +319,4 @@ contraction hiearchies expanded 7935 time 284ms
 % min [26051 & 32 & 4.3 & 1365 & 5 & 6.16 & 88.51 ]
 % max [996507 & 17455 & 2142 & 13681 & 711 & 0.57 & 49.45 ]
 % avr [355444 & 5018 & 604 & 5786 & 190 & 57 & 18.6
-
-
-
-
-Test testGraph11k-10k (0.75-1.5)
-Preparation time 17s
-dijkstra expanded 38997 time 126ms
-contraction hiearchies expanded 8830 time 643ms
-
-Test testGraph11k-10k (0.5-2)
-Preparation time 734s
-dijkstra expanded 377541 time 20798ms
-contraction hiearchies expanded 12261 time 353ms
-
-Test testGraph5555-20k
-Preparation time 121s shrotcuts42780
-dijkstra expanded 355497 time 4981ms
-contraction hiearchies expanded 5466 time 298ms
-
-Test testGraph5555-20k
-Preparation time 116s shrotcuts43082
-dijkstra expanded 292526 time 3225ms
-contraction hiearchies expanded 7935 time 284ms
 
