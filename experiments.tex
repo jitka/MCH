@@ -17,52 +17,36 @@
 
 \section{Experiments}
 \label{secExperiments}
-In this section, we present the results of computations measuring the performance
-of MCHp and MCHq versus MLS.
 
-We've tried both algorithms (MCHp and MCHq) on the New York City road 
-map benchmark from the 9th DIMACS Implementation
-Challenge: Shortest Path 
-\url{http://www.dis.uniroma1.it/challenge9/}
+We exerimented with our implementation of MCHp and MCHq algorithms using the New York City road map benchmark from 9th DIMACS Implementation Challenge: Shortest Path\footnote{
+\url{http://www.dis.uniroma1.it/challenge9/}} and compared them to MLS algorithm. We were interested in two metrics: number of expanded nodes and computation time.
 
-The full graph had 270K nodes. Benchmark also contained subgraphs with 10,20,30-50K nodes. 
+Graph representing New York City road network consists of 270,000 nodes. In addition to full graph, the benchmark also features smaller subgraphs with 10K, 20K, 30K, 40K and 50K nodes. 
 
-The New York City benchmark contains two criteria -- distance and time. 
-We generate graphs with random third criterion. 
-When original weight vector is $(w_1,w_2)$ the new is 
-$(w_1,w_2,rand(0.75,1.5) \times w_1 + rand(0.75,1.5) \times w_2)$ and
-$(w_1,w_2,rand(0.5,2) \times w_1 + rand(0.5,2) \times w_2)$.
+The benchmark problem was defined as a bi-criterial shortest path search. The two objectives were: geographic distance and travel time. 
+
+{\color{blue}{
+We also generated graphs with a random third criterion. When the original weight vector is $(w_1,w_2)$ the new is $(w_1,w_2,rand(0.75,1.5) \times w_1 + rand(0.75,1.5) \times w_2)$ and $(w_1,w_2,rand(0.5,2) \times w_1 + rand(0.5,2) \times w_2)$.
+}}
 \todo{pro tyhle grafy mam vysledky spocitane v raw\_result.txt, do tabulky doplnim pozdej}
+\todo[inline]{Tretie (nahodne) kriterium nemusime myslim vobec spominat. Ja by som tento (modry) odstavec proste zmazal/zakomentoval. Ale je to na tebe.}
 
-There were 1000 random queries on bi-criteria subgraphs and 10 queries
-on full graph and tri-criteria graphs. 
-\todo{ty dotazy na uplny graf jsem vybyrala tak aby MLS dobehlo, protoze na nektere dotazy bezi dele nez den, nevim jak to napsat}
+We computed 1,000 random queries on the subgraphs and 10 queries on the full graph. %and tri-criteria graphs. 
+The queries on the full graph had to be hand-crafted in such a way, that would allow the MLS algorithm to finish in a reasonable time (MLS failed to finish within one day using random full graph queries).  
+The node {\em rank} heuristic was computed as {\tt shortcut*3 + deleted*3 -~inEdges -~outEdges} in our MCH implementation. The Witness Search time limit was set to 0.25s. 
 
-Rank function for MCH is 
-% return this.shortcut*3+deleted*3-inEdges-outEdges;
-Witness search has time limit 0.25s. 
+%We compared our algorithms to MLS.
+%\todo{( was it only Dijkstra?), psala jsem i namou, ale vycházela mi jen asi o 30\% rychlejsi nez MLS, a nejsem si jista jestli je to ok a nebo mam spatnou imlementaci nebo spatnou heuristiku}
 
-We compared our algorithms to MLS.
-\todo{( was it only Dijkstra?), psala jsem i namou, ale vycházela mi jen asi o 30\% rychlejsi nez MLS, a nejsem si jista jestli je to ok a nebo mam spatnou imlementaci nebo spatnou heuristiku}
+All the algorithms were implemented in Java 1.8. The experiments were conducted on a machine with 
+32GB RAM and Intel(R) Core(TM) i7-4770S CPU @ 3.10GHz processor. The experiment results are in Table \ref{result}. 
 
-All algorithms were implemented in Java 1.8 
-The experiments were conducted on a machine with 
-32 GB or RAM and  Intel(R) Core(TM) i7-4770S CPU @ 3.10GHz processor.
-
-The experiment results are in Table \ref{result}. 
-
-In the table, we see that our algorithms performed better with respect to 
-number of expanded nodes and with respect to query time.
-On average, we expanded only X\% of the nodes expanded by Dijkstra and our queries 
- took only Y\% of Dijkstra time.
-
-
-\begin{table}
+\begin{table}[h]
 \tiny
 \caption{Comparison of MLS and MCL}
 \label{result}
 \begin{tabular}{l|c|cc|ccccc}
- & & \multicolumn{2}{c}{DIJK} & \multicolumn{5}{c}{MCH} \\ \cline{3-6} \hline
+ & & \multicolumn{2}{c}{MLS} & \multicolumn{5}{c}{MCH} \\ \cline{3-6} \hline
 instance & nodes & query & query & prep & query & query & speed up & speed up \\ \hline
 & & (expanded) & (ms) & (min) & (expanded) & (ms) & expanded & time \\ \hline
 full & 270 000 & & & &  2 & 8 & 1.1 & 1.9 \\ \hline
@@ -84,6 +68,12 @@ Minimum & 10 000 & 996507 & 17455 & 2142 & 13681 & 711 & 0.57 & 49.45\\ \hline
 Maximum & 50 000 & 355444 & 5018 & 604 & 5786 & 190 & 57 & 18.6 \\ \hline
 \end{tabular}
 \end{table}
+
+\todo[inline]{v tabulke chybaju vysledky pre MLS a preparation time MCH na full grafe}
+
+The {\em ``speed up expanded''} and {\em ``speed up time''} columns in the table express how many times faster the MCH queries were compared to MLS queries with respect to number of expanded nodes and computation time respectively. We can see that MCH performed better on all the benchmark graphs with the exception of the smallest one (10K nodes), where MLS had shorter computation time (speedup was 0.57 < 1).
+\todo[inline]{Prosim ta vysvetli tu Summary cast a avg/min/max hodnoty.}
+
 % jak porametry MCq ovlivnovali dobu preprocessingu:
 %\subsection{Graph preprocessing}
 %čím dál hýbat:
