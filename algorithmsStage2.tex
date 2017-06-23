@@ -12,15 +12,14 @@ Multi-weighted Contraction Hierarchies query (MCHq) is based on a bi-directional
 Each $s$-$t$ search query runs two MLS-like searches on a slightly modified preprocessed graph
 and then they combine their results.
 
-Both forward and reverse search have structure open\_labels implemented as priority queue which orders labels alphabetically. MCHq searches on slightly modified graphs. 
 We do not transform the whole graph in advance but modify it during queries.
-\todo[inline]{Nie su v tomto odstavci nahodou len implementacne detaily, ktore pre samotny algoritmus nie su dolezite? Neda sa to vynechat?}
 
 \paragraph*{Forward Search}
-Forward search uses a preprocessed graph with edges oriented from the node with lower rank to nodes with higher rank. This could be done by replacing line \todo{budu predelavat sazbu pseudokodu aby to slo} by \ref{}
-It runs MLS search algorithm with the query from node $s$ to $t$ and returns all label bug.\todo{label bug? co to je?}
-Line TODO could by replaced by:
-\todo[inline]{Priznam sa, ze vobec nerozumiem tomuto odstavcu (Forward Search). Chce to nejak preformulovat. Mimochodom, preco chceme rozpravat o nejakom nahradzani riadkov pseudokodu? }
+Forward search uses a preprocessed graph with edges oriented from the node with lower rank to nodes with higher rank. 
+It is not necessary transform the whole graph in advance. 
+The graph could be modify during queries.
+In the pseudocode of MLS we change line \todo{jina sazba pseudokodu} to \ref{}.
+We run MLS search algorithm with the query from node $s$ to $t$ and returns label bags $B(v)$ for all nodes.
 
 \begin{lstlisting}[caption={Forward Search},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
     for every outgoing edge e=(node(l),w):
@@ -29,6 +28,7 @@ Line TODO could by replaced by:
 \end{lstlisting}
 
 \paragraph*{Reverse Search}
+\todo[inline]{prepisu po schvaleni Forward Searche}
 Reverse search uses graph with all the edges reversed and then keeps only edges
 from lower rank to higher. 
 This could by done by replacing line \todo{budu predelavat sazbu pseudokodu aby to slo} by \ref{}
@@ -43,6 +43,7 @@ It run MLS search algorithm with the query from node $t$ to $s$ and return all l
 \end{lstlisting}
 
 To find the paths in preprocessed graph, we combine the labels from forward and reverse search. 
-For all the nodes $v$ with $B(v) \ne \emptyset$ we join all the combinations of $s$-$v$ and $v$-$t$ paths. All non-dominated paths determine the Pareto set of shortest $s$-$t$ paths in the preprocessed graph.
+For all the nodes $v$ with $B(v) \ne \emptyset$ we join all the combinations of $s$-$v$ and $v$-$t$ paths. 
+All non-dominated paths determine the Pareto set of shortest $s$-$t$ paths in the preprocessed graph.
 Pareto set of shortest paths in the original graph can be reconstructed recursively using the notes on the shortcuts.
 

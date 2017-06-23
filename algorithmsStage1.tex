@@ -15,9 +15,15 @@ First, we initialize the $f$ values for all the nodes. Then, at each step of the
 At $i$-th step, the least important node $v$ is assigned a $rank(v) = i$ and is \emph{contracted}. 
 Contraction of a node $v$ consists of removing and archiving all the edges adjacent to $v$, removing and archiving the node $v$ itself and adding {\em shortcuts}. 
 
-We need to keep the distance of all Pareto optimal paths in the graph unchanged. For every two edges $(u_i,v)_k,(v,w_j)_l$, we need to know if they are part of a Pareto optimal path. If we found a path $p(u_i,w_j)_m$ which dominates $w((u_i,v)_k)+w((v,w_j)_l)$, then the combination is not needed. We call $p(u_i,w_j)_m$ a \emph{witness} for these two edges. 
+We need to keep the distance of all Pareto optimal paths in the graph unchanged. For every two edges $(u_i,v)_k,(v,w_j)_l$ , we need to know if they are part of a Pareto optimal path. If we found a path $p(u_i,w_j)_m$ which dominates $w((u_i,v)_k)+w((v,w_j)_l)$ , then the combination is not needed. We call $p(u_i,w_j)_m$ a \emph{witness} for these two edges. 
 
-To find the {\em shortcuts}, we run so-called {\em witness search} (described below) and add a shortcut for each pair of edges which do not have a witness. A shortcut is a new edge with the weight equal to the sum of weights of edges\todo{sum of weights of which edges?}. We also keep a note about which node was used to create which shortcut.
+To find the {\em shortcuts}, we run so-called {\em witness search} (described
+below) and add a shortcut for each pair of edges which do not have a witness.
+For pair of edges $(u_i,v)_k,(v,w_j)_l$, a  shortcut is a new edge $(u_i,w_j)_0$ 
+\todo[inline]{ta nula tam je trošku haluzná protože ve stejném kroku můžu přidat i druhou zkratku (ui,wj)1, netusim jak to napsat aby to nebylo matoci}
+with the weight $w((u_i,w_j)_0) = w((u_i,v)_k)+w((v,w_j)_l)$. 
+We also keep a note about which node was used to create which
+shortcut.
 
 Note that a shortcut could be added even if a witness exists for it. Unnecessary shortcuts do not violate the correctness. They can only make the preprocessed graph larger.
 
@@ -30,12 +36,10 @@ The Witness Search is used to determine which shortcuts we need to add when we c
 
 First, we denote all the in-edges as $(u_i,v)_k$ and out-edges as $(v,w_i)_l$. For each in-edge $(u_i,v)_k$, we run a separate search which finds all the shortcuts from $u_i$. For that, we use a MLS algorithm with query $u_i-\{w_0,\dots w_k\}$. 
 
-Structure open\_labels is implemented as a priority queue with alphabetical ordering. 
-Top of quote contain labels with the lowest first weight which are ordered by second weight and so on. In such ordering, each label comes after all open labels which dominate it.\todo[inline]{Cely tento odstavec nechapem. Na co je open\_labels? Aky quote? Tuto cast potrebujeme lepsie vysvetlit. Doplnujuca otazka: nie su to nahodou len nejake zbytocne implementacne detaily, ktore bude lepsie vynechat?}
-
 The MLS algorithm does not expand a label when it is dominated by at least one path to every goal node $w_j$. It stops either when there are no open labels and its goal nodes are all witnesses,
 or when some time limit was reached (finding only a subset of witnesses). 
 \todo[inline]{nemame na witness search pseudokod?}
+\todo[inline]{ne mame pseudokod na MLS který se od withnes searche lisi jen malinko, stejne tak se od nej forward a reverse search lisi jen trochu}
 
 \renewcommand{\lstlistingname}{Pseudocode}
 \begin{lstlisting}[caption={MCHp},label=MCHp,captionpos=t,float,abovecaptionskip=-\medskipamount]

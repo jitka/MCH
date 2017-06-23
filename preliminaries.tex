@@ -78,7 +78,9 @@ The outgoing edge plus path to label represents
 path which we add to the corresponding bag then check if there
 is label which dominates another.
 
-Structure open\_labels is set of all labels which was created but not expanded.
+Structure open\_labels is a priority queue with all labels which was created but not expanded.
+Priority function has to guarantee that top label is not dominated by any other label in that
+queue an any time.
 
 Algorithm stop when every label was expanded at that time
 labels in bags $B(t), t \in T$ are lengths of paretoset of shortest path.
