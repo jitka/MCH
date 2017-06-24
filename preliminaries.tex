@@ -20,11 +20,11 @@ $b$ has at least one weight lower than $a$ and no weight higher than $a$.
 Any sequence of edges $(s=u_0,u_1)_*,(u_1,u_k)_*,\dots(u_{k-1},t=u_k)$ is called
 \emph{path} $p_{s,t}$. Length of a path is defined as a sum of the weights 
 $w(p_{s,t}) = \Sigma_{i=0}^{i<k} (u_i,u_{i+1})$. The set of all non-dominated paths between $s$ and $t$ is called {\em Pareto set}
-$P(s,t)$.
-\todo[inline]{Sem pridaj este jednu vetu, ktora definuje co je to MOSP. Napr. neico ako ``Given a pair of nodes s,t, the aim of MOSP is to find P(s,t)''?. Zatial mame explicitne definovany len Pareto set, nie samotny search problem.}
+$P(s,t)$. Given a pair of nodes $s,t$, the aim of MOSP is to find a Pareto set $P(s,t)$.
+
+\vskip 5mm
 
 %\subsection{Meta Search Algorithm}
-
 Many typical search algorithms in this context are related either to original Dijkstra algorithm~\cite{dijkstra1959note} or to Multicriteria Label-Setting (MLS) algorithm~\cite{martins1984multicriteria}. Let us now present its generalization in order to establish the notation.
 
 MLS algorithm (see Pseudocode \ref{MLSalg}) is designed to search for paths in multi-weighted directed multi-graphs. It can answer three types of queries:
