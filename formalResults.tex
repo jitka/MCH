@@ -7,36 +7,36 @@
 
 \begin{lemma}
 %[Lemma]
-Set of edges found by query is Pareto set of shortest paths.
+Set of edges found by the query is Pareto set of shortest paths.
 \end{lemma}
 \begin{proof}
 \begin{itemize}
 \item[$\subseteq$] 
 
-Let $p_{s,t}$ be arbitrary path from Pareto set $P(s,t)$. 
+Let $p_{s,t}$ be an arbitrary path from Pareto set $P(s,t)$. 
 
 Suppose that $t$ is node with highest rank in the path $p_{s,t}$, 
 then path $p_{s,t}$ should be found by forward search
 and together with path $p_{t,t}$, $l(p_{t,t})=0$ 
-founded by backward search its represents original path.
-If $p_{s,t}$ is the single edge, then forward search founds it.
-If $p$ is node with second highest rank, then we denote $v$ the
-node with third highest rank. 
-By the time when $w$ was contracting, all other nodes had been contracted
-and $s,t$ was adjacent to $v$. So the shortcut $(s,t)_j$ was created, and forward search uses it.
-If $v \ne s$ is the node with second highest rank on the path,
+found by backward search it represents an original path.
+If $p_{s,t}$ is single edge, then the forward search will find it.
+If $p$ is a node with the second highest rank, then we denote $v$ the
+node with the third highest rank. 
+By the time when $w$ was contracted, all the other nodes had been contracted
+and $s,t$ was adjacent to $v$. So the shortcut $(s,t)_j$ was created, and forward search used it.
+If $v \ne s$ is the node with the second highest rank on the path,
 then the sub-path $p_{s,v}$ is found by the forward search by induction and
 then sub-path $p_{v,t}$ is also found by the forward search.
 
 The case when $rank(s)$ is the highest rank on path $p_{s,t}$ is very similar. 
+Let $v \ne s \ne t$ be a node with the highest rank on the path $p_{s,t}$. 
 
-Let $v \ne s \ne t$ be node with highest rank on path $p_{s,t}$. 
-Sub-path $p_{s,v} \in P(s,v)$ 
-if not than the $p' \in P(s,v)$ which dominates $p_{s,v}$ could be substituted
+Sub-path $p_{s,v} \in P(s,v)$ if not than the $p' \in P(s,v)$ which dominates $p_{s,v}$ could be substituted
 to $p_{s,t}$ and the resulting paths $p'_{s,t}$ dominates $p_{s,t}$ which contradict
 $p \in P(s,t)$.
-Similarly, $p_{v,t} \in P(v,t) $. Path $p_{s,v}$ is found by forward search end path
-$p_{v,t}$ by backward search.
+\todo[inline]{predchadzajuca veta mi nedava uplne zmysel. opravit formulaciu prosim.}
+Similarly, $p_{v,t} \in P(v,t) $. Path $p_{s,v}$ is found by the forward search end path
+$p_{v,t}$ by the backward search.
 
 \item[$\supseteq$] 
 Each path found by multi-weighted CH corresponds to the path in the original graph. 
