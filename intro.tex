@@ -29,7 +29,7 @@ Typical example of real-world application of MOSP is automated planning of paths
 %  - CH has good results (reference), but it was no used for MOSP yet
 %   CSH
 
-One of the common methods used to speed up the graph search is called Contraction Hierarchies (CH)~\cite{geisberger2008contraction}. They can be used to find the shortest path more efficiently than Dijkstra algorithm or similar routing approaches and is used in many advanced routing techniques~\cite{delling2009engineering}. 
+One of the common methods used to speed up the graph search is called Contraction Hierarchies (CH)~\cite{geisberger2008contraction}. They can be used to find the shortest path more efficiently than  alternative routing approaches and is used in many advanced routing techniques~\cite{delling2009engineering}. 
 
 The problem is that CH is not applicable to multi-weighted graphs and therefore cannot be used for MOSP, even though the method was recently used for a similar problem -- Constrained Shortest Path Problem (CSPP)~\cite{pugliese2013survey,funke2013polynomial}. Similarly to MOSP, CSPP algorithms also search for shortest paths in multi-weighted graphs, but instead of complete Pareto sets, they only return a single path with the best linear combination of the weights.  
 
@@ -65,4 +65,4 @@ In this paper, we present an algorithm that successfully applies the idea behind
 After the introduction of required terminology in Section \ref{secPreliminaries}, we describe our two-stage solution in Section \ref{secAlgorithms} -- MHC actually consists of two algorithms: one for offline graph preprocessing and one for the search queries. In Section \ref{secExperiments}, we describe our experiments on DIMACS New York City road network benchmarks and compare the performance to an alternative approach. Finally, in Section \ref{secFormalResults}, we formally prove our algorithm's correctness.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\todo[inline]{Tato sekcia potrebuje podstatne viac referencii.}
