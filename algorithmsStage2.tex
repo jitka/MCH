@@ -28,6 +28,8 @@ The MLS algorithm is used to search for the shortest path from $s$ to $t$ and ob
 Reverse search is similar to Forward search, but it originates in the node $t$ and runs on a graph with all the edges reversed (implicitly -- we do not need to actually modify the graph structure for this). Again, we only consider those edges, which (after being reversed) go from lower-ranked nodes to higher-ranked nodes. 
 In this case, the MLS search algorithm is used to search for the shortest path from $t$ to $s$ and obtain the label bags $B(v)$ for all the nodes.
 
+\vskip 5mm
+
 \begin{lstlisting}[caption={Line X of MLS for Reverse Search},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
     for every outgoing edge e=(w, node(l)):
     	if rank(w) < rank(node(l)):

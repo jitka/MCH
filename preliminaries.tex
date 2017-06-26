@@ -11,13 +11,14 @@ First of all, let us describe the Multi-Objective Shortest Path Problem (MOSP) a
 Let $G(V,E)$ be a directed multi-graph where $V$ is a set of nodes and $E$ a set
 of edges with $|V| = n$ and $|E| = m$. Since $G$ is a multi-graph, multi-edges
 $((u,v)_0,(u,v)_1,\dots)$ are allowed in $E$. For a fixed node $v$, any edge $(u,v)_i$ is called an in-edge and any edge $(v,w)_j$ is considered an out-edge.
+% TODO nahradit out-edge za outgoing edge?
 
-Every node is assigned a \emph{weight vector} given by the weight function $w: E \rightarrow \mathbb{R+}^d$. Dimension $d$ represents a number of criteria in a multi-objective search. 
+Every node is assigned a \emph{weight vector} given by the weight function $w: E \rightarrow \mathbb{R}_+^d$. Dimension $d$ represents a number of criteria in a multi-objective search. 
 In our experiments, we consider $d=2$ and $d=3$.
-We say that a weight vector $a$ is dominated by vector $b$ ($a,b \in \mathbb{R+}^d$) if
+We say that a weight vector $a$ is dominated by vector $b$ ($a,b \in \mathbb{R}_+^d$) if
 $b$ has at least one weight lower than $a$ and no weight higher than $a$. 
 
-Any sequence of edges $(s=u_0,u_1)_*,(u_1,u_k)_*,\dots(u_{k-1},t=u_k)$ is called
+Any sequence of edges $(s \! = \! u_0,u_1)_*,(u_1,u_k)_*,\dots(u_{k-1},t \! = \! u_k)$ is called
 \emph{path} $p_{s,t}$. Length of a path is defined as a sum of the weights 
 $w(p_{s,t}) = \Sigma_{i=0}^{i<k} (u_i,u_{i+1})$. The set of all non-dominated paths between $s$ and $t$ is called {\em Pareto set}
 $P(s,t)$. Given a pair of nodes $s,t$, the aim of MOSP is to find a Pareto set $P(s,t)$.
@@ -36,19 +37,26 @@ MLS algorithm (see Pseudocode \ref{MLSalg}) is designed to search for paths in m
 \end{itemize}
 
 Key part of the algorithm is assigning so-called \emph{labels} $l\in \mathcal{R}^d$ to graph nodes.
-Each label $l$ of a node $v$ contains the length $w(l)$  of one possible path from $s$ to $v$. Given a node pair $s,t$ and a label $l$, we denote the name of its corresponding node as $node(l) = v$ and the name of previous node on the path from $s$ to $v$ as $prev(l)$.
+Intuitive, labels represents path from $s$ to some node $v$.
+Given source node $s$ and label $l$ we denote its corresponding node $node(l)=v$
+Label $l$ contains label from previous node on the path $prev(l)$ and length of this path $w(l)$.
 Each node has a set of non-dominated labels called \emph{label bag} $B(v)$.
 
-As the first step of the algorithm, we assign labels in the following manner: $B(s)=0^d$ and $\forall v \ne s: B(v)=\emptyset$.
+As the first step of the algorithm, we assign labels in the following manner: $B(s)=\{0^d\}$ and $\forall v \ne s: B(v)=\emptyset$.
 At every subsequent step of the algorithm, one label is \emph{expanded}. 
-During the expansion, all the outgoing edges are considered -- the outgoing edge, together with the previous path to the label make up the path that is added to corresponding label bag. Then, we check whether there is a label which dominates another.
-\todo[inline]{nie som si isty, ci su predchadzajuce 2 vety spravne, plus nie su uplne jednoducho zrozumitelne. skontroluj to prosim a ked sa da, vylepsi tu formulaciu tak, aby bola jasnejsia}
+During the expansion, all the outgoing edges are considered -- the outgoing edge, together with the previous path to the label make up the path that is added to corresponding label bag. 
+Then, we check whether there is a label which dominates another in order to have only non-dominated labels in label bag for
+each node.
+%\todo[inline]{nie som si isty, ci su predchadzajuce 2 vety spravne, plus nie su uplne jednoducho zrozumitelne. skontroluj to prosim a ked sa da, vylepsi tu formulaciu tak, aby bola jasnejsia}
+%Ten prvni odstavec jsem prepsala, a opravila jsem nejake drobne chyby, je to lepsi?
 
 Data structure {\em open\_labels} is typically used when implementing MLS. It is a priority queue with all the labels which were created, but not yet expanded. The priority function needs to guarantee that top label is never dominated by any other label in that queue.
 
-The MLS algorithm stops when every label is expanded. At that time, the labels in bags $B(t), t \in T$ represent the lengths of the paretoset of shortest path.\todo{Veta zacinajuca na ``At that time\ldots'' asi nie je formalne uplne ok.} Resulting path can be reconstructed recursively using $prev(l)$.
-
-%\todo[inline]{je třeba dokazovat korektnost nebo je to zjevne ci zname?} -> netreba
+The MLS algorithm stops when every label is expanded. It returns label bags $B(t), t \in T$. 
+They represent the full Pareto set of shortest path. 
+%\todo{Veta zacinajuca na ``At that time\ldots'' asi nie je formalne uplne ok.} 
+% Lepsi?
+Resulting path can be reconstructed recursively using $prev(l)$.
 
 \renewcommand{\lstlistingname}{Pseudocode} 
 \begin{lstlisting}[caption={MLS Algorithm},label=MLSalg,captionpos=t,float,abovecaptionskip=-\medskipamount]

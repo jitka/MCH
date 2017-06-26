@@ -12,7 +12,7 @@ Both algorithms are inspired by Contraction Hiearchies for single-weighted undir
 \begin{itemize}
   \item {\em MCHp: Preprocessing algorithm} takes a multi-weighted directed multigraph on the input and returns an extended graph with the same set of nodes, but with additional edges. It contracts all the nodes one by one, adding new edges called \emph{shortcuts}, while preserving all the Pareto optimal shortest path distances. 
 Nodes will have a rank ($rank(v) \in \{0, \dots n-1\}$) corresponding to their order of contraction.
-Resulting preprocessed graph has all the original nodes $V$, edges $E$ and new set of shortcuts $E+$.
+Resulting preprocessed graph has all the original nodes $V$, edges $E$ and new set of shortcuts $E_+$.
 Each shortcut $(u,v)_i$ corresponds to a path in the original graph $p_{u,v}$, while $w((u,v)_i) = w(p_{u,v})$ and it keeps a note which is later used to reconstruct the original path.
   \item {\em MCHq: Query algorithm} uses the preprocessed graph to find a Pareto set of all
 the shortest paths between two nodes $s$ and $t$. MCHq runs a search algorithm in both directions -- from $s$ to $t$ and from $t$ to $s$. After that, it joins the search results into the path in preprocessed graph and finally reconstructs the path in the original graph. 

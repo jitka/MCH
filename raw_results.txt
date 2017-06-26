@@ -300,7 +300,54 @@ query 6032` 11738
 dijkstra expanded 292526 time 3225ms
 contraction hiearchies expanded 7935 time 284ms
 
-
+Test USA-road-NY
+query 314` 6275
+dijkstra expanded 31612 time 116458243
+contraction hiearchies expanded 44112 time 25796111423
+paretoset size 3
+query 106809` 163598
+dijkstra expanded 20645947 time 1736967269923
+contraction hiearchies expanded 28359 time 4267343025
+paretoset size 220
+query 254403` 50911
+dijkstra expanded 3747775 time 97739302415
+contraction hiearchies expanded 17025 time 2011937117
+paretoset size 32
+query 199910` 41911
+dijkstra expanded 14896233 time 601908737789
+contraction hiearchies expanded 27249 time 3970699162
+paretoset size 247
+query 180009` 164892
+dijkstra expanded 1040523 time 9163765141
+contraction hiearchies expanded 44178 time 4021925137
+paretoset size 51
+query 142787` 101930
+dijkstra expanded 15462623 time 589129961333
+contraction hiearchies expanded 26020 time 2016972611
+paretoset size 137
+query 253826` 8151
+dijkstra expanded 15076640 time 903303597231
+contraction hiearchies expanded 30464 time 6614231475
+paretoset size 289
+query 164220` 150215
+dijkstra expanded 2523058 time 47381215182
+contraction hiearchies expanded 26056 time 2358949639
+paretoset size 20
+query 73443` 35455
+dijkstra expanded 5839319 time 179757488556
+contraction hiearchies expanded 50615 time 15261843269
+paretoset size 4
+query 201782` 68467
+dijkstra expanded 20139711 time 1005800420227
+contraction hiearchies expanded 35933 time 7808687182
+paretoset size 344
+query 31474` 194156
+dijkstra expanded 9310722 time 266607022198
+contraction hiearchies expanded 73789 time 28051749768
+paretoset size 56
+======================SUM==================
+dijkstra expanded 9883105 time 494352ms
+contraction hiearchies expanded 36709 time 9289ms
 
 
 %[[26051 , 32 , 4.3 , 4227 , 56 ], [178472 , 607 , 31 , 2055 , 34 ], [174808 , 514 , 23 , 2004 , 20 ], [53238 , 60 , 12 , 1365 , 5 ], [146709 , 278 , 41 , 6853 , 149 ], [912326 , 17455 , 1978 , 10307 , 353 ], [996507 , 16181 , 2142 , 13681 , 711 ], 
@@ -319,4 +366,10 @@ contraction hiearchies expanded 7935 time 284ms
 % min [26051 & 32 & 4.3 & 1365 & 5 & 6.16 & 88.51 ]
 % max [996507 & 17455 & 2142 & 13681 & 711 & 0.57 & 49.45 ]
 % avr [355444 & 5018 & 604 & 5786 & 190 & 57 & 18.6
+
+
+Test USA-road-NY
+======================SUM==================
+dijkstra expanded 9883105 time 494352ms
+contraction hiearchies expanded 36709 time 9289ms
 
