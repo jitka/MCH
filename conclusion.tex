@@ -3,9 +3,25 @@
 
 \section{Conclusion}
 \label{secConclusion}
-Contraction Hierarchies provided guaranteed speedup on singe-criteria graph
-with fixed highway dimension. We brought its advantages to multi-criteria 
-road graphs.
 
+Contraction Hierarchies is a method that can provide a significant speedup for 
+shortest path problem algorithms. However, the method could only be used on 
+single-weighted graphs until now, which prevented its application to multi-objective
+shortest path problem. 
+
+We introduced an extension of the method, called Multi-weighted Contraction Hierarchies (MCH),
+which can successfully be applied to multi-weighted graphs. 
+MCH consists of two algorithms: offline graph preprocessing and online query algorithm. 
+
+In this paper, we were able to formally prove the correctness of MCH and to test our 
+implementation of the method with respect to both the run time and the number of expanded nodes 
+on real-world based benchmarks. We compared the method's performance to baseline alternative 
+solution -- Multi-criteria Label Setting (MLS) algorithm.
+
+Our results on 12 benchmark instances from 9th DIMACS Implementation Challenge,
+representing bi- and tri-objective shortest path search problems on New York City 
+road network demonstrate, that MCH algorithms are faster than MLS by an order of 
+magnitude on all benchmark instances with at least 20,000 nodes (the instance size 
+varied between 10,000 and 270,000 nodes). 
 
 
