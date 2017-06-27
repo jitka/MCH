@@ -1,70 +1,100 @@
 % 1. Introduction:
 % 
-%  (background)
-%  - Common problem: Multi-objective shortest path problems (MOSP)
-%  - Briefly explain the problem in natural language (no formalisms)
-%  - How this graph problem relates to real world (path planning)
-%  - The easier variant of the problem, SPP, can be solved 
-%    using Contraction Hierarchies (CH)
-%  - In 1-2 natural language sentences, explain the contraction hierarchies approach
+%  (background) - Common problem: Multi-objective shortest path problems (MOSP)
+%  - Briefly explain the problem in natural language (no formalisms) - How this
+%  graph problem relates to real world (path planning) - The easier variant of
+%  the problem, SPP, can be solved using Contraction Hierarchies (CH) - In 1-2
+%  natural language sentences, explain the contraction hierarchies approach
 %  
-%  (problem)
-%  - CH has good results (reference), but it was no used for MOSP yet
+%  (problem) - CH has good results (reference), but it was no used for MOSP yet
 %  
-%  (solution)
-%  - in this paper, we show how CH can be used for MOSP
-%  - [describe the solution] 
+%  (solution) - in this paper, we show how CH can be used for MOSP - [describe
+%  the solution] 
 %  
-%  (outline)
-%  - paper outline. contents of all the sections
+%  (outline) - paper outline. contents of all the sections
 
-\section{Introduction}
-\label{secIntroduction}
+\section{Introduction} \label{secIntroduction}
 
-Multi-objective shortest path problem (MOSP) is a fundamental problem from graph theory with many real world applications. Algorithms solving the problem need to find a Pareto set of shortest paths between two nodes in a multi-weighted directed or undirected graphs or multi-graphs. 
+Multi-objective shortest path problem (MOSP) is a fundamental problem from
+graph theory with many real world applications. Algorithms solving the problem
+need to find the Pareto set of shortest paths between two nodes in a
+multi-weighted directed or undirected graphs or multi-graphs. 
 
-Typical example of real-world application of MOSP is automated planning of paths within the transport network represented as a graph, while optimizing criteria like travel time, distance, price, comfort or compatibility with traveller's preferences. This problem arises from both travel industry and daily life activities. Trip planning applications, such as car navigation systems need efficient algorithms for for multi-criteria problems in very large transport networks~\cite{veneti2016time}. 
+A typical example of real-world application of MOSP is automated planning of
+paths within a transport network represented as a graph, while optimizing
+criteria such as travel time, distance, price, comfort or compatibility with
+traveller's preferences. This problem arises from both travel industry and
+daily life activities. Trip planning applications, such as car navigation
+systems need efficient algorithms for for multi-criteria problems in very large
+transport networks~\cite{veneti2016time}. 
 
-% smazala jsem public transport protoze to je time-dependent search coz je dost jiny problem
+% smazala jsem public transport protoze to je time-dependent search coz je dost
+% jiny problem
 
-%  (problem)
-%  - CH has good results (reference), but it was no used for MOSP yet
-%   CSH
+%  (problem) - CH has good results (reference), but it was no used for MOSP yet
+%  CSH
 
-One of the common methods used to speed up the graph search is called Contraction Hierarchies (CH)~\cite{geisberger2008contraction}. They can be used to find the shortest path more efficiently than  alternative routing approaches and is used in many advanced routing techniques~\cite{delling2009engineering}. 
+One of the common methods used to speed up the shortest path search  is called
+Contraction Hierarchies (CH)~\cite{geisberger2008contraction}. Contraction
+Hierarchies can be used to find a shortest path more efficiently than previous
+routing approaches and is used in many advanced routing
+techniques~\cite{delling2009engineering}.  CH is relatively simple algorithm
+which could be modified so we choose it for generalisation above current state
+of the art algorithm.
 
-The problem is that CH is not applicable to multi-weighted graphs and therefore cannot be used for MOSP, even though the method was recently used for a similar problem -- Constrained Shortest Path Problem (CSPP)~\cite{pugliese2013survey,funke2013polynomial}. Similarly to MOSP, CSPP algorithms also search for shortest paths in multi-weighted graphs, but instead of complete Pareto sets, they only return a single path with the best linear combination of the weights.  
+The problem is that Contraction Hiearchies is not applicable to multi-weighted
+graphs and therefore cannot be used for MOSP, even though the method was
+recently used for a similar problem -- Constrained Shortest Path Problem
+(CSPP)~\cite{pugliese2013survey,funke2013polynomial}. Similarly to
+Multi-objective shortest path, Constrained Shortest Path algorithms also search
+for shortest paths in multi-weighted graphs, but instead of complete Pareto
+sets, they only return a single path with the best linear combination of
+weights.  
 
-%  (solution)
-%  - in this paper, we show how CH can be used for MOSP
-%  - [describe the solution] 
+%  (solution) - in this paper, we show how CH can be used for MOSP - [describe
+%  the solution] 
 
-In this paper, we present an algorithm that successfully applies the idea behind Contraction Hierarchies approach to efficiently solve MOSP. Our algorithm, called Multi-weighted Contraction Hierarchies (MCH), is able to find the whole Pareto set of shortest paths between a pair of nodes in a multi-weighted directed multi-graph. In addition to CH, we also draw inspiration from Multicriterial Label-Setting (MLS) algorithm~\cite{martins1984multicriteria}. 
+In this paper, we present an algorithm that generalizes the idea behind Contraction
+Hierarchies approach to efficiently solve MOSP. Our algorithm, called
+Multi-weighted Contraction Hierarchies (MCH), is able to find the whole Pareto
+set of shortest paths between a pair of nodes in a multi-weighted directed
+multi-graph. In addition to CH, we also draw inspiration from Multicriterial
+Label-Setting (MLS) algorithm~\cite{martins1984multicriteria}. 
 % \todo{citace} co si rovnou nezapisu na posledni chvili nenajdu!
 
-%For vehicle or bicycle routing could be used namoa \todo{citace} which is optimal for direct (no preparation) questions.
-%\todo[inline]{to je state of the art a u te si nejsem jista jestli jsem si naimplementovala dobre a tak ji nemam ve vysledcich, nevim jestli ji davat tady.} -> radsej nie. 
+%For vehicle or bicycle routing could be used namoa \todo{citace} which is
+%optimal for direct (no preparation) questions.  \todo[inline]{to je state of
+%the art a u te si nejsem jista jestli jsem si naimplementovala dobre a tak ji
+%nemam ve vysledcich, nevim jestli ji davat tady.} -> radsej nie. 
 
 %There could be improvemenents when we allows preprocessing algorithms. 
 
-% Higway dimension  \cite{abraham2010highway} is parametr which is low on road network whit only on criteria and it could be used for upper bound of time complexity of search algorithms. We generalize highway dimension in orther to found complexity bound also for our problem.  
-%Intuice v pozadí:
-%Important vertices plati nejen čase - dokazano v
-%ale věřím že bude funguvat i v namořské výšce a
-%pohodlnosti cest
-%Tj delší důležitější cesty mají hezké vlastnosti
+% Higway dimension  \cite{abraham2010highway} is parametr which is low on road
+% network whit only on criteria and it could be used for upper bound of time
+% complexity of search algorithms. We generalize highway dimension in orther to
+% found complexity bound also for our problem.  
+%Intuice v pozadí: Important vertices plati nejen čase - dokazano v ale věřím
+%že bude funguvat i v namořské výšce a pohodlnosti cest Tj delší důležitější
+%cesty mají hezké vlastnosti
 
 %tady patri vetsina uvodu
 
-%Fully dynamic speed-up techniques for multi-criteria shortest path searches in time-dependent networks.\cite{berger2010fully}
+%Fully dynamic speed-up techniques for multi-criteria shortest path searches in
+%time-dependent networks.\cite{berger2010fully}
 
 % bidirectional heuristic (spis nepouzitelna) \cite{holte2016bidirectional}
 % future work hub labeling \cite{abraham2012hierarchical}
 
 
-%  (outline)
-%  - paper outline. contents of all the sections
-After the introduction of required terminology in Section \ref{secPreliminaries}, we describe our two-stage solution in Section \ref{secAlgorithms} -- MHC actually consists of two algorithms: one for offline graph preprocessing and one for the search queries. In Section \ref{secExperiments}, we describe our experiments on DIMACS New York City road network benchmarks and compare the performance to an alternative approach. Finally, in Section \ref{secFormalResults}, we formally prove our algorithm's correctness.
+%  (outline) - paper outline. contents of all the sections
+After the introduction of required terminology in Section
+\ref{secPreliminaries}, we describe our two-stage solution in Section
+\ref{secAlgorithms} -- MHC consists of two algorithms: one for 
+graph preprocessing and one for queries. In Section
+\ref{secExperiments}, we describe our experiments on DIMACS New York City road
+network benchmarks and compare the performance to an alternative approach.
+Finally, in Section \ref{secFormalResults}, we formally prove our algorithm's
+correctness.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\todo[inline]{Tato sekcia potrebuje podstatne viac referencii.}
+\ptodo[inline]{Tato sekcia potrebuje podstatne viac referencii.}
