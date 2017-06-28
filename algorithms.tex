@@ -5,17 +5,17 @@
 \section{Proposed Algorithms: Multi-weighted Contraction Hierarchies}
 \label{secAlgorithms}
 
-To address the problem of finding Pareto set of optimal paths in multi-weighted directed multi-graphs, we propose so-called Multi-weighted Contraction Hierarchies (MCH). 
-MCH approach consists of two separate stages, each solved by a separate algorithm: preprocessing (MCHp) and query (MCHq). 
-Both algorithms are inspired by Contraction Hierachies for single-weighted undirected graphs \cite{geisberger2008contraction}.
+To address the problem of finding the Pareto set of optimal paths in multi-weighted directed multi-graphs, we propose Multi-weighted Contraction Hierarchies (MCH). 
+MCH approach consists of two separate stages, each solved by a separate algorithm: contracted graph construction (MCHp) and query (MCHq). 
+Both algorithms are generalisation of Contraction Hierachies for single-weighted undirected graphs \cite{geisberger2008contraction}.
 
 \begin{itemize}
-  \item {\em MCHp: Preprocessing algorithm} takes a multi-weighted directed multigraph on the input and returns an extended graph with the same set of nodes, but with additional edges. It contracts all the nodes one by one, adding new edges called \emph{shortcuts}, while preserving all the Pareto optimal shortest path distances. 
+  \item {\em MCHp: Preprocessing algorithm} takes a multi-weighted directed multigraph on the input and returns an extended graph with the same set of nodes, but with additional edges. It contracts all the nodes one by one, adding new edges called \emph{shortcuts}, while preserving all the Pareto optimal shortest path lengths. 
 Nodes will have a rank ($rank(v) \in \{0, \dots n-1\}$) corresponding to their order of contraction.
-Resulting preprocessed graph has all the original nodes $V$, edges $E$ and new set of shortcuts $E_+$.
+The resulting preprocessed graph has all the original nodes $V$, edges $E$ and new set of shortcuts $E_+$.
 Each shortcut $(u,v)_i$ corresponds to a path in the original graph $p_{u,v}$, while $w((u,v)_i) = w(p_{u,v})$ and it keeps a note which is later used to reconstruct the original path.
-  \item {\em MCHq: Query algorithm} uses the preprocessed graph to find a Pareto set of all
-the shortest paths between two nodes $s$ and $t$. MCHq runs a search algorithm in both directions -- from $s$ to $t$ and from $t$ to $s$. After that, it joins the search results into the path in preprocessed graph and finally reconstructs the path in the original graph. 
+  \item {\em MCHq: Query algorithm} uses the preprocessed graph to find the Pareto set of all
+the shortest paths between two nodes $s$ and $t$. MCHq runs a search algorithm in both directions -- from $s$ to $t$ and from $t$ to $s$. After that, it joins the both partial paths into the path in the preprocessed graph and finally reconstructs the path in the original graph. 
 \end{itemize}
 
 \input{algorithmsStage1.tex}
