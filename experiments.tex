@@ -59,12 +59,6 @@ full & 270 000 & 9883105 & 494352 & & 36709 & 9289 & 269.23 & 53.22  \\ \hline
 10k(0.5-2) & 10 000     & 377541 & 20798 & 734 & 12261 & 353 & 30.80 & 58.92 \\ \hline
 20k(0.75-1.5) & 20 000 & 355497 & 4981 & 121 & 5466 & 298 & 65.04 & 16.72 \\ \hline
 20k(0.5-2) & 20 000    & 292526 & 3225 & 116 & 7935 & 284 & 36.87 & 11.36 \\ \hline
-
-%neaktualni
-%\multicolumn{9}{c}{Summary} \\ \hline
-%Average & 27 143 & 26051 & 32 & 4.3 & 1365 & 5 & 6.16 & 88.51 \\ \hline
-%Minimum & 10 000 & 996507 & 17455 & 2142 & 13681 & 711 & 0.57 & 49.45\\ \hline
-%Maximum & 50 000 & 355444 & 5018 & 604 & 5786 & 190 & 57 & 18.6 \\ \hline
 \end{tabular}
 \end{table}
 
@@ -72,8 +66,7 @@ full & 270 000 & 9883105 & 494352 & & 36709 & 9289 & 269.23 & 53.22  \\ \hline
 %\todo[inline]{ s full graf je problem. nahodne dozaci tam casto nezbehnou ani za nekolik hodin. jsou dve reseni but tam nedat to MLS pro porovnani a nebo dat vyber jen tech dotazu co zbehnout (mam uz ho pripraveny). Ktera varianta je lepsi?}
 
 The {\em ``speed up expanded''} and {\em ``speed up time''} columns in the table express how many times faster the MCH queries were compared to MLS queries with respect to number of expanded nodes and computation time respectively. We can see that MCH performed better on all the benchmark instances with the exception of the smallest one and modified smallest one ({\tt 11k-10k} and {\tt 11k-10k-(0.75-1.5)}), where MLS had shorter computation time (the speedup was $0.57 < 1$, $0.2~<~1$).
-%\todo[inline]{Prosim ta vysvetli tu Summary cast a avg/min/max hodnoty.}
-%\todo[inline]{je to 'excelovkse sum, min, avr sloupecku nad tim. To jsem ospala z tabulky v jinem clanku stejne koference. Ma smysl to tam mit?} -> moc nie
+
 
 % jak porametry MCq ovlivnovali dobu preprocessingu:
 %\subsection{Graph preprocessing}
@@ -90,15 +83,25 @@ The {\em ``speed up expanded''} and {\em ``speed up time''} columns in the table
 %TODO pocet stratek a cas pri precessing celeho grafu
 % weighted ordering?
 %
-%\begin{table}
-%\caption{Preprocessing ...}
-%\label{table1}
-%\begin{tabular}{l|l|ccc|cc}
-%instance & variant & edges \# & shortcut \# & shortcut X & length \# & shorter x \\ \hline
-%\multicolumn{7}{c}{Summary} \\ \hline
+\begin{table}
+\caption{Preprocessing ...}
+\label{table1}
+\begin{tabular}{l|l|c|ccc|ccc}
+    instance & variant & prep & edges & shortcuts & \% & MLS length & MCH length & \% \\ \hline
+\multicolumn{9}{c}{Summary} \\ \hline
+2455-20k & default & 27s & 49296 & 35081 & 1.71 & 134.84 & 20.98 & 6.43 \\ \hline
+5555-20k & default & 21s & 50292 & 36137 & 1.71 & 152.41 & 18.40 & 8.28 \\ \hline 
+8765-20k & default & 10s & 51090 & 34785 & 1.68 & 103.76 & 17.17 & 6.04 \\ \hline
+2455-20k & \#s & 23s & 49296 & 35192 & 1.71 & 100.99 & 17.42 & 5.80 \\ \hline
+5555-20k & \#s & 25s & 50292 & 37123 & 1.74 & 124.99 & 16.09 & 7.76 \\ \hline
+8765-20k & \#s & 8s & 51090 & 34964 & 1.68 & 88.73 & 15.71 & 5.64 \\ \hline
+2455-20k & \#s-d & 47s & 49296 & 53956 & 2.09 & 127.07 & 16.30 & 7.79 \\ \hline
+5555-20k & \#s-d & 43s & 50292 & 56038 & 2.11 & 125.09 & 19.35 & 6.46 \\ \hline
+8765-20k & \#s-d & 29s & 51090 & 57701 & 2.13 & 94.32 & 17.43 & 5.41 \\ \hline
+
 %Average & variant a & & & & & \\ \hline
 %Average & variant b & & & & & \\ \hline
 %Average & variant c & & & & & \\ \hline
-%\end{tabular}
-%\end{table}
+\end{tabular}
+\end{table}
 

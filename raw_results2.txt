@@ -1,0 +1,29 @@
+Preparation time 27s
+instance testGraph2455-20k variant default edges 49296 shotcut 35081 % 1.7116398896462188
+length 134.84225 20.976904 1.0
+Preparation time 21s
+instance testGraph5555-20k variant default edges 50292 shotcut 36137 % 1.7185437047641772
+length 152.41727 18.40352 1.0
+Preparation time 10s
+instance testGraph8765-20k variant default edges 51090 shotcut 34785 % 1.680857310628303
+length 103.76137 17.175 1.0
+
+Preparation time 23s
+instance testGraph2455-20k variant #shortcut edges 49296 shotcut 35192 % 1.7138915936384291
+length 100.99117 17.423391 1.0
+Preparation time 25s
+instance testGraph5555-20k variant #shortcut edges 50292 shotcut 37123 % 1.7381492086216497
+length 124.98743 16.093712 1.0
+Preparation time 8s
+instance testGraph8765-20k variant #shortcut edges 51090 shotcut 34964 % 1.6843609316891759
+length 88.72884 15.708099 1.0
+
+Preparation time 47s
+instance testGraph2455-20k variant #shortcut-degree edges 49296 shotcut 53956 % 2.0945309964297305
+length 127.072655 16.298914 1.0
+Preparation time 43s
+instance testGraph5555-20k variant #shortcut-degree edges 50292 shotcut 56038 % 2.114252763859063
+length 125.091934 19.353687 1.0
+Preparation time 29s
+instance testGraph8765-20k variant #shortcut-degree edges 51090 shotcut 57701 % 2.1293990996281074
+length 94.31889 17.429443 1.0
