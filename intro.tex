@@ -36,20 +36,16 @@ One of the common methods used to speed up the shortest path search  is called
 Contraction Hierarchies (CH)~\cite{geisberger2008contraction}. Contraction
 Hierarchies can be used to find a shortest path more efficiently than previous
 routing approaches and is used in many advanced routing
-techniques~\cite{delling2009engineering}.  CH is relatively simple algorithm
-which could be modified so we choose it for generalisation above current state
-of the art algorithm.
+techniques~\cite{delling2009engineering}. 
 
-The problem is that Contraction Hiearchies is not applicable to multi-weighted
+The problem is that Contraction Hiearchies approach is not applicable to multi-weighted
 graphs and therefore cannot be used for MOSP, even though the method was
-recently used for a similar problem -- Constrained Shortest Path Problem
-(CSPP)~\cite{pugliese2013survey,funke2013polynomial}. Similarly to
-Multi-objective shortest path, Constrained Shortest Path algorithms also search
+recently used for a similar problems. For example, Funke and Storand used CH for Constrained Shortest Path Problem (CSPP)~\cite{pugliese2013survey,funke2013polynomial}. Similarly to Multi-objective shortest path, Constrained Shortest Path algorithms also search
 for shortest paths in multi-weighted graphs, but instead of complete Pareto
 sets, they only return a single path with the best linear combination of
-weights. Another problem where CH was applied is shortest path for
-battery electric vehicle \cite{artmeier2010shortest} where they optimize only
-time but consider battery state. 
+weights. Before that, Artmeier et al. applied it when searching for shortest paths for electric vehicles, where they optimized for
+time, while also considering battery state~\cite{artmeier2010shortest}. 
+
 
 %  (solution) - in this paper, we show how CH can be used for MOSP - [describe
 %  the solution] 
@@ -60,6 +56,9 @@ Multi-weighted Contraction Hierarchies (MCH), is able to find the whole Pareto
 set of shortest paths between a pair of nodes in a multi-weighted directed
 multi-graph. In addition to CH, we also draw inspiration from Multicriterial
 Label-Setting (MLS) algorithm~\cite{martins1984multicriteria}. 
+
+Even though some methods that are more recent and more advanced than CH exist (for example Hub Labelling by Abraham et al.~\cite{abraham2011hub}), we decided to extend CH because it can be relatively easily generalized for multi-objective search. 
+
 
 %For vehicle or bicycle routing could be used namoa \todo{citace} which is
 %optimal for direct (no preparation) questions.  \todo[inline]{to je state of
