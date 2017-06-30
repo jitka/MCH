@@ -56,25 +56,39 @@ The MLS algorithm stops when every label is expanded. It returns label bags $B(t
 They represent the full Pareto set of shortest path in the graph.
 Sequence of nodes on final path can be reconstructed from labels recursively using $prev(l)$.
 
-\renewcommand{\lstlistingname}{Pseudocode} 
-\begin{lstlisting}[caption={MLS Algorithm},label=MLSalg,captionpos=t,float,abovecaptionskip=-\medskipamount]
-Input: source node s, set of target nodes T
-for all nodes v:
-	B(v) <- \emptyset
-B(s) <- 0^d
-B(t) <- \infinity^d for all t \in T
-open_labels <- s
-while open_labels is not empty:
-	l <- some label from open_labels
-    if w(l) is dominated by all labels in B(t) \in T
-    	continue
-    for every outgoing edge e=(node(l),w)_i
-    	for every label k from bag B(w):
-            if k is dominated by w(l)+w(e):
-            	remove k from bag B(w)
-        if w(l)+w(e) is not dominated by any label from B(w)
-            add new label with weight (w(l)+w(e)) to B(w)
-Output: B(t) for every t \in T
-\end{lstlisting}
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \LinesNumbered
+    \SetKwInOut{Input}{input}
+    \SetKwInOut{Output}{output}
+    \SetKw{Continue}{continue}
+    \caption{Algorithm MLS}
+    \label{MLSalg}
+    \Input{ source node $s$, set of target nodes $T$}
+    \ForEach{{\upshape node} $v \in V$}{
+        $B(v) \leftarrow \emptyset$
+    }
+    \ForEach{{\upshape node} $t \in T$}{
+        $B(t) \leftarrow \infty^d $
+    }
+    $B(s) \leftarrow 0^d$ \\
+    open\_labels $ \leftarrow s$ \\
+    \While{ {\upshape open\_labels} $\ne \emptyset$}{
+        $l \leftarrow$ a label from open\_labels
+        \If{ $w(l)$ {\upshape is dominated by all labels in } $B(t) \in T$}{
+            \Continue
+        }
+        \ForEach{ \upshape outgoing edge $e=(node(l),w)_i$ \label{MLS:edge}}{
+            \ForEach{ \upshape label $k$ from bag $B(w)$}{
+                \If{ \upshape $w(k)$ is dominated by $w(l)+w(e)$ } {
+                    remove $w(k)$ from bag $B(w)$
+                }
+            }
+            \If{ \upshape $w(l)+w(e)$ is not dominated by any label from $B(w)$ } {
+                add new label with weight $(w(l)+w(e))$ to $B(w)$
+            }
+        }
+    }
+    \Output{ $B(t)$ for every $t \in T$}
+\end{algorithm}
 
-%\todo[inline]{sazba pseudokodu}

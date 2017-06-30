@@ -13,14 +13,35 @@ Rank of a node is assigned by a heuristic function $f$. In our implementation,
 we used a function described in section \ref{secExperiments}.
 %Higway dimension in theretical resutls
 
-\renewcommand{\lstlistingname}{Pseudocode MCHp}
-\begin{lstlisting}[caption={MCHp},label=MCHp,captionpos=t,float,abovecaptionskip=-\medskipamount]
-Input: Graph G for i from 0 to n-1 v <- node with the minimal rank rank(v) = i
-witnesses <- witness search for every pair of edges (u,v)_i,(v,w)_j: if
-p(u,v,w) is not dominated by any witness: add shortcut (u,w)_0 w((u,w)_0) =
-w((u,v)_i)+w((v,w)_j) contracted_node((u,w)) = v remove all out-edges (v,w) and
-in-edges(u,v) from G remove v from G put v and adjacent edges into archive
-Output: Archived nodes, edges, rank of nodes.  \end{lstlisting}
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \LinesNumbered
+    \SetKwInOut{Input}{input}
+    \SetKwInOut{Output}{output}
+    \SetKwComment{Comment}{$\triangleright$\ }{}
+    \SetKw{Continue}{continue}
+    \caption{Algorithm MCHp}
+    \label{MCHp}
+    \Input{ Graph $G$ with weight function $w: E \rightarrow R_+^d$. }
+    \For{\upshape $i$ from $0$ to $n-1$} {
+        $v \leftarrow $ node with the minimal rank
+        $rank(v) = i$ \\
+        witnesses $\leftarrow$ witness search \\
+        $n \leftarrow 0$ \Comment*[r]{Number of new shortcuts} 
+        \ForEach{\upshape pair of edges $(u,v)_i,(v,w)_j$ } {
+            \If{\upshape $p(u,v,w)$ is not dominated by any witness } {
+                add shortcut $(u,w)_n$ \\
+                $w((u,w)_n) = w((u,v)_i)+w((v,w)_j)$ \\
+                $contracted\_node((u,w)_n) = v$ \\
+                $n = n+1$ \\
+            }
+        }
+        remove all out-edges $(v,w)$ and in-edges$(u,v)$ from $G$ \\
+        remove $v$ from $G$ \\
+        put $v$ and adjacent edges into archive 
+    }
+    \Output{ Archived nodes, edges, rank of nodes. }
+\end{algorithm}
 
 First, we initialize the $f$ values for all the nodes. Then, at each step of
 the algorithm, we select the node $v$ with lowest value of $f$ and update $f$

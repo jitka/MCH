@@ -8,7 +8,7 @@
 \subsection{Stage 2: Search Query}
 \label{subsecStage2}
 
-Multi-weighted Contraction Hierarchies query (see Pseudocode \ref{MCHp} below) is based on bi-directional search.
+Multi-weighted Contraction Hierarchies query (see Pseudocode \ref{MCHq} below) is based on bi-directional search.
 Each $s$-$t$ search query runs two MLS-like searches on a slightly modified preprocessed graph
 and then we combine their results. 
 %We do not transform the whole graph in advance -- we merely modify it during queries.
@@ -17,34 +17,74 @@ and then we combine their results.
 Forward search runs on a preprocessed sub-graph with only those oriented edges going from 
 lower-rank nodes to higher-rang nodes
 (other edges are ignored). It is not necessary to transform the whole graph in advance -- we do it on the go. 
-%In the pseudocode of MLS we change line \todo{jina sazba pseudokodu} to \ref{}.
+In the pseudocode of MLS we change line to \ref{MLS:edge} to code \ref{MCHqf}.
 The MLS algorithm is used to search for the shortest path from $s$ to $t$ and obtain the label bags $B(v)$ for all the nodes.
 
-%\begin{lstlisting}[caption={Line X of MLS for Forward Search},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
-%    for every outgoing edge e=(node(l),w):
-%    	if rank(node(l)) < rank(w):
-%        	continue;
-%\end{lstlisting}
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKw{Continue}{continue}
+    \caption{Line \ref{MLS:edge} of MLS for Forward Search}
+    \label{MCHqf}
+    \ForEach{ \upshape outgoing edge $e=(node(l),w)_i$}{
+        \If { rank(node(l)) < rank(w)) } {
+            \Continue
+        }
+        $\dots$
+    }
+\end{algorithm}
 
 \paragraph*{Reverse Search}
 Reverse search is similar to Forward search, but it originates in the node $t$ and runs on a graph with all the edges reversed (implicitly -- we do not need to actually modify the graph structure for this). Again, we only consider those edges, which (after being reversed) go from lower-ranked nodes to higher-ranked nodes. 
+In the pseudocode of MLS we change line to \ref{MLS:edge} to code \ref{MCHqr}.
 In this case, the MLS search algorithm is used to search for the shortest path from $t$ to $s$ and obtain the label bags $B(v)$ for all the nodes.
 
 \vskip 5mm
 
-%\begin{lstlisting}[caption={Line X of MLS for Reverse Search},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount]
-%    for every outgoing edge e=(w, node(l)):
-%    	if rank(w) < rank(node(l)):
-%        	continue;
-%\end{lstlisting}
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKw{Continue}{continue}
+    \caption{Line \ref{MLS:edge} of MLS for Reverse Search}
+    \label{MCHqr}
+    \ForEach{ \upshape outgoing edge $e=(w,node(l))_i$}{
+        \If { rank(w) < rank(node(l)) } {
+            \Continue
+        }
+        $\dots$
+    }
+\end{algorithm}
 
 To find the paths in preprocessed graph, we combine the labels from forward and reverse search. 
 For all the nodes $v$ with $B(v) \ne \emptyset$, we join all the combinations of $s$-$v$ and $v$-$t$ paths. 
 All non-dominated paths make up the Pareto set of shortest $s$-$t$ paths in the preprocessed graph.
 Pareto set of shortest paths in the original graph can be reconstructed recursively using the notes on the shortcuts.
 
-\begin{lstlisting}[caption={Pseudocode MCHq},label="MCHq",captionpos=t,float,abovecaptionskip=-\medskipamount]
-%    for every outgoing edge e=(w, node(l)):
-%    	if rank(w) < rank(node(l)):
-%        	continue;
-\end{lstlisting}
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKw{Continue}{continue}
+    \SetKwInOut{Input}{input}
+    \SetKwInOut{Output}{output}
+    \caption{Algorithm MCHq}
+    \label{MCHq}
+    \Input{ Preprocessed graph $G'$, source node $s$, target node $t$.}
+    forward\_bags $\leftarrow$ forward search \\
+    backward\_bags $\leftarrow$ backward search \\
+    pareto\_set $\leftarrow \emptyset$ \\
+    \ForEach{ \upshape node $v \in $ forward\_bags } {
+        $L \leftarrow $ forward\_bags($v$) \\
+        $R \leftarrow $ reverse\_bags($v$) \\
+        \ForEach{ \upshape par of label $l \in L, r \in R$ } {
+            \ForEach{ \upshape label $k$ from pareto\_set}{
+                \If{ \upshape $w(k)$ is dominated by $w(l)+w(r)$ } {
+                    remove $k$ from pareto\_set
+                }
+            }
+            \If{ \upshape $l$ is not dominated by any label from pareto\_set } {
+                pareto\_set $\leftarrow$ path from $l$ connected to reverse path from $r$
+            }
+        }
+    }
+    \ForEach{ \upshape path $p$ $\in$ pareto\_set } {
+        reconstruct path to original graph
+    }
+    \Output{ Pareto set of shortest $s$-$t$ paths. }
+\end{algorithm}
