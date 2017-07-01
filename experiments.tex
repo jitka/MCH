@@ -14,40 +14,46 @@
 % politika zabijeni whitnessearche
 % heuristika
 
+% Rozdelit Experiment Setting, Experiments, idealne i Discusion
+
 
 \section{Experiments}
 \label{secExperiments}
 
+\subsection{Experiment Setting}
 We experimented with our implementation of MCHp and MCHq algorithms using the New York City road map benchmark from 9th DIMACS Implementation Challenge: Shortest Path\footnote{
 \url{http://www.dis.uniroma1.it/challenge9/}} and compared them to MLS algorithm. We were interested in two metrics: number of expanded nodes and computation time.
 
-Graph representing New York City road network consists of 270,000 nodes. In addition to full graph, the benchmark also features smaller subgraphs with 10K, 20K, 30K, 40K and 50K nodes. 
+Graph representing New York City road network consists of 264346 nodes and 733846 edges. In addition to full graph, the benchmark also features smaller connected subgraphs with 10K, 20K, 30K, 40K and 50K nodes. 
 
 The benchmark problem was defined as a bi-criterial shortest path search. The two objectives were: geographic distance and travel time. 
-We also generated additional graphs with a randomized third criterion. Where the original weight vector was $(w_1,w_2)$, we set the new vector to be $(w_1,w_2,rand(0.75,1.5) \times w_1 + rand(0.75,1.5) \times w_2)$ and $(w_1,w_2,rand(0.5,2) \times w_1 + rand(0.5,2) \times w_2)$. 
 
-%\todo[inline]{Tretie (nahodne) kriterium nemusime myslim vobec spominat. Ja by som tento (modry) odstavec proste zmazal/zakomentoval. Ale je to na tebe.}
-%\todo[inline]{Me to prislo velmi prekvapive ze to dost dobre funguje i s nekorelovanou souradnici. Nechala bych to tam.}
-
-We computed 1,000 random queries on the subgraphs and 10 queries on the full graph and tri-criteria graphs and averaged the results (times and numbers of extended nodes) among those queries. 
-The queries on the full graph had to be hand-crafted in such a way, that would allow the MLS algorithm to finish in a reasonable time (MLS failed to finish within one day using random full graph queries).   
-The {\em node rank} heuristic was computed as {\tt shortcut*3 + deleted*3 -~inEdges -~outEdges} in our MCH implementation. The Witness Search time limit was set to 0.25 sec. 
+We also generated additional graphs with a randomized third criterion in order to illustrate how algorithm depends on correlation of weights. Where the original weight vector was $(w_1,w_2)$, we set the new vector to be $(w_1,w_2,rand(0.75,1.5) \times w_1 + rand(0.75,1.5) \times w_2)$ and $(w_1,w_2,rand(0.5,2) \times w_1 + rand(0.5,2) \times w_2)$. 
 
 %We compared our algorithms to MLS.
 %\todo{( was it only Dijkstra?), psala jsem i namou, ale vycházela mi jen asi o 30\% rychlejsi nez MLS, a nejsem si jista jestli je to ok a nebo mam spatnou imlementaci nebo spatnou heuristiku}
 
 All the algorithms were implemented in Java 1.8. The experiments were conducted on a machine with 
-32GB RAM and Intel(R) Core(TM) i7-4770S CPU @ 3.10GHz processor. The experiment results are in Table \ref{result}. 
+32GB RAM and Intel(R) Core(TM) i7-4770S CPU @ 3.10GHz processor.
+
+
+\subsection{Query Experiment Results}
+
+We computed 1,000 random queries on the subgraphs and 10 queries on the full graph and tri-criteria graphs and averaged the results (times and numbers of extended nodes) among those queries. 
+The queries on the full graph are those where MLS algorithm finish in a reasonable time. The queries where MLS failed to finish within one day is not included in results. 
+The {\em node rank} heuristic was computed as {\tt shortcut*3 + deleted*3 -~inEdges -~outEdges} in our MCH implementation. The Witness Search time limit was set to 0.25 sec. 
+
+The experiment results are in Table \ref{result}. 
 
 \begin{table}[h]
 \tiny
-\caption{Comparison of MLS and MCL}
+\caption{Comparison of MLS and MCH}
 \label{result}
 \begin{tabular}{l|c|cc|ccccc}
  & & \multicolumn{2}{c}{MLS} & \multicolumn{5}{c}{MCH} \\ \cline{3-6} \hline
 instance & nodes & query & query & prep & query & query & speed up & speed up \\ \hline
 & & (expanded) & (ms) & (sec) & (expanded) & (ms) & expanded & time \\ \hline
-full & 270 000 & 9883105 & 494352 & & 36709 & 9289 & 269.23 & 53.22  \\ \hline
+full & 270 000 & 9883105 & 494352 & $\sim10^5$ & 36709 & 9289 & 269.23 & 53.22  \\ \hline
 11k-10k & 10 000 & 26051 & 32 & 4.3 & 4227 & 56 & 6.16 & 0.57 \\ \hline
 2455-20k & 20 000 & 178472 & 607 & 31 & 2055 & 34 & 86.85 & 17.85 \\ \hline
 5555-20k & 20 000 & 174808 & 514 & 23 & 2004 & 20 & 87.23 & 25.7 \\ \hline
@@ -62,11 +68,19 @@ full & 270 000 & 9883105 & 494352 & & 36709 & 9289 & 269.23 & 53.22  \\ \hline
 \end{tabular}
 \end{table}
 
-%\todo[inline]{v tabulke chybaju vysledky pre MLS a preparation time MCH na full grafe}
-%\todo[inline]{ s full graf je problem. nahodne dozaci tam casto nezbehnou ani za nekolik hodin. jsou dve reseni but tam nedat to MLS pro porovnani a nebo dat vyber jen tech dotazu co zbehnout (mam uz ho pripraveny). Ktera varianta je lepsi?}
-
 The {\em ``speed up expanded''} and {\em ``speed up time''} columns in the table express how many times faster the MCH queries were compared to MLS queries with respect to number of expanded nodes and computation time respectively. We can see that MCH performed better on all the benchmark instances with the exception of the smallest one and modified smallest one ({\tt 11k-10k} and {\tt 11k-10k-(0.75-1.5)}), where MLS had shorter computation time (the speedup was $0.57 < 1$, $0.2~<~1$).
 
+
+\subsection{Preprocessing Experiment Results}
+
+During preprocessing phase is possible use different {\em node rank} heuristic.
+We try three variant and compare them in table \ref{result2}.
+\begin{description}
+    \item[default] {\tt shortcut*3 + deleted*3 -~inEdges -~outEdges} 
+    \item[\#s] {\tt shortcut} 
+    \item[\#s-d] {\tt shortcut -~inEdges -~outEdges} 
+\end{description}
+We test those three variant on three subgraphs and provide average values.
 
 % jak porametry MCq ovlivnovali dobu preprocessingu:
 %\subsection{Graph preprocessing}
@@ -75,20 +89,14 @@ The {\em ``speed up expanded''} and {\em ``speed up time''} columns in the table
 %Řadit podle počtu zkratek / podle okoli / stupeň (DynamicNode)
 %Čas ukoncění prohledávání okolo
 %(nenaimplementovane: nekontrohovat cele)
-%
-%každé testovat na třech instancích
-%pro každou uvést: 
-%\#hran \#zkratek \% \%delky cesty \%zkraceni čas
-%
-%TODO pocet stratek a cas pri precessing celeho grafu
-% weighted ordering?
+%The {\em node rank} heuristic was computed as {\tt shortcut*3 + deleted*3 -~inEdges -~outEdges} in our MCH implementation. The Witness Search time limit was set to 0.25 sec. 
 %
 \begin{table}
-\caption{Preprocessing ...}
-\label{table1}
+\tiny
+\caption{Preprocessing of MCH}
+\label{result2}
 \begin{tabular}{l|l|c|ccc|ccc}
     instance & variant & prep & edges & shortcuts & \% & MLS length & MCH length & \% \\ \hline
-\multicolumn{9}{c}{Summary} \\ \hline
 2455-20k & default & 27s & 49296 & 35081 & 1.71 & 134.84 & 20.98 & 6.43 \\ \hline
 5555-20k & default & 21s & 50292 & 36137 & 1.71 & 152.41 & 18.40 & 8.28 \\ \hline 
 8765-20k & default & 10s & 51090 & 34785 & 1.68 & 103.76 & 17.17 & 6.04 \\ \hline
@@ -98,10 +106,12 @@ The {\em ``speed up expanded''} and {\em ``speed up time''} columns in the table
 2455-20k & \#s-d & 47s & 49296 & 53956 & 2.09 & 127.07 & 16.30 & 7.79 \\ \hline
 5555-20k & \#s-d & 43s & 50292 & 56038 & 2.11 & 125.09 & 19.35 & 6.46 \\ \hline
 8765-20k & \#s-d & 29s & 51090 & 57701 & 2.13 & 94.32 & 17.43 & 5.41 \\ \hline
-
-%Average & variant a & & & & & \\ \hline
-%Average & variant b & & & & & \\ \hline
-%Average & variant c & & & & & \\ \hline
+\multicolumn{9}{c}{Summary} \\ \hline
+Average & default & 19.33 & 50226.0 & 35334.33 & 1.7 & 130.33 & 18.85 & 6.92 \\ \hline
+Average & \#s & 18.67 & 50226.0 & 35759.67 & 1.71 & 104.90 & 16.41 & 6.40 \\ \hline
+Average & \#s-d & 39.67 & 50226.0 & 55898.33 & 2.11 & 115.49 & 17.69 & 6.55 \\ \hline
 \end{tabular}
 \end{table}
+
+%[[27,49296,35081,1.71,134.84,20.98,6.43], [21,50292,36137,1.71,152.41,18.40,8.28], [10,51090,34785,1.68,103.76,17.17,6.04], [23,49296,35192,1.71,100.99,17.42,5.80], [25,50292,37123,1.74,124.99,16.09,7.76], [8,51090,34964,1.68,88.73,15.71,5.64], [47,49296,53956,2.09,127.07,16.30,7.79], [43,50292,56038,2.11,125.09,19.35,6.46], [29,51090,57701,2.13,94.32,17.43,5.41]]
 
