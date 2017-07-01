@@ -8,62 +8,81 @@
 \subsection{Stage 2: Search Query}
 \label{subsecStage2}
 
-Multi-weighted Contraction Hierarchies query (see Pseudocode \ref{MCHq} below) is based on bi-directional search.
+Multi-weighted Contraction Hierarchies query (see Algorithm \ref{MCHq} at the end of this section) is based on bi-directional search.
 Each $s$-$t$ search query runs two MLS-like searches on a slightly modified preprocessed graph
-and then we combine their results. 
+and then we combine their results. Let us first take a look at those two MLS-like searches.
 %We do not transform the whole graph in advance -- we merely modify it during queries.
 
 \paragraph*{Forward Search}
 Forward search runs on a preprocessed sub-graph with only those oriented edges going from 
-lower-rank nodes to higher-rang nodes
-(other edges are ignored). It is not necessary to transform the whole graph in advance -- we do it on the go. 
-In the pseudocode of MLS we change line to \ref{MLS:edge} to code \ref{MCHqf}.
-The MLS algorithm is used to search for the shortest path from $s$ to $t$ and obtain the label bags $B(v)$ for all the nodes.
+lower-rank nodes to higher-rank nodes
+(other edges are ignored). It is not necessary to transform the whole graph in advance -- we do it on the go.
+\vskip 3mm
 
-\begin{algorithm}[H]
-    \SetAlgoLined
-    \SetKw{Continue}{continue}
-    \caption{Line \ref{MLS:edge} of MLS for Forward Search}
-    \label{MCHqf}
-    \ForEach{ \upshape outgoing edge $e=(node(l),w)_i$}{
-        \If { rank(node(l)) < rank(w)) } {
-            \Continue
-        }
-        $\dots$
-    }
-\end{algorithm}
+\noindent Implementation-wise, the forward search is basically the MLS algorithm with one small change -- line 13 of MLS (see Algorithm \ref{MLSalg} in Section \ref{secPreliminaries}) is replaced by following two lines:
+\vskip 5mm
+
+{\bf foreach} outgoing edge $e=(node(l),w)_i$ {\bf do}
+
+\ \ \ \ {\bf if} {\em rank(node(l)) < rank(w))} {\bf then continue} 
+
+\vskip 5mm
+\noindent The modified MLS is used to search for the shortest path from $s$ to $t$ and obtain the label bags $B(v)$ for all the nodes.
+
+%\begin{algorithm}[H]
+%    \SetAlgoLined
+%    \SetKw{Continue}{continue}
+%    \caption{Line \ref{MLS:edge} of MLS for Forward Search}
+%    \label{MCHqf}
+%    \ForEach{ \upshape outgoing edge $e=(node(l),w)_i$}{
+%        \If { rank(node(l)) < rank(w)) } {
+%            \Continue
+%        }
+%        $\dots$
+%    }
+%\end{algorithm}
 
 \paragraph*{Reverse Search}
 Reverse search is similar to Forward search, but it originates in the node $t$ and runs on a graph with all the edges reversed (implicitly -- we do not need to actually modify the graph structure for this). Again, we only consider those edges, which (after being reversed) go from lower-ranked nodes to higher-ranked nodes. 
-In the pseudocode of MLS we change line to \ref{MLS:edge} to code \ref{MCHqr}.
-In this case, the MLS search algorithm is used to search for the shortest path from $t$ to $s$ and obtain the label bags $B(v)$ for all the nodes.
+\vskip 3mm
 
+\noindent To implement reverse search, We simply replace line 13 of MLS (see Algorithm \ref{MLSalg} in Section \ref{secPreliminaries}) by the following two lines:
 \vskip 5mm
 
-\begin{algorithm}[H]
-    \SetAlgoLined
-    \SetKw{Continue}{continue}
-    \caption{Line \ref{MLS:edge} of MLS for Reverse Search}
-    \label{MCHqr}
-    \ForEach{ \upshape outgoing edge $e=(w,node(l))_i$}{
-        \If { rank(w) < rank(node(l)) } {
-            \Continue
-        }
-        $\dots$
-    }
-\end{algorithm}
+{\bf foreach} outgoing edge $e=(w,node(l))_i$ {\bf do}
+
+\ \ \ \ {\bf if} {\em rank(w) < rank(node(l))} {\bf then continue} 
+
+\vskip 5mm
+\noindent In this case, the modified MLS algorithm is used to search for the shortest path from $t$ to $s$ and obtain the label bags $B(v)$ for all the nodes.
+
+%\vskip 5mm
+%
+%\begin{algorithm}[H]
+%    \SetAlgoLined
+%    \SetKw{Continue}{continue}
+%    \caption{Line \ref{MLS:edge} of MLS for Reverse Search}
+%    \label{MCHqr}
+%    \ForEach{ \upshape outgoing edge $e=(w,node(l))_i$}{
+%        \If { rank(w) < rank(node(l)) } {
+%            \Continue
+%        }
+%        $\dots$
+%    }
+%\end{algorithm}
 
 To find the paths in preprocessed graph, we combine the labels from forward and reverse search. 
 For all the nodes $v$ with $B(v) \ne \emptyset$, we join all the combinations of $s$-$v$ and $v$-$t$ paths. 
 All non-dominated paths make up the Pareto set of shortest $s$-$t$ paths in the preprocessed graph.
 Pareto set of shortest paths in the original graph can be reconstructed recursively using the notes on the shortcuts.
 
+\vskip 5mm
 \begin{algorithm}[H]
     \SetAlgoLined
     \SetKw{Continue}{continue}
     \SetKwInOut{Input}{input}
     \SetKwInOut{Output}{output}
-    \caption{Algorithm MCHq}
+    \caption{MCHq algorithm implementing the search query}
     \label{MCHq}
     \Input{ Preprocessed graph $G'$, source node $s$, target node $t$.}
     forward\_bags $\leftarrow$ forward search \\
@@ -87,4 +106,6 @@ Pareto set of shortest paths in the original graph can be reconstructed recursiv
         reconstruct path to original graph
     }
     \Output{ Pareto set of shortest $s$-$t$ paths. }
+    \vskip 5mm
 \end{algorithm}
+\vskip 15mm
