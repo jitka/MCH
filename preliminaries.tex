@@ -26,9 +26,9 @@ $P(s,t)$. Given a pair of nodes $s,t$, the aim of MOSP is to find the Pareto set
 \vskip 5mm
 
 %\subsection{Meta Search Algorithm}
-Many typical search algorithms in this context are related either to original Dijkstra algorithm~\cite{dijkstra1959note} or to Multicriteria Label-Setting (MLS) algorithm~\cite{martins1984multicriteria}. Let us now present its generalization of (MLS) in order to establish the notation.
+Many typical search algorithms in this context are related either to original Dijkstra algorithm~\cite{dijkstra1959note} or to Multicriteria Label-Setting (MLS) algorithm~\cite{martins1984multicriteria}. Let us now present a generalization of MLS in order to establish the notation.
 
-MLS algorithm (see Pseudocode \ref{MLSalg}) is designed to search for paths in multi-weighted directed multi-graphs. It can answer three types of queries:
+MLS algorithm (see Algorithm \ref{MLSalg}) is designed to search for paths in multi-weighted directed multi-graphs. It can answer three types of queries:
 \begin{itemize}
 \item Find all non-dominated shortest paths from source node $s$ to target node $t$ ($s$ is sometimes called {\em origin} and $t$ is called {\em destination}).
     % TODO přepsat s t na o d (origin destination)
@@ -38,31 +38,19 @@ MLS algorithm (see Pseudocode \ref{MLSalg}) is designed to search for paths in m
 
 Key part of the algorithm is assigning so-called \emph{labels} $l\in \mathcal{R}^d$ to graph nodes.
 Intuitively, labels represents path from $s$ to some node $v$.
-Given source node $s$ and label $l$ we denote its corresponding node $node(l)=v$
+Given source node $s$ and label $l$, we denote its corresponding node $node(l)=v$.
 Label $l$ contains link $prev(l)$ to label $l'$ where $node(l')$ is immediately before $node(l)$ on the path $p_{s,node(l)}$.
 Label $l$ contains length of this path $w(l)$.
 Each node has a set of non-dominated labels called \emph{label bag} $B(v)$.
 
-As the first step of the algorithm, we assign labels in the following manner: $B(s)=\{0^d\}$ and $\forall v \ne s: B(v)=\emptyset$.
-At each subsequent step of the algorithm, one label is \emph{expanded}. 
-During the expansion, all the outgoing edges are considered -- the outgoing edge, together with the previously found path to the label make up the path that is added to corresponding label bag. 
-During adding new labels to the bag, we check whether there is a label which dominates another and delete dominates labels.
-%\todo[inline]{nie som si isty, ci su predchadzajuce 2 vety spravne, plus nie su uplne jednoducho zrozumitelne. skontroluj to prosim a ked sa da, vylepsi tu formulaciu tak, aby bola jasnejsia}
-%Ten prvni odstavec jsem prepsala, a opravila jsem nejake drobne chyby, je to lepsi?
-
-Data structure {\em open\_labels} is typically used when implementing MLS. It is a priority queue with all the labels which were created but not yet expanded. The priority function needs to guarantee that top label is never dominated by any other label in that queue.
-
-The MLS algorithm stops when every label is expanded. It returns label bags $B(t), t \in T$. 
-They represent the full Pareto set of shortest path in the graph.
-Sequence of nodes on final path can be reconstructed from labels recursively using $prev(l)$.
-
+\vskip 5mm
 \begin{algorithm}[H]
     \SetAlgoLined
     \LinesNumbered
     \SetKwInOut{Input}{input}
     \SetKwInOut{Output}{output}
     \SetKw{Continue}{continue}
-    \caption{Algorithm MLS}
+    \caption{Multicriteria Label-Setting (MLS) algorithm}
     \label{MLSalg}
     \Input{ source node $s$, set of target nodes $T$}
     \ForEach{{\upshape node} $v \in V$}{
@@ -90,5 +78,23 @@ Sequence of nodes on final path can be reconstructed from labels recursively usi
         }
     }
     \Output{ $B(t)$ for every $t \in T$}
+    \vskip 5mm
 \end{algorithm}
+\vskip 5mm
+
+As the first step of the algorithm, we assign labels in the following manner: $B(s)=\{0^d\}$ and $\forall v \ne s: B(v)=\emptyset$.
+At each subsequent step of the algorithm, one label is \emph{expanded}. 
+During the expansion, all the outgoing edges are considered -- the outgoing edge, together with the previously found path to the label make up the path that is added to corresponding label bag. 
+When adding new labels to the bag, we check whether there is a label which dominates another and delete dominated labels.
+%\todo[inline]{nie som si isty, ci su predchadzajuce 2 vety spravne, plus nie su uplne jednoducho zrozumitelne. skontroluj to prosim a ked sa da, vylepsi tu formulaciu tak, aby bola jasnejsia}
+%Ten prvni odstavec jsem prepsala, a opravila jsem nejake drobne chyby, je to lepsi?
+
+
+
+Data structure {\em open\_labels} is typically used when implementing MLS. It is a priority queue with all the labels which were created but not yet expanded. The priority function needs to guarantee that top label is never dominated by any other label in that queue.
+
+The MLS algorithm stops when every label is expanded. It returns label bags $B(t), t \in T$. 
+They represent the full Pareto set of shortest path in the graph.
+Sequence of nodes on final path can be reconstructed from labels recursively using $prev(l)$.
+
 
