@@ -6,13 +6,14 @@
 
 \subsection{Stage 1: Preprocessing} \label{subsecStage1}
 
-Preprocessing algorithm (see Pseudocode \ref{MCHp} below) contracts all the
+Preprocessing algorithm (see Algorithm \ref{MCHp} below) contracts all the
 graph nodes one by one in the order of their rank (starting with the lowest
 rank), while keeping the cost vector of all the Pareto optimal paths unchanged.
 Rank of a node is assigned by a heuristic function $f$. In our implementation,
 we used a function described in section \ref{secExperiments}.
 %Higway dimension in theretical resutls
 
+\vskip 5mm
 \begin{algorithm}[H]
     \SetAlgoLined
     \LinesNumbered
@@ -20,7 +21,7 @@ we used a function described in section \ref{secExperiments}.
     \SetKwInOut{Output}{output}
     \SetKwComment{Comment}{$\triangleright$\ }{}
     \SetKw{Continue}{continue}
-    \caption{Algorithm MCHp}
+    \caption{MCHp algorithm for graph preprocessing}
     \label{MCHp}
     \Input{ Graph $G$ with weight function $w: E \rightarrow R_+^d$. }
     \For{\upshape $i$ from $0$ to $n-1$} {
@@ -41,7 +42,9 @@ we used a function described in section \ref{secExperiments}.
         put $v$ and adjacent edges into archive 
     }
     \Output{ Archived nodes, edges, rank of nodes. }
+    \vskip 5mm
 \end{algorithm}
+\vskip 5mm
 
 First, we initialize the $f$ values for all the nodes. Then, at each step of
 the algorithm, we select the node $v$ with lowest value of $f$ and update $f$
@@ -50,15 +53,16 @@ is assigned a $rank(v) = i$ and is \emph{contracted}.  Contraction of a node
 $v$ consists of removing and archiving all the edges adjacent to $v$, removing
 and archiving the node $v$ itself and adding {\em shortcuts}. 
 
+\vskip 5mm
 We need to keep the distance of all Pareto optimal paths in the graph
 unchanged. For every two edges $(u_i,v)_k,(v,w_j)_l$, we need to know if they
-are part of a Pareto optimal path. If we found a path $p_{u_i,w_j}$ which
+are part of a Pareto optimal path. If we find a path $p_{u_i,w_j}$ which
 dominates $w((u_i,v)_k)+w((v,w_j)_l)$ , then the combination is not needed. We
-call $p_{u_i,w_j}$ a \emph{witness} of edges $(u_i,v)_k,(v,w_j)_l$. 
+call such $p_{u_i,w_j}$ a \emph{witness} of edges $(u_i,v)_k,(v,w_j)_l$. 
 
 To find the {\em shortcuts}, we run so-called {\em witness search} (described
 below) and add a shortcut for each pair of edges which do not have a witness.
-For pair of nodes $u_i, w_j$ there is $m$ edges $(u_i,v)_k,(v,w_j)_l$
+For a pair of nodes $u_i, w_j$ there is $m$ edges $(u_i,v)_k,(v,w_j)_l$
 with no witness. Shortcuts are new edges
 $(u_i,w_j)_0, (u_i,w_j)_1 \dots (u_i,w_j)_m$ 
 %\todo[inline]{ta nula tam je trošku haluzná protože ve stejném kroku můžu
@@ -66,8 +70,8 @@ $(u_i,w_j)_0, (u_i,w_j)_1 \dots (u_i,w_j)_m$
 with weights $w((u_i,w_j)_*) = w((u_i,v)_k)+w((v,w_j)_l)$.  We also keep a note
 about which node was used to create which shortcut.  Note that a shortcut could
 be added even if a witness exists for it. Unnecessary shortcuts do not violate
-the correctness. They can only make the preprocessed graph larger and in some
-cases adding unnecessary shortcuts speed up preprocessing. 
+the correctness. They can only make the preprocessed graph larger (in some
+cases, adding unnecessary shortcuts can even speed up the preprocessing). 
 
 %By this process, multiple edges with different weights could be created. 
 
