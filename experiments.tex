@@ -28,7 +28,7 @@ Graph representing New York City road network consists of 264346 nodes and 73384
 
 The benchmark problem was defined as a bi-criterial shortest path search. The two objectives were: geographic distance and travel time. 
 
-We also generated additional graphs with a randomized third criterion in order to illustrate how algorithm depends on correlation of weights. Where the original weight vector was $(w_1,w_2)$, we set the new vector to be $(w_1,w_2,rand(0.75,1.5) \times w_1 + rand(0.75,1.5) \times w_2)$ and $(w_1,w_2,rand(0.5,2) \times w_1 + rand(0.5,2) \times w_2)$. 
+We also generated additional graphs with a randomized third criterion in order to analyze how the algorithm depends on the correlation of weights. Where the original weight vector was $(w_1,w_2)$, we set the new vector to be $(w_1,w_2,rand(0.75,1.5) \times w_1 + rand(0.75,1.5) \times w_2)$ and $(w_1,w_2,rand(0.5,2) \times w_1 + rand(0.5,2) \times w_2)$. 
 
 %We compared our algorithms to MLS.
 %\todo{( was it only Dijkstra?), psala jsem i namou, ale vycházela mi jen asi o 30\% rychlejsi nez MLS, a nejsem si jista jestli je to ok a nebo mam spatnou imlementaci nebo spatnou heuristiku}
@@ -40,10 +40,11 @@ All the algorithms were implemented in Java 1.8. The experiments were conducted 
 \subsection{Query Experiment Results}
 
 We computed 1,000 random queries on the subgraphs and 10 queries on the full graph and tri-criteria graphs and averaged the results (times and numbers of extended nodes) among those queries. 
-The queries on the full graph are those where MLS algorithm finish in a reasonable time. The queries where MLS failed to finish within one day is not included in results. 
+On the full graph, we only considered those queries, where MLS algorithm finished in a reasonable time. The queries where MLS failed to finish within one day were not included in the results. 
+
 The {\em node rank} heuristic was computed as {\tt shortcut*3 + deleted*3 -~inEdges -~outEdges} in our MCH implementation. The Witness Search time limit was set to 0.25 sec. 
 
-The experiment results are in Table \ref{result}. 
+\noindent The experiment results are in Table \ref{result}. 
 
 \begin{table}[h]
 \tiny
@@ -73,14 +74,18 @@ The {\em ``speed up expanded''} and {\em ``speed up time''} columns in the table
 
 \subsection{Preprocessing Experiment Results}
 
-During preprocessing phase is possible use different {\em node rank} heuristic.
-We try three variant and compare them in table \ref{result2}.
-\begin{description}
-    \item[default] {\tt shortcut*3 + deleted*3 -~inEdges -~outEdges} 
-    \item[\#s] {\tt shortcut} 
-    \item[\#s-d] {\tt shortcut -~inEdges -~outEdges} 
-\end{description}
-We test those three variant on three subgraphs and provide average values.
+It is possible to use different {\em node rank} heuristics during the
+preprocessing phase. We experimented with the following three variants 
+and compared them in table \ref{result2}:
+
+\begin{itemize}
+    \item {\bf default rank heuristic:} {\tt shortcut*3 + deleted*3 -~inEdges -~outEdges} 
+    \item {\bf no. of shortcuts (\#s):} {\tt shortcut} 
+    \item {\bf shortcuts - dimension (\#s-d):} {\tt shortcut -~inEdges -~outEdges} 
+\end{itemize}
+
+We tested these three variants of rank heuristics on three 
+subgraphs and computed the average values.
 
 % jak porametry MCq ovlivnovali dobu preprocessingu:
 %\subsection{Graph preprocessing}
@@ -91,7 +96,7 @@ We test those three variant on three subgraphs and provide average values.
 %(nenaimplementovane: nekontrohovat cele)
 %The {\em node rank} heuristic was computed as {\tt shortcut*3 + deleted*3 -~inEdges -~outEdges} in our MCH implementation. The Witness Search time limit was set to 0.25 sec. 
 %
-\begin{table}
+\begin{table}[h]
 \tiny
 \caption{Preprocessing of MCH}
 \label{result2}
