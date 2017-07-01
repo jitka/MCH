@@ -22,9 +22,8 @@ lower-rank nodes to higher-rank nodes
 \noindent Implementation-wise, the forward search is basically the MLS algorithm with one small change -- line 13 of MLS (see Algorithm \ref{MLSalg} in Section \ref{secPreliminaries}) is replaced by following two lines:
 \vskip 5mm
 
-{\bf foreach} outgoing edge $e=(node(l),w)_i$ {\bf do}
-
-\ \ \ \ {\bf if} {\em rank(node(l)) < rank(w))} {\bf then continue} 
+{\bf foreach} outgoing edge $e=(node(l),w)_i$ {\bf do}\\
+\indent \ \ \ \ {\bf if} {\em rank(node(l)) < rank(w))} {\bf then continue} 
 
 \vskip 5mm
 \noindent The modified MLS is used to search for the shortest path from $s$ to $t$ and obtain the label bags $B(v)$ for all the nodes.
@@ -49,9 +48,8 @@ Reverse search is similar to Forward search, but it originates in the node $t$ a
 \noindent To implement reverse search, We simply replace line 13 of MLS (see Algorithm \ref{MLSalg} in Section \ref{secPreliminaries}) by the following two lines:
 \vskip 5mm
 
-{\bf foreach} outgoing edge $e=(w,node(l))_i$ {\bf do}
-
-\ \ \ \ {\bf if} {\em rank(w) < rank(node(l))} {\bf then continue} 
+{\bf foreach} outgoing edge $e=(w,node(l))_i$ {\bf do}\\
+\indent \ \ \ \ {\bf if} {\em rank(w) < rank(node(l))} {\bf then continue} 
 
 \vskip 5mm
 \noindent In this case, the modified MLS algorithm is used to search for the shortest path from $t$ to $s$ and obtain the label bags $B(v)$ for all the nodes.
