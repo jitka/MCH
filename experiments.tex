@@ -37,7 +37,7 @@ All the algorithms were implemented in Java 1.8. The experiments were conducted 
 32GB RAM and Intel(R) Core(TM) i7-4770S CPU @ 3.10GHz processor.
 
 
-\subsection{Query Experiment Results}
+\subsection{Query Phase Experiment Results}
 
 We computed 1,000 random queries on the subgraphs and 10 queries on the full graph and tri-criteria graphs and averaged the results (times and numbers of extended nodes) among those queries. 
 On the full graph, we only considered those queries, where MLS algorithm finished in a reasonable time. The queries where MLS failed to finish within one day were not included in the results. 
@@ -72,7 +72,7 @@ full & 270 000 & 9883105 & 494352 & $\sim10^5$ & 36709 & 9289 & 269.23 & 53.22  
 The {\em ``speed up expanded''} and {\em ``speed up time''} columns in the table express how many times faster the MCH queries were compared to MLS queries with respect to number of expanded nodes and computation time respectively. We can see that MCH performed better on all the benchmark instances with the exception of the smallest one and modified smallest one ({\tt 11k-10k} and {\tt 11k-10k-(0.75-1.5)}), where MLS had shorter computation time (the speedup was $0.57 < 1$, $0.2~<~1$).
 
 
-\subsection{Preprocessing Experiment Results}
+\subsection{Preprocessing Phase Experiment Results}
 
 It is possible to use different {\em node rank} heuristics during the
 preprocessing phase. We experimented with the following three variants 
@@ -87,18 +87,17 @@ and compared them in table \ref{result2}:
 We tested these three variants of rank heuristics on three 
 subgraphs and computed the average values.
 
-Preprocessing faze was shortest in with the {\bf no. of shortcuts} heuristic. 
-It is interesting that the {\bf shortuct - degree} heuristic which greedy minimalise 
-number of new shortcuts created much more shortcut then other.
+The preprocessing phase was fastest with the {\em \#s} heuristic (no. of shortcuts), as seen in the {\em prep} column of Table \ref{result2}. 
+It is interesting that the {\em \#s-d} heuristic (shortuct - degree), which should greedily 
+minimize the number of new shortcuts created considerably more shortcuts than the others (see the {\em shortcuts} column).
 
-Most important parameter we measure is length. 
-For a $s-t$ query it is a average number of nodes on path in Pareto set before reconstructing
-paths to original graph.
-In each test was randomly generate set of 100 queries and compare MLS and MCH answers.
-
-The first heuristic the best, because it combine small preprocessed graph
-and good seed up in query.
-
+The most important parameter we analyzed was the average length (number of nodes) of 
+the paths in the Pareto set before reconstructing the paths to the original graph, 
+since shorter paths potentially decrease the computation time of the Query phase algorithm (MCHq).
+For each test, we generated 100 random queries and computed the average number of nodes 
+in all the found paths. We computed this number for both the MLS and MCH answers. As you can see 
+in the {\em MCH length} column, the {\em \#s} heuristic (no. of shortcuts) appears to 
+be the best in this respect, with the average length of 16.41 nodes.  
 
 % jak porametry MCq ovlivnovali dobu preprocessingu:
 %\subsection{Graph preprocessing}
