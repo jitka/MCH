@@ -81,11 +81,24 @@ and compared them in table \ref{result2}:
 \begin{itemize}
     \item {\bf default rank heuristic:} {\tt shortcut*3 + deleted*3 -~inEdges -~outEdges} 
     \item {\bf no. of shortcuts (\#s):} {\tt shortcut} 
-    \item {\bf shortcuts - dimension (\#s-d):} {\tt shortcut -~inEdges -~outEdges} 
+    \item {\bf shortcuts - degree (\#s-d):} {\tt shortcut -~inEdges -~outEdges} 
 \end{itemize}
 
 We tested these three variants of rank heuristics on three 
 subgraphs and computed the average values.
+
+Preprocessing faze was shortest in with the {\bf no. of shortcuts} heuristic. 
+It is interesting that the {\bf shortuct - degree} heuristic which greedy minimalise 
+number of new shortcuts created much more shortcut then other.
+
+Most important parameter we measure is length. 
+For a $s-t$ query it is a average number of nodes on path in Pareto set before reconstructing
+paths to original graph.
+In each test was randomly generate set of 100 queries and compare MLS and MCH answers.
+
+The first heuristic the best, because it combine small preprocessed graph
+and good seed up in query.
+
 
 % jak porametry MCq ovlivnovali dobu preprocessingu:
 %\subsection{Graph preprocessing}
