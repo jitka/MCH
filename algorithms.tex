@@ -10,12 +10,12 @@ MCH approach consists of two separate stages, each solved by a separate algorith
 Both algorithms are generalisation of Contraction Hierachies for single-weighted undirected graphs \cite{geisberger2008contraction}.
 
 \begin{itemize}
-  \item {\em MCHp: Preprocessing algorithm} takes a multi-weighted directed multigraph on the input and returns an extended graph with the same set of nodes, but with additional edges. It contracts all the nodes one by one, adding new edges called \emph{shortcuts}, while preserving all the Pareto optimal shortest path lengths. 
+  \item {\em MCHp: Preprocessing algorithm} takes a multi-weighted directed multigraph as the input and returns an extended graph with the same set of nodes, but with additional edges. It contracts all the nodes one by one, adding new edges called \emph{shortcuts}, while preserving all the Pareto optimal shortest path lengths. 
 Nodes will have a rank ($rank(v) \in \{0, \dots n-1\}$) corresponding to their order of contraction.
 The resulting preprocessed graph has all the original nodes $V$, edges $E$ and new set of shortcuts $E_+$.
 Each shortcut $(u,v)_i$ corresponds to a path in the original graph $p_{u,v}$, while $w((u,v)_i) = w(p_{u,v})$ and it keeps a note which is later used to reconstruct the original path.
   \item {\em MCHq: Query algorithm} uses the preprocessed graph to find the Pareto set of all
-the shortest paths between two nodes $s$ and $t$. MCHq runs a search algorithm in both directions -- from $s$ to $t$ and from $t$ to $s$. After that, it joins the both partial paths into the path in the preprocessed graph and finally reconstructs the path in the original graph. 
+the shortest paths between two nodes $s$ and $t$. MCHq runs a search algorithm in both directions -- from $s$ to $t$ and from $t$ to $s$. After that, it joins both partial paths into the path in the preprocessed graph and finally reconstructs the path in the original graph. 
 \end{itemize}
 
 \input{algorithmsStage1.tex}
@@ -34,8 +34,8 @@ Set of the edges found by the query algorithm is the Pareto set of shortest path
 \begin{proof}[Proof of Lemma \ref{lemmaCorrectness}]
 \ \\ 
 \begin{itemize}
-\item[$\subseteq$] 
-Let $p_{s,t}$ be an arbitrary path from the Pareto set $P(s,t)$. 
+\item[$\supseteq$] 
+    Let $p_{s,t}$ be an arbitrary path from the Pareto set $P(s,t)$. We show that $p_{s,t}$ is found by the query algorithm. 
 
 Suppose that $t$ is the node with the highest rank in the path $p_{s,t}$. 
 Then path $p_{s,t}$ should be found by forward search
@@ -60,9 +60,10 @@ would dominate $p_{s,t}$ which would contradict $p_{s,t} \in P(s,t)$.\\
 %\todo[inline]{predchadzajuca veta mi nedava uplne zmysel. opravit formulaciu prosim.}
 Similarly, $p_{v,t} \in P(v,t) $. Path $p_{s,v}$ is found by the forward search end path
 $p_{v,t}$ by the backward search.
-\item[$\supseteq$] 
+\item[$\subseteq$] 
 Each path found by multi-weighted CH corresponds to the path in the original graph. 
-
+The query algorithm filters paths which are dominates by other. So the every path
+found by the query algorithm is one of the non-dominated shortest path in original graph.
 \end{itemize}
 \end{proof}
 

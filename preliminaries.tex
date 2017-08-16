@@ -13,14 +13,14 @@ of edges with $|V| = n$ and $|E| = m$. Since $G$ is a multi-graph, multi-edges
 $((u,v)_0,(u,v)_1,\dots)$ are allowed in $E$. For a fixed node $v$, any edge $(u,v)_i$ is called an in-edge and any edge $(v,w)_j$ is considered an out-edge.
 % TODO nahradit out-edge za outgoing edge?
 
-Every node is assigned a \emph{weight vector} given by the weight function $w: E \rightarrow \mathbb{R}_+^d$. Dimension $d$ represents a number of criteria in a multi-objective search. 
+Every edge is assigned a \emph{weight vector} given by the weight function $w: E \rightarrow \mathbb{R}_+^d$. Dimension $d$ represents a number of criteria in a multi-objective search. 
 In our experiments, we consider $d=2$ and $d=3$.
 We say that a weight vector $a$ is dominated by a vector $b$ ($a,b \in \mathbb{R}_+^d$) if
 $b$ has at least one weight lower than $a$ and no weight higher than $a$. 
 
 Any sequence of edges $(s \! = \! u_0,u_1)_*,(u_1,u_k)_*,\dots(u_{k-1},t \! = \! u_k)$ is called
 \emph{path} $p_{s,t}$. The length of a path is defined as a sum of the weights 
-$w(p_{s,t}) = \Sigma_{i=0}^{i<k} (u_i,u_{i+1})$. The set of all non-dominated paths between $s$ and $t$ is called {\em Pareto set}
+$w(p_{s,t}) = \Sigma_{i=0}^{i<k} w(u_i,u_{i+1})$. The set of all non-dominated paths between $s$ and $t$ is called {\em Pareto set}
 $P(s,t)$. Given a pair of nodes $s,t$, the aim of MOSP is to find the Pareto set $P(s,t)$.
 
 \vskip 5mm
@@ -38,7 +38,7 @@ MLS algorithm (see Algorithm \ref{MLSalg}) is designed to search for paths in mu
 
 Key part of the algorithm is assigning so-called \emph{labels} $l\in \mathcal{R}^d$ to graph nodes.
 Intuitively, labels represents path from $s$ to some node $v$.
-Given source node $s$ and label $l$, we denote its corresponding node $node(l)=v$.
+Given source node $s$ and label $l$, we denote label's corresponding node $node(l)=v$.
 Label $l$ contains link $prev(l)$ to label $l'$ where $node(l')$ is immediately before $node(l)$ on the path $p_{s,node(l)}$.
 Label $l$ contains length of this path $w(l)$.
 Each node has a set of non-dominated labels called \emph{label bag} $B(v)$.
@@ -62,7 +62,7 @@ Each node has a set of non-dominated labels called \emph{label bag} $B(v)$.
     $B(s) \leftarrow 0^d$ \\
     open\_labels $ \leftarrow s$ \\
     \While{ {\upshape open\_labels} $\ne \emptyset$}{
-        $l \leftarrow$ a label from open\_labels
+        $l \leftarrow$ a label from open\_labels \\
         \If{ $w(l)$ {\upshape is dominated by all labels in } $B(t) \in T$}{
             \Continue
         }

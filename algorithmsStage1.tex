@@ -9,8 +9,8 @@
 Preprocessing algorithm (see Algorithm \ref{MCHp} below) contracts all the
 graph nodes one by one in the order of their rank (starting with the lowest
 rank), while keeping the cost vector of all the Pareto optimal paths unchanged.
-Rank of a node is assigned by a heuristic function $f$. In our implementation,
-we used a function described in section \ref{secExperiments}.
+Rank of a node is assigned by a heuristic function $f$. Heuristic function 
+used in our implementation is described in Section \ref{secExperiments}.
 %Higway dimension in theretical resutls
 
 \vskip 5mm
@@ -30,7 +30,7 @@ we used a function described in section \ref{secExperiments}.
         witnesses $\leftarrow$ witness search \\
         $n \leftarrow 0$ \Comment*[r]{Number of new shortcuts} 
         \ForEach{\upshape pair of edges $(u,v)_i,(v,w)_j$ } {
-            \If{\upshape $p(u,v,w)$ is not dominated by any witness } {
+            \If{\upshape $p_{\{u,v,w\}}$ is not dominated by any witness } {
                 add shortcut $(u,w)_n$ \\
                 $w((u,w)_n) = w((u,v)_i)+w((v,w)_j)$ \\
                 $contracted\_node((u,w)_n) = v$ \\
@@ -51,7 +51,9 @@ the algorithm, we select the node $v$ with lowest value of $f$ and update $f$
 of all the nodes adjacent to $v$.  At $i$-th step, the lowest-ranked node $v$
 is assigned a $rank(v) = i$ and is \emph{contracted}.  Contraction of a node
 $v$ consists of removing and archiving all the edges adjacent to $v$, removing
-and archiving the node $v$ itself and adding {\em shortcuts}. 
+and archiving the node $v$ itself and adding {\em shortcuts}. Lets denote
+node with in-coming edge to $v$ by $u_i$ and nodes with out-coming edge $w_j$.
+\todo{picture}
 
 \vskip 5mm
 We need to keep the distance of all Pareto optimal paths in the graph
@@ -71,7 +73,8 @@ with weights $w((u_i,w_j)_*) = w((u_i,v)_k)+w((v,w_j)_l)$.  We also keep a note
 about which node was used to create which shortcut.  Note that a shortcut could
 be added even if a witness exists for it. Unnecessary shortcuts do not violate
 the correctness. They can only make the preprocessed graph larger (in some
-cases, adding unnecessary shortcuts can even speed up the preprocessing). 
+cases, adding unnecessary shortcuts can even speed up the preprocessing
+because that this shortcuts could be used in witness search). 
 
 %By this process, multiple edges with different weights could be created. 
 
@@ -82,7 +85,7 @@ preprocessed graph in the archive including all its nodes and edges.
 shortcuts we need to add when we contracting a node $v$. 
 
 First, we denote all the in-edges as $(u_i,v)_k$ and out-edges as $(v,w_i)_l$.
-For each node $u_i$ connected with $b$ by in-edge $(u_i,v)_*$, we run a
+For each node $u_i$ connected with $v$ by in-edge $(u_i,v)_*$, we run a
 separate search which finds all the shortcuts from $u_i$. For that, we use a
 MLS algorithm with query from $u_i$ to $\{w_0,\dots w_k\}$. 
 
